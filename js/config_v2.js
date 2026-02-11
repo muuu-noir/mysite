@@ -29,9 +29,9 @@ window.SITE_CONFIG = {
   import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   
   const firebaseConfig = { 
-    apiKey: "YOUR_API_KEY", 
-    projectId: "YOUR_PROJECT_ID", 
-    appId: "YOUR_APP_ID" 
+    apiKey: "AIzaSyCGzBYbY_OCBacDJ8x7F0M333oYGSqTJi8", 
+    projectId: "my-site-analytics-993dc", 
+    appId: "1:973356323774:web:b2797526ac35ca259c9fef" 
   };
 
   const app = initializeApp(firebaseConfig);
