@@ -13,27 +13,12 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '0px 0px -50px', threshold: 0.01 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- A. Global DiagLog (Defined First) ---
+  // --- A. System Log (Console Only) ---
   const diagLog = (msg, isError = false) => {
-    const container = document.getElementById('diag-log');
-    if (container) {
-      const div = document.createElement('div');
-      div.className = 'diag-item' + (isError ? ' error' : '');
-      div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
-      container.prepend(div);
-    }
-    if (isError) console.warn(`[Diag] ${msg}`); else console.log(`[Diag] ${msg}`);
+    if (isError) console.warn(`[396 FOLIO] ${msg}`); else console.log(`[396 FOLIO] ${msg}`);
   };
   window.diagLog = diagLog;
-  diagLog("System: Booting...");
-
-  // Toggle Shift+D
-  window.addEventListener('keydown', (e) => {
-    if (e.shiftKey && e.code === 'KeyD') {
-      const overlay = document.getElementById('diagnostic-overlay');
-      if (overlay) overlay.classList.toggle('active');
-    }
-  });
+  diagLog("System: Online.");
 
   // --- B. Hybrid News Engine ---
   const initNews = async () => {
