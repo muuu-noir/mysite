@@ -2,8 +2,7 @@
  * 396 FOLIO - Main Logic
  */
 
-// 1. Sophisticated Staggered Reveal Animations (Mobile Optimized)
-const revealElements = document.querySelectorAll('.reveal');
+// 1. Reveal Elements Observer
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -11,28 +10,24 @@ const revealObserver = new IntersectionObserver((entries) => {
       revealObserver.unobserve(entry.target);
     }
   });
-}, {
-  root: null,
-  rootMargin: '0px 0px -50px',
-  threshold: 0.01
-});
-window.revealObserver = revealObserver; // Globally available for components
+}, { rootMargin: '0px 0px -50px', threshold: 0.01 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- A. System Diagnostics Definition (Must be FIRST) ---
+  // --- A. Global DiagLog (Defined First) ---
   const diagLog = (msg, isError = false) => {
-    const diagContainer = document.getElementById('diag-log');
-    if (diagContainer) {
-      const item = document.createElement('div');
-      item.className = 'diag-item' + (isError ? ' error' : '');
-      item.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
-      diagContainer.prepend(item);
+    const container = document.getElementById('diag-log');
+    if (container) {
+      const div = document.createElement('div');
+      div.className = 'diag-item' + (isError ? ' error' : '');
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      container.prepend(div);
     }
-    console.log(`[Diagnostic] ${msg}`);
+    if (isError) console.warn(`[Diag] ${msg}`); else console.log(`[Diag] ${msg}`);
   };
-  window.diagLog = diagLog; // Expose globally
+  window.diagLog = diagLog;
+  diagLog("System: Booting...");
 
-  // Toggle overlay with Shift+D
+  // Toggle Shift+D
   window.addEventListener('keydown', (e) => {
     if (e.shiftKey && e.code === 'KeyD') {
       const overlay = document.getElementById('diagnostic-overlay');
@@ -40,203 +35,130 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  diagLog("System: DOMContentLoaded fired. Booting logic...");
-
-  // --- B. News Logic (The core of current debug) ---
+  // --- B. Hybrid News Engine ---
   const initNews = async () => {
-    diagLog("News Unit: Searching for display container...");
+    const newsArea = document.getElementById('top-info') || document.getElementById('news-area');
+    if (!newsArea) return diagLog("News: Container not found on this page.");
 
-    // Attempt multiple selectors to find where the news should go
-    let newsArea = document.getElementById('top-info')
-      || document.getElementById('news-area')
-      || document.querySelector('.news-container-external');
+    diagLog("News Area detected. Starting hybrid fetch...");
 
-    if (!newsArea) {
-      // Fallback: search by section title if IDs fail
-      const titles = Array.from(document.querySelectorAll('section-title'));
-      const newsTitle = titles.find(t => t.getAttribute('title') === 'NEWS');
-      if (newsTitle) {
-        newsArea = newsTitle.parentElement.querySelector('glass-card');
-      }
-    }
-
-    if (!newsArea) {
-      diagLog("News Unit: ABORTED. Target container not found.", true);
-      return;
-    }
-
-    diagLog(`News Unit: Container found [${newsArea.id || 'no-id'}]. Initiating fetch...`);
-
-    const parseCSV = (csvText) => {
-      diagLog(`News Unit: Parsing Sheet data (${csvText.length} bytes)...`);
-      const splitCsvLine = (line) => {
-        const result = [];
-        let start = 0;
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-          if (line[i] === '"') inQuotes = !inQuotes;
-          if (line[i] === ',' && !inQuotes) {
-            result.push(line.substring(start, i).replace(/^"|"$/g, '').trim());
-            start = i + 1;
-          }
+    const parseCSV = (csv) => {
+      diagLog(`Parsing CSV: ${csv.length} bytes`);
+      const splitLine = (l) => {
+        const res = []; let s = 0, q = false;
+        for (let i = 0; i < l.length; i++) {
+          if (l[i] === '"') q = !q;
+          if (l[i] === ',' && !q) { res.push(l.substring(s, i).replace(/^"|"$/g, '').trim()); s = i + 1; }
         }
-        result.push(line.substring(start).replace(/^"|"$/g, '').trim());
-        return result;
+        res.push(l.substring(s).replace(/^"|"$/g, '').trim());
+        return res;
       };
-
-      const rows = csvText.split(/\r?\n/).filter(row => row.trim());
+      const rows = csv.split(/\r?\n/).filter(r => r.trim());
       if (rows.length <= 1) return [];
-
       const items = [];
       for (let i = 1; i < rows.length; i++) {
-        const cols = splitCsvLine(rows[i]);
-        if (cols.length >= 4) {
-          items.push({
-            date: cols[1] || 'Unknown',
-            text: cols[2] || 'No Title',
-            link: cols[4] || ''
-          });
-        }
+        const c = splitLine(rows[i]);
+        if (c.length >= 4) items.push({ date: (c[1] || '').replace(/\//g, '.'), text: c[2] || '', link: c[4] || '' });
       }
-      diagLog(`News Unit: Parsed ${items.length} items.`);
       return items;
     };
 
     try {
       let combined = [];
-
-      // 1. Static fetch
+      // 1. news.html
       try {
-        diagLog("News Unit: Fetching static news.html...");
+        diagLog("Fetching news.html archive...");
         const res = await fetch('news.html');
         if (res.ok) {
           const html = await res.text();
           const doc = new DOMParser().parseFromString(html, 'text/html');
-          const dataNode = doc.querySelector('#news-data');
-          if (dataNode) combined = JSON.parse(dataNode.getAttribute('data'));
-          diagLog(`News Unit: Static fetch OK (${combined.length} items).`);
+          const node = doc.querySelector('#news-data');
+          if (node) {
+            const data = JSON.parse(node.getAttribute('data'));
+            combined = data;
+            diagLog(`Loaded ${data.length} archived items.`);
+          }
         }
-      } catch (e) { diagLog(`News Unit: Static fetch failed: ${e.message}`, true); }
+      } catch (e) { diagLog("Static archive offline.", true); }
 
-      // 2. Google Sheets fetch
-      if (window.SITE_CONFIG && window.SITE_CONFIG.newsSheetUrl) {
+      // 2. Google Sheet
+      const sheetUrl = window.SITE_CONFIG ? window.SITE_CONFIG.newsSheetUrl : null;
+      if (sheetUrl) {
+        diagLog(`Fetching Google Sheet: ${sheetUrl.substring(0, 30)}...`);
         try {
-          diagLog("News Unit: Fetching Google Sheet CSV...");
-          const res = await fetch(window.SITE_CONFIG.newsSheetUrl);
+          const res = await fetch(sheetUrl);
           if (res.ok) {
             const csv = await res.text();
             const sheetItems = parseCSV(csv);
             combined = [...sheetItems, ...combined];
+            diagLog(`Merged ${sheetItems.length} fresh items from Sheet.`);
           } else {
-            diagLog(`News Unit: Sheet fetch error ${res.status}`, true);
+            diagLog(`Sheet error: HTTP ${res.status}`, true);
           }
         } catch (e) {
-          diagLog(`News Unit: Sheet fetch error: ${e.message}`, true);
-          if (window.location.protocol === 'file:') diagLog("Local file:// protocol blocks external fetch.", true);
+          diagLog(`Sheet fetch failed: ${e.message}`, true);
+          if (window.location.protocol === 'file:') diagLog("Browser blocks external fetch via file:// protocol.", true);
         }
+      } else {
+        diagLog("No newsSheetUrl configured in config.js.", true);
       }
 
-      // 3. Sort and Render
-      combined.forEach(item => { if (item.date) item.date = item.date.replace(/\//g, '.'); });
+      // Sort & Render
       combined.sort((a, b) => b.date.localeCompare(a.date));
+      const display = combined.slice(0, newsArea.id === 'top-info' ? 3 : 20); // Top page shows 3, News page shows up to 20
 
-      const top3 = combined.slice(0, 3);
-      if (top3.length > 0) {
-        top3[0].isNew = true;
-        const displayData = top3.map(item => ({
-          date: item.date,
-          text: item.text,
-          link: item.link,
-          isNew: item.isNew || false
-        }));
-        newsArea.innerHTML = `<info-table data='${JSON.stringify(displayData).replace(/'/g, "&apos;")}'></info-table>`;
-        diagLog("News Unit: Rendered top 3 items.");
+      if (display.length > 0) {
+        display[0].isNew = true; // Force mark newest as NEW
+        diagLog(`Rendering ${display.length} items to ${newsArea.id}...`);
+        newsArea.innerHTML = `<info-table data='${JSON.stringify(display).replace(/'/g, "&apos;")}'></info-table>`;
       } else {
-        newsArea.innerHTML = '<p class="flex-center">No news entries discovered.</p>';
-        diagLog("News Unit: Result list is empty.");
+        newsArea.innerHTML = '<p class="flex-center">No news yet.</p>';
+        diagLog("No items found to render.");
       }
     } catch (err) {
-      diagLog(`News Unit: CRITICAL FAIL: ${err.message}`, true);
+      diagLog(`Critical Engine Failure: ${err.message}`, true);
     }
   };
 
-  // Run News Init
   initNews();
 
   // --- C. Hero & Visuals ---
-  revealElements.forEach(el => { revealObserver.observe(el); });
-  const hero = document.querySelector('.hero');
-  const aura = document.querySelector('.hero-aura');
-  const heroBg = document.querySelector('.hero-bg img');
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  const hero = document.querySelector('.hero'), aura = document.querySelector('.hero-aura'), heroBg = document.querySelector('.hero-bg img');
   if (hero && aura) {
     hero.addEventListener('mousemove', (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      const r = hero.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
       aura.style.left = `${x}px`; aura.style.top = `${y}px`;
       if (heroBg) {
-        const moveX = (x - rect.width / 2) / 40, moveY = (y - rect.height / 2) / 40;
-        heroBg.style.transform = `scale(1.1) translate(${moveX * 0.5}px, ${moveY * 0.5}px)`;
+        const mx = (x - r.width / 2) / 40, my = (y - r.height / 2) / 40;
+        heroBg.style.transform = `scale(1.1) translate(${mx * 0.5}px, ${my * 0.5}px)`;
       }
     });
     hero.addEventListener('mouseleave', () => { if (heroBg) heroBg.style.transform = `scale(1) translate(0, 0)`; });
   }
 
-  // --- D. Global Tools (Lightbox, etc.) ---
-  const header = document.querySelector('header');
-  if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-
-  const createLightbox = () => {
-    const lb = document.createElement('div');
-    lb.className = 'lightbox-overlay'; lb.id = 'lightbox';
-    lb.innerHTML = '<div class="lightbox-close"><i class="fa fa-times"></i></div><div class="lightbox-content"><img src=""></div>';
-    document.body.appendChild(lb);
-    const close = () => { lb.classList.remove('active'); setTimeout(() => lb.style.display = 'none', 400); };
-    lb.querySelector('.lightbox-close').addEventListener('click', close);
-    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-    return lb;
-  };
-  const lightbox = createLightbox();
-  window.openLightbox = (src) => {
-    const img = lightbox.querySelector('img'); img.src = src;
-    lightbox.style.display = 'flex'; setTimeout(() => lightbox.classList.add('active'), 10);
-  };
-  document.addEventListener('click', (e) => {
-    if (e.target.tagName === 'IMG' && (e.target.closest('#gallery-grid') || e.target.closest('.gallery-grid'))) window.openLightbox(e.target.src);
-  });
-
-  // --- E. Integrations (Twitter/Insta/Counter) ---
+  // --- D. Integrations ---
   const initIntegrations = () => {
-    diagLog("Integrations: Booting external scripts...");
-    if (!window.SITE_CONFIG) return diagLog("ERROR: config.js missing!", true);
-
+    if (!window.SITE_CONFIG) return;
     const { twitterId, counterTag, featuredTweet } = window.SITE_CONFIG;
-    const twitterSection = document.getElementById('SOCIAL');
-    const twitterWrapper = document.getElementById('twitter-timeline-wrapper');
-    const fallbackTweet = document.getElementById('twitter-fallback');
-
-    if (twitterSection) {
-      diagLog("Integrations: SOCIAL section active.");
-      if (fallbackTweet && featuredTweet) {
-        document.getElementById('fallback-tweet-text').textContent = featuredTweet.text;
-        document.getElementById('fallback-tweet-date').textContent = featuredTweet.date;
+    const soc = document.getElementById('SOCIAL');
+    if (soc) {
+      if (featuredTweet) {
+        const ft = document.getElementById('fallback-tweet-text'), fd = document.getElementById('fallback-tweet-date');
+        if (ft) ft.textContent = featuredTweet.text; if (fd) fd.textContent = featuredTweet.date;
       }
-      const tryTwitter = () => {
-        if (window.twttr && window.twttr.ready && twitterWrapper) {
+      setTimeout(() => {
+        if (window.twttr && window.twttr.ready) {
           window.twttr.ready((t) => {
-            t.widgets.createTimeline({ sourceType: 'profile', screenName: twitterId }, twitterWrapper, { height: 600, theme: 'light', chrome: 'noheader,nofooter,noborders,transparent' })
-              .then((el) => { if (el) { diagLog("Integrations: Twitter SUCCESS."); fallbackTweet.style.display = 'none'; } });
+            t.widgets.createTimeline({ sourceType: 'profile', screenName: twitterId }, document.getElementById('twitter-timeline-wrapper'), { height: 600, theme: 'light', chrome: 'noheader,nofooter,noborders,transparent' })
+              .then((el) => { if (el) { diagLog("Twitter Success."); document.getElementById('twitter-fallback').style.display = 'none'; } });
           });
         }
-      };
-      setTimeout(tryTwitter, 3500);
+      }, 3000);
     }
     const cnt = document.getElementById('access-counter');
-    if (cnt && counterTag && !counterTag.includes('お嬢様、ここに')) {
-      diagLog("Integrations: Injecting Counter.");
-      cnt.innerHTML = counterTag;
-    }
+    if (cnt && counterTag && !counterTag.includes('お嬢様、ここに')) cnt.innerHTML = counterTag;
   };
-
   initIntegrations();
 });
