@@ -47,7 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const items = [];
       for (let i = 1; i < rows.length; i++) {
         const c = splitLine(rows[i]);
-        if (c.length >= 4) items.push({ date: (c[1] || '').replace(/\//g, '.'), text: c[2] || '', link: c[4] || '' });
+        if (c.length >= 4) {
+          const title = c[2] || '';
+          const content = c[3] || '';
+          const fullText = (title && content) ? `${title} ${content}` : (title || content);
+          items.push({ date: (c[1] || '').replace(/\//g, '.'), text: fullText, link: c[4] || '' });
+        }
       }
       return items;
     };
