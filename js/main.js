@@ -61,32 +61,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // 2. Optimized News Fetching (Silent Error Handling)
+  // 2. Hybrid News Fetching (Google Sheets + news.html)
   const newsArea = document.getElementById('top-info');
   if (newsArea) {
-    fetch('news.html')
-      .then(res => res.ok ? res.text() : Promise.reject())
-      .then(html => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const infoTable = doc.querySelector('#news-data');
+    const parseCSV = (csvText) => {
+      const rows = csvText.split(/\r?\n/).filter(row => row.trim());
+      if (rows.length <= 1) return []; // Skip header
 
-        if (infoTable && newsArea) {
-          const data = JSON.parse(infoTable.getAttribute('data'));
-          const top3 = data.slice(0, 3);
+      const newsItems = [];
+      // Form columns: Timestamp (unused), Date, Title, Content, Link
+      for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+        if (cols.length >= 4) {
+          newsItems.push({
+            date: cols[1] || 'Unknown Date',
+            text: cols[2] || 'No Title',
+            content: cols[3] || '',
+            link: cols[4] || ''
+          });
+        }
+      }
+      return newsItems;
+    };
 
-          if (top3.length > 0) {
-            top3[0].isNew = true;
+    const fetchHybridNews = async () => {
+      try {
+        let combinedNews = [];
+
+        // A. Static fetch from news.html
+        try {
+          const res = await fetch('news.html');
+          if (res.ok) {
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const infoTable = doc.querySelector('#news-data');
+            if (infoTable) combinedNews = JSON.parse(infoTable.getAttribute('data'));
           }
+        } catch (e) { console.warn('Static news fetch failed', e); }
+
+        // B. Dynamic fetch from Google Sheets (CSV)
+        if (window.SITE_CONFIG && window.SITE_CONFIG.newsSheetUrl) {
+          try {
+            const res = await fetch(window.SITE_CONFIG.newsSheetUrl);
+            if (res.ok) {
+              const csvText = await res.text();
+              const sheetNews = parseCSV(csvText);
+              combinedNews = [...sheetNews, ...combinedNews];
+            }
+          } catch (e) { console.warn('Google Sheets news fetch failed', e); }
+        }
+
+        // Sort by date (Assuming YYYY.MM.DD format)
+        combinedNews.sort((a, b) => b.date.localeCompare(a.date));
+
+        const top3 = combinedNews.slice(0, 3);
+        if (top3.length > 0) {
+          top3[0].isNew = true;
+          // Format for info-table: simplify content for the small preview card
+          const displayData = top3.map(item => ({
+            date: item.date,
+            text: item.text,
+            link: item.link
+          }));
 
           newsArea.innerHTML = `
-            <info-table data='${JSON.stringify(top3).replace(/'/g, "&apos;")}'></info-table>
+            <info-table data='${JSON.stringify(displayData).replace(/'/g, "&apos;")}'></info-table>
           `;
+        } else {
+          newsArea.innerHTML = '<p style="text-align: center; font-style: italic; opacity: 0.7;">No new updates yet.</p>';
         }
-      })
-      .catch((err) => {
-        console.error('News fetch error:', err);
-        newsArea.innerHTML = '<p style="text-align: center;">News data currently unavailable.</p>';
-      });
+      } catch (err) {
+        console.error('Hybrid news error:', err);
+        newsArea.innerHTML = '<p style="text-align: center;">Unable to load news data.</p>';
+      }
+    };
+
+    fetchHybridNews();
   }
 
 
