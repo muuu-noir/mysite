@@ -42,6 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     diagLog("News Area detected. Starting hybrid fetch...");
 
+    // DEBUG: Check Config Content
+    const configKeys = Object.keys(window.SITE_CONFIG || {});
+    diagLog(`Debug info: window.SITE_CONFIG keys = [${configKeys.join(', ')}]`);
+
     const parseCSV = (csv) => {
       diagLog(`Parsing CSV: ${csv.length} bytes`);
       const splitLine = (l) => {
@@ -138,7 +142,31 @@ document.addEventListener('DOMContentLoaded', () => {
     hero.addEventListener('mouseleave', () => { if (heroBg) heroBg.style.transform = `scale(1) translate(0, 0)`; });
   }
 
-  // --- D. Integrations ---
+  // --- D. Global Tools (Lightbox, etc.) ---
+  const header = document.querySelector('header');
+  if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
+
+  const createLightbox = () => {
+    const lb = document.createElement('div');
+    lb.className = 'lightbox-overlay'; lb.id = 'lightbox';
+    lb.innerHTML = '<div class="lightbox-close"><i class="fa fa-times"></i></div><div class="lightbox-content"><img src=""></div>';
+    document.body.appendChild(lb);
+    const close = () => { lb.classList.remove('active'); setTimeout(() => lb.style.display = 'none', 400); };
+    lb.querySelector('.lightbox-close').addEventListener('click', close);
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    return lb;
+  };
+  const lightbox = createLightbox();
+  window.openLightbox = (src) => {
+    const img = lightbox.querySelector('img'); img.src = src;
+    lightbox.style.display = 'flex'; setTimeout(() => lightbox.classList.add('active'), 10);
+  };
+  document.addEventListener('click', (e) => {
+    if (e.target.tagName === 'IMG' && (e.target.closest('#gallery-grid') || e.target.closest('.gallery-grid'))) window.openLightbox(e.target.src);
+  });
+
+  // --- E. Integrations ---
   const initIntegrations = () => {
     if (!window.SITE_CONFIG) return;
     const { twitterId, counterTag, featuredTweet } = window.SITE_CONFIG;
