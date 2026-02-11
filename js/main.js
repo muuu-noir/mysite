@@ -65,13 +65,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const newsArea = document.getElementById('top-info');
   if (newsArea) {
     const parseCSV = (csvText) => {
+      diagLog(`Parsing CSV: ${csvText.length} bytes`);
+      // Robust CSV Splitter (Handles quotes and commas inside cells)
+      const splitCsvLine = (line) => {
+        const result = [];
+        let start = 0;
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          if (line[i] === '"') inQuotes = !inQuotes;
+          if (line[i] === ',' && !inQuotes) {
+            result.push(line.substring(start, i).replace(/^"|"$/g, '').trim());
+            start = i + 1;
+          }
+        }
+        result.push(line.substring(start).replace(/^"|"$/g, '').trim());
+        return result;
+      };
+
       const rows = csvText.split(/\r?\n/).filter(row => row.trim());
-      if (rows.length <= 1) return []; // Skip header
+      if (rows.length <= 1) {
+        diagLog("CSV seems empty (only header or less).");
+        return [];
+      }
 
       const newsItems = [];
-      // Form columns: Timestamp (unused), Date, Title, Content, Link
       for (let i = 1; i < rows.length; i++) {
-        const cols = rows[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+        const cols = splitCsvLine(rows[i]);
         if (cols.length >= 4) {
           newsItems.push({
             date: cols[1] || 'Unknown Date',
@@ -81,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       }
+      diagLog(`Parsed ${newsItems.length} items from Sheet.`);
       return newsItems;
     };
 
@@ -111,7 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
           } catch (e) { console.warn('Google Sheets news fetch failed', e); }
         }
 
-        // Sort by date (Assuming YYYY.MM.DD format)
+        // Normalize dates and sort (Assuming YYYY.MM.DD or YYYY/MM/DD)
+        combinedNews.forEach(item => {
+          if (item.date) item.date = item.date.replace(/\//g, '.');
+        });
         combinedNews.sort((a, b) => b.date.localeCompare(a.date));
 
         const top3 = combinedNews.slice(0, 3);
@@ -121,7 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const displayData = top3.map(item => ({
             date: item.date,
             text: item.text,
-            link: item.link
+            link: item.link,
+            isNew: item.isNew || false
           }));
 
           newsArea.innerHTML = `
