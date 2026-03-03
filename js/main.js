@@ -3,11 +3,11 @@
  */
 
 // 1. Reveal Elements Observer
-const revealObserver = new IntersectionObserver((entries) => {
+window.revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('active');
-      revealObserver.unobserve(entry.target);
+      window.revealObserver.unobserve(entry.target);
     }
   });
 }, { rootMargin: '0px 0px -50px', threshold: 0.01 });
