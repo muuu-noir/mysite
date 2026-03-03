@@ -44,21 +44,82 @@
                 </button>
             </div>
 
+            <!-- Loading Indicator -->
+            <div id="gallery-loader" class="flex-center" style="padding: 4rem; opacity: 0.8;">
+                <div class="loader-ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+                <p
+                    style="font-family: 'Outfit', sans-serif; letter-spacing: 0.2em; font-size: 0.8rem; margin-top: 1rem;">
+                    PREPARING COLLECTIONS</p>
+            </div>
+
             <!-- Gallery Grid -->
-            <div id="gallery-grid" class="gallery-grid">
+            <div id="gallery-grid" class="gallery-grid" style="display: none;">
                 <!-- JavaScript will populate this -->
             </div>
         </section>
     </main>
     <site-footer></site-footer>
 
+    <style>
+        .loader-ripple {
+            display: inline-block;
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+
+        .loader-ripple div {
+            position: absolute;
+            border: 2px solid var(--color-indigo);
+            opacity: 1;
+            border-radius: 50%;
+            animation: loader-ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
+
+        .loader-ripple div:nth-child(2) {
+            animation-delay: -0.5s;
+        }
+
+        @keyframes loader-ripple {
+            0% {
+                top: 30px;
+                left: 30px;
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+
+            100% {
+                top: 0;
+                left: 0;
+                width: 60px;
+                height: 60px;
+                opacity: 0;
+            }
+        }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('gallery-grid');
+            const loader = document.getElementById('gallery-loader');
             const shuffleBtn = document.getElementById('shuffle-btn');
-            const prefixes = ['watercolor', 'pencil', 'digital', 'work'];
 
-            // Shuffle algorithm (Fisher-Yates)
+            // --- Baseline (Known image counts for instant render) ---
+            const manifest = {
+                watercolor: 11,
+                pencil: 6,
+                digital: 33,
+                work: 0
+            };
+
+            let allFoundItems = [];
+            let currentIndex = 0;
+            const itemsPerPage = 12;
+
             function shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -67,77 +128,14 @@
                 return array;
             }
 
-            // Function to shuffle existing items in the grid
-            function shuffleGallery() {
-                const items = Array.from(document.querySelectorAll('.gallery-item'));
-                if (items.length === 0) return;
-
-                items.forEach(item => {
-                    item.classList.remove('active');
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.95)';
-                });
-
-                setTimeout(() => {
-                    grid.innerHTML = '';
-                    const shuffledItems = shuffle(items);
-                    shuffledItems.forEach(item => {
-                        grid.appendChild(item);
-                        item.style.opacity = '';
-                        item.style.transform = '';
-                        setTimeout(() => {
-                            if (window.revealObserver) {
-                                window.revealObserver.observe(item);
-                            } else {
-                                item.classList.add('active');
-                            }
-                        }, 50);
-                    });
-                }, 400);
+            function createItem(prefix, i) {
+                const item = document.createElement('div');
+                item.className = 'gallery-item reveal';
+                const src = `img/gallery/${prefix}_${i}.jpg`;
+                item.innerHTML = `<img src="${src}" alt="${prefix} image" loading="lazy">`;
+                return item;
             }
 
-            let allFoundItems = []; // 発見された全アイテムを保持
-            let currentIndex = 0;   // 現在表示されているインデックス
-            const itemsPerPage = 12; // 一度に表示する枚数
-
-            // Universal Auto-Loader: Efficient Asset Discovery
-            async function discoverAssets() {
-                console.log("[Gallery] Initializing discovery patrol...");
-                const prefixes = ['watercolor', 'pencil', 'digital', 'work'];
-                const batchSize = 35; // 少し控えめに
-
-                const probePrefix = async (prefix) => {
-                    const promises = [];
-                    for (let i = 1; i <= batchSize; i++) {
-                        promises.push(new Promise(resolve => {
-                            const img = new Image();
-                            const src = `img/gallery/${prefix}_${i}.jpg`;
-                            img.onload = () => {
-                                const item = document.createElement('div');
-                                item.className = 'gallery-item reveal';
-                                item.innerHTML = `<img src="${src}" alt="${prefix} image" loading="lazy">`;
-                                resolve(item);
-                            };
-                            img.onerror = () => resolve(null);
-                            img.src = src;
-                        }));
-                    }
-                    return (await Promise.all(promises)).filter(n => n !== null);
-                };
-
-                const results = await Promise.all(prefixes.map(p => probePrefix(p)));
-                allFoundItems = shuffle(results.flat());
-
-                console.log(`[Gallery] Discovery complete. Found ${allFoundItems.length} works.`);
-
-                if (allFoundItems.length === 0) {
-                    grid.innerHTML = '<p class="flex-center" style="grid-column: 1/-1; padding: 4rem; opacity: 0.5;">No works found.</p>';
-                } else {
-                    renderNextBatch(); // 最初のバッチを表示
-                }
-            }
-
-            // Function to render the next set of images
             function renderNextBatch() {
                 const limit = Math.min(currentIndex + itemsPerPage, allFoundItems.length);
                 const batch = allFoundItems.slice(currentIndex, limit);
@@ -151,18 +149,12 @@
                 });
 
                 currentIndex = limit;
-
-                // 次のバッチの準備（スクロール検知用の監視）
-                if (currentIndex < allFoundItems.length) {
-                    setupIntersectionObserver();
-                }
+                if (currentIndex < allFoundItems.length) setupIntersectionObserver();
             }
 
-            // Infinite scroll trigger
             function setupIntersectionObserver() {
                 const sentinel = document.createElement('div');
                 sentinel.className = 'load-sentinel';
-                sentinel.style.height = '10px';
                 grid.appendChild(sentinel);
 
                 const observer = new IntersectionObserver((entries) => {
@@ -171,13 +163,42 @@
                         sentinel.remove();
                         renderNextBatch();
                     }
-                }, { rootMargin: '400px' }); // 400px手前で読み込み開始
-
+                }, { rootMargin: '400px' });
                 observer.observe(sentinel);
             }
 
-            // Initial Load
-            discoverAssets();
+            async function discoverNewAssets() {
+                const prefixes = Object.keys(manifest);
+                for (const prefix of prefixes) {
+                    let nextId = manifest[prefix] + 1;
+                    for (let i = nextId; i < nextId + 5; i++) { // Limit background search depth
+                        const exists = await new Promise(resolve => {
+                            const img = new Image();
+                            img.onload = () => resolve(true);
+                            img.onerror = () => resolve(false);
+                            img.src = `img/gallery/${prefix}_${i}.jpg`;
+                        });
+                        if (exists) {
+                            allFoundItems.push(createItem(prefix, i));
+                            console.log(`[Gallery] New discovery: ${prefix}_${i}`);
+                        } else break;
+                    }
+                }
+            }
+
+            // Initialization
+            Object.entries(manifest).forEach(([prefix, count]) => {
+                for (let i = 1; i <= count; i++) {
+                    allFoundItems.push(createItem(prefix, i));
+                }
+            });
+
+            allFoundItems = shuffle(allFoundItems);
+            loader.style.display = 'none';
+            grid.style.display = 'grid';
+            renderNextBatch();
+
+            discoverNewAssets(); // Search for updates in background
 
             shuffleBtn.addEventListener('click', () => {
                 grid.innerHTML = '';
