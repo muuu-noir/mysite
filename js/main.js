@@ -99,12 +99,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Sort & Render
       combined.sort((a, b) => b.date.localeCompare(a.date));
-      const display = combined.slice(0, newsArea.id === 'top-info' ? 3 : 20); // Top page shows 3, News page shows up to 20
+      const initialLimit = newsArea.id === 'top-info' ? 3 : 5;
+      const display = combined.slice(0, initialLimit);
 
       if (display.length > 0) {
         display[0].isNew = true; // Force mark newest as NEW
         diagLog(`Rendering ${display.length} items to ${newsArea.id}...`);
         newsArea.innerHTML = `<info-table data='${JSON.stringify(display).replace(/'/g, "&apos;")}'></info-table>`;
+
+        // Add "Add More" button if there are more items and we are on the news page
+        if (combined.length > initialLimit && newsArea.id !== 'top-info') {
+          const moreBtnContainer = document.createElement('div');
+          moreBtnContainer.className = 'flex-center';
+          moreBtnContainer.style.marginTop = '1.5rem';
+          moreBtnContainer.innerHTML = `
+            <button id="load-more-news" class="btn-more" style="cursor: pointer; background: none; border: none; outline: none; font-family: inherit;">
+              もっと見る <i class="fa fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+            </button>
+          `;
+          newsArea.appendChild(moreBtnContainer);
+
+          moreBtnContainer.querySelector('#load-more-news').addEventListener('click', () => {
+            // Render all items
+            if (combined.length > 0) combined[0].isNew = true;
+            newsArea.innerHTML = `<info-table data='${JSON.stringify(combined).replace(/'/g, "&apos;")}'></info-table>`;
+            diagLog("Rendered all news items.");
+          });
+        }
       } else {
         newsArea.innerHTML = '<p class="flex-center">No news yet.</p>';
         diagLog("No items found to render.");
