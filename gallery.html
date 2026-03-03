@@ -59,6 +59,13 @@
             <div id="gallery-grid" class="gallery-grid" style="display: none;">
                 <!-- JavaScript will populate this -->
             </div>
+
+            <!-- Load More Control -->
+            <div id="load-more-wrap" class="flex-center reveal" style="display: none; margin-top: 4rem;">
+                <button id="load-more-btn" class="btn-cta">
+                    MORE WORKS
+                </button>
+            </div>
         </section>
     </main>
     <site-footer></site-footer>
@@ -100,6 +107,11 @@
                 opacity: 0;
             }
         }
+
+        /* ボタン中央寄せのための微調整 */
+        #load-more-wrap.flex-center {
+            padding-bottom: 4rem;
+        }
     </style>
 
     <script>
@@ -107,6 +119,8 @@
             const grid = document.getElementById('gallery-grid');
             const loader = document.getElementById('gallery-loader');
             const shuffleBtn = document.getElementById('shuffle-btn');
+            const loadMoreWrap = document.getElementById('load-more-wrap');
+            const loadMoreBtn = document.getElementById('load-more-btn');
 
             // --- Baseline (Known image counts for instant render) ---
             const manifest = {
@@ -118,7 +132,7 @@
 
             let allFoundItems = [];
             let currentIndex = 0;
-            const itemsPerPage = 12;
+            const itemsPerPage = 9; // お嬢様御指定の9枚
 
             function shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -149,22 +163,13 @@
                 });
 
                 currentIndex = limit;
-                if (currentIndex < allFoundItems.length) setupIntersectionObserver();
-            }
 
-            function setupIntersectionObserver() {
-                const sentinel = document.createElement('div');
-                sentinel.className = 'load-sentinel';
-                grid.appendChild(sentinel);
-
-                const observer = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        observer.disconnect();
-                        sentinel.remove();
-                        renderNextBatch();
-                    }
-                }, { rootMargin: '400px' });
-                observer.observe(sentinel);
+                // もし全件表示済みならボタンを隠す
+                if (currentIndex >= allFoundItems.length) {
+                    loadMoreWrap.style.display = 'none';
+                } else {
+                    loadMoreWrap.style.display = 'flex';
+                }
             }
 
             async function discoverNewAssets() {
@@ -184,6 +189,10 @@
                         } else break;
                     }
                 }
+                // 背景での探索後、もし続きがあればボタンを表示状態に更新
+                if (currentIndex < allFoundItems.length) {
+                    loadMoreWrap.style.display = 'flex';
+                }
             }
 
             // Initialization
@@ -199,6 +208,11 @@
             renderNextBatch();
 
             discoverNewAssets(); // Search for updates in background
+
+            // Event Listeners
+            loadMoreBtn.addEventListener('click', () => {
+                renderNextBatch();
+            });
 
             shuffleBtn.addEventListener('click', () => {
                 grid.innerHTML = '';
