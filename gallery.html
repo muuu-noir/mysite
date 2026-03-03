@@ -33,16 +33,15 @@
 
             <!-- Category Description -->
             <glass-card id="category-info" reveal>
-                <h3 id="category-title">All Works</h3>
-                <p id="category-text">これまでに制作したすべての作品をご覧いただけます。水彩、鉛筆、デジタル、それぞれの表現の追求をお楽しみください。</p>
+                <h3 id="category-title">Selected Works</h3>
+                <p id="category-text">水彩、鉛筆、デジタル。手法に縛られず、その時々の感性が形作った作品たち。混ざり合う色彩と線のリズムをお楽しみください。</p>
             </glass-card>
 
-            <!-- Filter Buttons -->
-            <div class="filter-wrap reveal">
-                <button class="filter-btn active" data-category="all">ALL</button>
-                <button class="filter-btn" data-category="watercolor">WATERCOLOR</button>
-                <button class="filter-btn" data-category="pencil">PENCIL</button>
-                <button class="filter-btn" data-category="digital">DIGITAL</button>
+            <!-- Shuffle Control -->
+            <div class="shuffle-wrap reveal">
+                <button id="shuffle-btn" class="filter-btn">
+                    <i class="fas fa-random"></i> SHUFFLE
+                </button>
             </div>
 
             <!-- Gallery Grid -->
@@ -56,120 +55,105 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('gallery-grid');
-            const infoTitle = document.getElementById('category-title');
-            const infoText = document.getElementById('category-text');
-            const filterBtns = document.querySelectorAll('.filter-btn');
+            const shuffleBtn = document.getElementById('shuffle-btn');
+            const prefixes = ['watercolor', 'pencil', 'digital', 'work'];
 
-            const categories = {
-                all: {
-                    title: 'All Works',
-                    text: 'これまでに制作したすべての作品をご覧いただけます。水彩、鉛筆、デジタル、それぞれの表現の追求をお楽しみください。'
-                },
-                watercolor: {
-                    title: 'Water color',
-                    text: '透明感のある水彩の調べ。繊細なタッチと柔らかな色使いで、見る人の心に静かな感動を届けられるような作品集です。'
-                },
-                pencil: {
-                    title: 'Pencil drawing',
-                    text: '鉛筆の柔らかな線。日常の中にある一瞬の感情を切り取った、子どもやアンニュイな表情の人々のデッサン集です。'
-                },
-                digital: {
-                    title: 'Digital art',
-                    text: 'ポップでカラフル。iPadを使ったビビッドな色使いと楽しいデザインで、見た人が思わず笑顔になるような作品集です。'
+            // Shuffle algorithm (Fisher-Yates)
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
                 }
-            };
+                return array;
+            }
 
-            const imagePaths = {
-                watercolor: 'img/gallery/watercolor',
-                pencil: 'img/gallery/pencil',
-                digital: 'img/gallery/digital'
-            };
+            // Function to shuffle existing items in the grid
+            function shuffleGallery() {
+                const items = Array.from(document.querySelectorAll('.gallery-item'));
+                if (items.length === 0) return;
 
-            // Smart Loader: Probes folders for images automatically
+                items.forEach(item => {
+                    item.classList.remove('active');
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.95)';
+                });
+
+                setTimeout(() => {
+                    grid.innerHTML = '';
+                    const shuffledItems = shuffle(items);
+                    shuffledItems.forEach(item => {
+                        grid.appendChild(item);
+                        item.style.opacity = '';
+                        item.style.transform = '';
+                        setTimeout(() => {
+                            if (window.revealObserver) {
+                                window.revealObserver.observe(item);
+                            } else {
+                                item.classList.add('active');
+                            }
+                        }, 50);
+                    });
+                }, 400);
+            }
+
+            shuffleBtn.addEventListener('click', () => {
+                shuffleGallery();
+            });
+
+            // Universal Auto-Loader: Probes for images automatically
             async function loadImages() {
+                console.log("[Gallery] Smart Patrol: Discovering assets...");
+                const allItems = [];
                 const loadPromises = [];
 
-                for (const [cat, path] of Object.entries(imagePaths)) {
-                    // Probe images 1 to 30 for each category
-                    for (let i = 1; i <= 30; i++) {
+                for (const prefix of prefixes) {
+                    // Try up to 100 images for each prefix
+                    // If 2 consecutive numbers are missing, we stop for that prefix.
+                    let missingCount = 0;
+                    for (let i = 1; i <= 100; i++) {
+                        if (missingCount >= 2) break;
+
                         const p = new Promise(resolve => {
                             const img = new Image();
-                            const src = `${path}/${i}.jpg`;
+                            const src = `img/gallery/${prefix}_${i}.jpg`;
                             img.onload = () => {
                                 const item = document.createElement('div');
                                 item.className = 'gallery-item reveal';
-                                item.dataset.category = cat;
-                                item.innerHTML = `<img src="${src}" alt="${cat} image" loading="lazy">`;
-                                resolve(item);
+                                item.dataset.category = prefix;
+                                item.innerHTML = `<img src="${src}" alt="${prefix} image" loading="lazy">`;
+                                resolve({ item, success: true });
                             };
-                            img.onerror = () => resolve(null);
+                            img.onerror = () => {
+                                resolve({ success: false });
+                            };
                             img.src = src;
                         });
-                        loadPromises.push(p);
+
+                        const result = await p;
+                        if (result.success) {
+                            allItems.push(result.item);
+                            missingCount = 0; // Reset missing counter
+                        } else {
+                            missingCount++;
+                        }
                     }
                 }
 
-                const results = await Promise.all(loadPromises);
+                console.log(`[Gallery] Smart Patrol result: Found ${allItems.length} works.`);
 
-                // Sort results to keep categories together if needed, 
-                // or just append as they were found
-                results.forEach(item => {
-                    if (item) {
-                        grid.appendChild(item);
-                        // Connect to global reveal observer if available
+                const shuffledResults = shuffle(allItems);
+
+                shuffledResults.forEach((item, index) => {
+                    grid.appendChild(item);
+                    setTimeout(() => {
                         if (window.revealObserver) {
                             window.revealObserver.observe(item);
+                        } else {
+                            item.classList.add('active');
                         }
-                    }
+                    }, index * 20);
                 });
             }
-
-            // Filtering with smooth transitions
-            function filterGallery(category) {
-                const items = document.querySelectorAll('.gallery-item');
-                const infoCard = document.getElementById('category-info');
-
-                // Update text with fade effect
-                infoCard.style.opacity = '0';
-                infoCard.style.transform = 'translateY(10px)';
-
-                setTimeout(() => {
-                    infoTitle.textContent = categories[category].title;
-                    infoText.textContent = categories[category].text;
-                    infoCard.style.opacity = '1';
-                    infoCard.style.transform = 'translateY(0)';
-                }, 300);
-
-                items.forEach(item => {
-                    if (category === 'all' || item.dataset.category === category) {
-                        item.style.display = 'block';
-                        setTimeout(() => {
-                            item.classList.remove('hidden');
-                            item.style.transform = 'scale(1)';
-                            item.style.opacity = '1';
-                        }, 10);
-                    } else {
-                        item.classList.add('hidden');
-                        item.style.transform = 'scale(0.9)';
-                        item.style.opacity = '0';
-                        setTimeout(() => {
-                            if (item.classList.contains('hidden')) {
-                                item.style.display = 'none';
-                            }
-                        }, 500);
-                    }
-                });
-            }
-
-            // Initialization
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (btn.classList.contains('active')) return;
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    filterGallery(btn.dataset.category);
-                });
-            });
 
             loadImages();
         });
