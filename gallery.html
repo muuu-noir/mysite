@@ -100,20 +100,16 @@
                 shuffleGallery();
             });
 
-            // Universal Auto-Loader: Probes for images automatically
+            // Universal Auto-Loader: Probes for images efficiently in parallel
             async function loadImages() {
-                console.log("[Gallery] Smart Patrol: Discovering assets...");
+                console.log("[Gallery] Initializing smart parallel loading...");
                 const allItems = [];
-                const loadPromises = [];
+                const batchSize = 40; // 一気に確認する枚数
 
-                for (const prefix of prefixes) {
-                    // Try up to 100 images for each prefix
-                    // If 2 consecutive numbers are missing, we stop for that prefix.
-                    let missingCount = 0;
-                    for (let i = 1; i <= 100; i++) {
-                        if (missingCount >= 2) break;
-
-                        const p = new Promise(resolve => {
+                const probePrefix = async (prefix) => {
+                    const promises = [];
+                    for (let i = 1; i <= batchSize; i++) {
+                        promises.push(new Promise(resolve => {
                             const img = new Image();
                             const src = `img/gallery/${prefix}_${i}.jpg`;
                             img.onload = () => {
@@ -121,37 +117,46 @@
                                 item.className = 'gallery-item reveal';
                                 item.dataset.category = prefix;
                                 item.innerHTML = `<img src="${src}" alt="${prefix} image" loading="lazy">`;
-                                resolve({ item, success: true });
+                                resolve(item);
                             };
-                            img.onerror = () => {
-                                resolve({ success: false });
-                            };
+                            img.onerror = () => resolve(null);
                             img.src = src;
-                        });
-
-                        const result = await p;
-                        if (result.success) {
-                            allItems.push(result.item);
-                            missingCount = 0; // Reset missing counter
-                        } else {
-                            missingCount++;
-                        }
+                        }));
                     }
+                    const results = await Promise.all(promises);
+                    return results.filter(item => item !== null);
+                };
+
+                const prefixResults = await Promise.all(prefixes.map(p => probePrefix(p)));
+                prefixResults.forEach(items => allItems.push(...items));
+
+                console.log(`[Gallery] Discovery complete. Found ${allItems.length} works.`);
+
+                if (allItems.length === 0) {
+                    console.warn("[Gallery] No images found. Please check img/gallery/ folder.");
+                    grid.innerHTML = '<p class="flex-center" style="grid-column: 1/-1; padding: 4rem; opacity: 0.5;">No works found in gallery.</p>';
+                    return;
                 }
 
-                console.log(`[Gallery] Smart Patrol result: Found ${allItems.length} works.`);
-
                 const shuffledResults = shuffle(allItems);
+                grid.innerHTML = ''; // クリア
 
                 shuffledResults.forEach((item, index) => {
                     grid.appendChild(item);
+
+                    // Staggered Reveal
                     setTimeout(() => {
                         if (window.revealObserver) {
                             window.revealObserver.observe(item);
                         } else {
                             item.classList.add('active');
                         }
-                    }, index * 20);
+
+                        // Safety fallback: Force show after a while even if observer misses it
+                        setTimeout(() => {
+                            item.classList.add('active');
+                        }, 2000);
+                    }, index * 15);
                 });
             }
 
