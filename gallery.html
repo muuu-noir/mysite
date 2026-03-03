@@ -96,15 +96,15 @@
                 }, 400);
             }
 
-            shuffleBtn.addEventListener('click', () => {
-                shuffleGallery();
-            });
+            let allFoundItems = []; // 発見された全アイテムを保持
+            let currentIndex = 0;   // 現在表示されているインデックス
+            const itemsPerPage = 12; // 一度に表示する枚数
 
-            // Universal Auto-Loader: Probes for images efficiently in parallel
-            async function loadImages() {
-                console.log("[Gallery] Initializing smart parallel loading...");
-                const allItems = [];
-                const batchSize = 40; // 一気に確認する枚数
+            // Universal Auto-Loader: Efficient Asset Discovery
+            async function discoverAssets() {
+                console.log("[Gallery] Initializing discovery patrol...");
+                const prefixes = ['watercolor', 'pencil', 'digital', 'work'];
+                const batchSize = 35; // 少し控えめに
 
                 const probePrefix = async (prefix) => {
                     const promises = [];
@@ -115,7 +115,6 @@
                             img.onload = () => {
                                 const item = document.createElement('div');
                                 item.className = 'gallery-item reveal';
-                                item.dataset.category = prefix;
                                 item.innerHTML = `<img src="${src}" alt="${prefix} image" loading="lazy">`;
                                 resolve(item);
                             };
@@ -123,44 +122,69 @@
                             img.src = src;
                         }));
                     }
-                    const results = await Promise.all(promises);
-                    return results.filter(item => item !== null);
+                    return (await Promise.all(promises)).filter(n => n !== null);
                 };
 
-                const prefixResults = await Promise.all(prefixes.map(p => probePrefix(p)));
-                prefixResults.forEach(items => allItems.push(...items));
+                const results = await Promise.all(prefixes.map(p => probePrefix(p)));
+                allFoundItems = shuffle(results.flat());
 
-                console.log(`[Gallery] Discovery complete. Found ${allItems.length} works.`);
+                console.log(`[Gallery] Discovery complete. Found ${allFoundItems.length} works.`);
 
-                if (allItems.length === 0) {
-                    console.warn("[Gallery] No images found. Please check img/gallery/ folder.");
-                    grid.innerHTML = '<p class="flex-center" style="grid-column: 1/-1; padding: 4rem; opacity: 0.5;">No works found in gallery.</p>';
-                    return;
+                if (allFoundItems.length === 0) {
+                    grid.innerHTML = '<p class="flex-center" style="grid-column: 1/-1; padding: 4rem; opacity: 0.5;">No works found.</p>';
+                } else {
+                    renderNextBatch(); // 最初のバッチを表示
                 }
-
-                const shuffledResults = shuffle(allItems);
-                grid.innerHTML = ''; // クリア
-
-                shuffledResults.forEach((item, index) => {
-                    grid.appendChild(item);
-
-                    // Staggered Reveal
-                    setTimeout(() => {
-                        if (window.revealObserver) {
-                            window.revealObserver.observe(item);
-                        } else {
-                            item.classList.add('active');
-                        }
-
-                        // Safety fallback: Force show after a while even if observer misses it
-                        setTimeout(() => {
-                            item.classList.add('active');
-                        }, 2000);
-                    }, index * 15);
-                });
             }
 
-            loadImages();
+            // Function to render the next set of images
+            function renderNextBatch() {
+                const limit = Math.min(currentIndex + itemsPerPage, allFoundItems.length);
+                const batch = allFoundItems.slice(currentIndex, limit);
+
+                batch.forEach((item, i) => {
+                    grid.appendChild(item);
+                    setTimeout(() => {
+                        if (window.revealObserver) window.revealObserver.observe(item);
+                        else item.classList.add('active');
+                    }, i * 30);
+                });
+
+                currentIndex = limit;
+
+                // 次のバッチの準備（スクロール検知用の監視）
+                if (currentIndex < allFoundItems.length) {
+                    setupIntersectionObserver();
+                }
+            }
+
+            // Infinite scroll trigger
+            function setupIntersectionObserver() {
+                const sentinel = document.createElement('div');
+                sentinel.className = 'load-sentinel';
+                sentinel.style.height = '10px';
+                grid.appendChild(sentinel);
+
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        observer.disconnect();
+                        sentinel.remove();
+                        renderNextBatch();
+                    }
+                }, { rootMargin: '400px' }); // 400px手前で読み込み開始
+
+                observer.observe(sentinel);
+            }
+
+            // Initial Load
+            discoverAssets();
+
+            shuffleBtn.addEventListener('click', () => {
+                grid.innerHTML = '';
+                currentIndex = 0;
+                allFoundItems = shuffle(allFoundItems);
+                renderNextBatch();
+            });
         });
     </script>
 </body>
