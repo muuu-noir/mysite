@@ -929,33 +929,352 @@ body.menu-open {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-    margin-bottom: 6rem; /* 作品グリッドとの間に大きなゆとりを */
+    margin-bottom: 6rem;
+    /* 作品グリッドとの間に大きなゆとりを */
 }
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 2rem;
+    margin-top: 4rem;
 }
 
 .gallery-item {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.gallery-item img {
-    width: 100%;
-    display: block;
-    aspect-ratio: 1 / 1;
+.gallery-item:hover {
+    transform: translateY(-8px);
+}
+
+/* Instagram Style Header */
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 0.8rem;
+}
+
+.post-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.8s ease;
+    border: 1.5px solid var(--color-indigo);
+    padding: 1px;
 }
 
-.gallery-item:hover img {
+.post-username {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-text-main);
+}
+
+.post-image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.post-image-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+.post-image-wrap img {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    scroll-snap-align: start;
+    transition: transform 0.8s ease;
+    cursor: zoom-in;
+}
+
+/* Carousel Indicators (Dots) */
+.carousel-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dot.active {
+    background: #fff;
+    transform: scale(1.3);
+}
+
+/* Multi-post hint */
+.post-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 10px;
+    z-index: 5;
+    pointer-events: none;
+    font-family: 'Outfit', sans-serif;
+}
+
+.gallery-item:hover .post-image-wrap img {
     transform: scale(1.08);
+}
+
+/* Instagram Style Actions */
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 1rem;
+    font-size: 1.25rem;
+    color: var(--color-text-main);
+}
+
+.post-actions-left {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.post-actions i {
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.post-actions i:hover {
+    transform: scale(1.15);
+}
+
+.post-actions i.active {
+    animation: heartBeat 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.post-actions i.fa-heart.active {
+    color: #ED4956;
+    font-weight: 900;
+}
+
+.post-actions i.fa-bookmark.active {
+    color: var(--color-indigo);
+    font-weight: 900;
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.3);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    75% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Big Center Heart Animation */
+.big-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 5rem;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.big-heart.active {
+    animation: bigHeartShow 1s ease-out forwards;
+}
+
+@keyframes bigHeartShow {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    15% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.9;
+    }
+
+    30% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.9;
+    }
+
+    80% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Toast Message */
+#gallery-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--color-indigo);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.1em;
+    z-index: 2000;
+    transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+/* Particle System (Heart Shower) */
+.particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 3000;
+    font-size: 1.5rem;
+    user-select: none;
+    animation: particleFall linear forwards;
+}
+
+@keyframes particleFall {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(-20px) rotate(45deg) scale(1.2);
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* Feedback Bubble (Butler's Message) */
+.feedback-bubble {
+    position: fixed;
+    bottom: 6rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 1rem 1.5rem;
+    border-radius: 20px 20px 0 20px;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
+    transform: translateY(30px);
+    opacity: 0;
+    transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 2500;
+}
+
+.feedback-bubble.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.feedback-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-indigo);
+    background: #fff;
+}
+
+.feedback-text {
+    font-size: 0.85rem;
+    color: var(--color-text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4;
+}
+
+.feedback-text b {
+    display: block;
+    color: var(--color-indigo);
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+}
+
+/* Like visual refinement */
+.post-actions i.fa-heart:hover {
+    color: #ED4956;
+}
+
+/* Instagram Style Caption */
+.post-caption {
+    padding: 0 1rem 1.5rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--color-text-main);
+}
+
+.username-bold {
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 850px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        /* スマホではさすがに1枚ずつの方が「フィード」感が出る */
+        gap: 2.5rem;
+    }
 }
 
 /* Filtering animation */
@@ -993,18 +1312,6 @@ body.menu-open {
 .lightbox-close:hover {
     opacity: 1;
     transform: rotate(90deg);
-}
-
-#gallery-grid img,
-.gallery-grid img {
-    cursor: zoom-in;
-    transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-#gallery-grid img:hover,
-.gallery-grid img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* --- Lightbox (Premium Image Viewer) --- */
