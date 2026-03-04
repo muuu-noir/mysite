@@ -342,15 +342,32 @@
                 }
             }
 
-            // --- Baseline ---
-            const manifest = {
-                pencil: 12,
-                watercolor: 0,
-                digital: 0,
-                work: 0
-            };
+            // --- Known Assets (Instant Load) ---
+            const initialPosts = [
+                // Digital (Archive)
+                ...Array.from({ length: 33 }, (_, i) => ({ prefix: 'digital', paths: [`img/Archive/digital_${i + 1}.jpg`] })),
+                // Watercolor (Archive)
+                ...Array.from({ length: 11 }, (_, i) => ({ prefix: 'watercolor', paths: [`img/Archive/watercolor_${i + 1}.jpg`] })),
+                // Pencil (Archive)
+                ...Array.from({ length: 6 }, (_, i) => ({ prefix: 'pencil', paths: [`img/Archive/pencil_${i + 1}.jpg`] })),
+                // New Pencil (Gallery - Multi-posts)
+                { prefix: 'pencil', paths: ['img/gallery/pencil_1_1.PNG', 'img/gallery/pencil_1_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_2_1.PNG', 'img/gallery/pencil_2_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_3_1.PNG', 'img/gallery/pencil_3_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_4_1.PNG', 'img/gallery/pencil_4_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_5_1.PNG', 'img/gallery/pencil_5_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_7_1.PNG', 'img/gallery/pencil_7_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_8_1.PNG', 'img/gallery/pencil_8_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_12_1.webp', 'img/gallery/pencil_12_2.JPG'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'] },
+                { prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'] }
+            ];
 
-            const supportedExts = ['jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG'];
+            const supportedExts = ['webp', 'jpg', 'png', 'jpeg', 'JPG', 'PNG'];
 
             async function checkImg(src) {
                 return new Promise(r => {
@@ -369,67 +386,47 @@
                 return null;
             }
 
-            async function discoverAssets() {
-                loader.style.display = 'flex';
-                grid.innerHTML = '';
-                allFoundItems = [];
-                currentIndex = 0;
+            // 初期表示
+            function initGallery() {
+                allFoundItems = initialPosts.map(p => createItem(p.prefix, p.paths));
+                allFoundItems = shuffle(allFoundItems);
+                loader.style.display = 'none';
+                grid.style.display = 'grid';
+                renderNextBatch();
+            }
 
-                const prefixes = Object.keys(manifest);
-                let initialBatchCount = 0;
-
+            // 新規追加分の背景探索（範囲を絞って軽量化）
+            async function backgroundDiscovery() {
+                const prefixes = ['pencil', 'watercolor', 'digital', 'work'];
                 for (const prefix of prefixes) {
-                    for (let i = 1; i <= 50; i++) {
-                        let item = null;
+                    // 現在のセットより先の番号だけをわずかに探索
+                    let startId = 15; // とりあえず15番以降をチェック
+                    if (prefix === 'digital') startId = 34;
+                    if (prefix === 'watercolor') startId = 12;
+
+                    for (let i = startId; i < startId + 3; i++) {
                         const multi1 = await findImage(`img/gallery/${prefix}_${i}_1`);
                         if (multi1) {
                             const paths = [multi1];
-                            for (let j = 2; j <= 10; j++) {
-                                const multiNext = await findImage(`img/gallery/${prefix}_${i}_${j}`);
-                                if (multiNext) paths.push(multiNext); else break;
+                            for (let j = 2; j <= 5; j++) {
+                                const m = await findImage(`img/gallery/${prefix}_${i}_${j}`);
+                                if (m) paths.push(m); else break;
                             }
-                            item = createItem(prefix, paths);
+                            allFoundItems.push(createItem(prefix, paths));
                         } else {
-                            const single = await findImage(`img/gallery/${prefix}_${i}`);
-                            if (single) item = createItem(prefix, [single]);
+                            const s = await findImage(`img/gallery/${prefix}_${i}`);
+                            if (s) allFoundItems.push(createItem(prefix, [s]));
                         }
-
-                        if (item) {
-                            allFoundItems.push(item);
-                            initialBatchCount++;
-                            // 最初の4件が見つかったら、一旦表示して待ち時間を減らす
-                            if (initialBatchCount === 4 && currentIndex === 0) {
-                                allFoundItems = shuffle(allFoundItems);
-                                loader.style.display = 'none';
-                                grid.style.display = 'grid';
-                                renderNextBatch();
-                            }
-                        } else if (i > manifest[prefix]) break;
                     }
                 }
-
-                // 4件に満たなかった場合や、全探索が終わった後の処理
-                if (initialBatchCount < 4 && allFoundItems.length > 0 && currentIndex === 0) {
-                    allFoundItems = shuffle(allFoundItems);
-                    loader.style.display = 'none';
-                    grid.style.display = 'grid';
-                    renderNextBatch();
-                } else if (allFoundItems.length > currentIndex) {
-                    // 全件見つかった後に「もっと見る」ボタンの表示状態を更新
-                    if (currentIndex < allFoundItems.length) loadMoreWrap.style.display = 'flex';
-                }
-
-                if (allFoundItems.length === 0) loader.style.display = 'none';
+                if (currentIndex < allFoundItems.length) loadMoreWrap.style.display = 'flex';
             }
 
-            // Start discovery
-            discoverAssets();
+            initGallery();
+            backgroundDiscovery();
 
             // Event Listeners
-            loadMoreBtn.addEventListener('click', () => {
-                renderNextBatch();
-            });
-
+            loadMoreBtn.addEventListener('click', renderNextBatch);
             shuffleBtn.addEventListener('click', () => {
                 grid.innerHTML = '';
                 currentIndex = 0;
