@@ -1005,7 +1005,6 @@ body.menu-open {
     object-fit: cover;
     scroll-snap-align: start;
     transition: transform 0.8s ease;
-    cursor: zoom-in;
 }
 
 /* Carousel Indicators (Dots) */
@@ -1047,10 +1046,6 @@ body.menu-open {
     z-index: 5;
     pointer-events: none;
     font-family: 'Outfit', sans-serif;
-}
-
-.gallery-item:hover .post-image-wrap img {
-    transform: scale(1.08);
 }
 
 /* Instagram Style Actions */
