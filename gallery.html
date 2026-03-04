@@ -124,7 +124,7 @@
 
             let allFoundItems = [];
             let currentIndex = 0;
-            const itemsPerPage = 10;
+            const itemsPerPage = 4; // 最初は4件だけ表示して軽量化
 
             function shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -376,11 +376,11 @@
                 currentIndex = 0;
 
                 const prefixes = Object.keys(manifest);
+                let initialBatchCount = 0;
 
                 for (const prefix of prefixes) {
-                    // 1枚目から順に探索（1〜50くらいまで）
                     for (let i = 1; i <= 50; i++) {
-                        // A. まず複数枚ポストをチェック (prefix_i_1.ext)
+                        let item = null;
                         const multi1 = await findImage(`img/gallery/${prefix}_${i}_1`);
                         if (multi1) {
                             const paths = [multi1];
@@ -388,25 +388,38 @@
                                 const multiNext = await findImage(`img/gallery/${prefix}_${i}_${j}`);
                                 if (multiNext) paths.push(multiNext); else break;
                             }
-                            allFoundItems.push(createItem(prefix, paths));
-                            continue;
+                            item = createItem(prefix, paths);
+                        } else {
+                            const single = await findImage(`img/gallery/${prefix}_${i}`);
+                            if (single) item = createItem(prefix, [single]);
                         }
 
-                        // B. 次に単体ポストをチェック (prefix_i.ext)
-                        const single = await findImage(`img/gallery/${prefix}_${i}`);
-                        if (single) {
-                            allFoundItems.push(createItem(prefix, [single]));
-                        } else if (i > manifest[prefix]) {
-                            // マニフェストを超えても見つからなければ、そのカテゴリーの探索終了
-                            break;
-                        }
+                        if (item) {
+                            allFoundItems.push(item);
+                            initialBatchCount++;
+                            // 最初の4件が見つかったら、一旦表示して待ち時間を減らす
+                            if (initialBatchCount === 4 && currentIndex === 0) {
+                                allFoundItems = shuffle(allFoundItems);
+                                loader.style.display = 'none';
+                                grid.style.display = 'grid';
+                                renderNextBatch();
+                            }
+                        } else if (i > manifest[prefix]) break;
                     }
                 }
 
-                allFoundItems = shuffle(allFoundItems);
-                loader.style.display = 'none';
-                grid.style.display = 'grid';
-                renderNextBatch();
+                // 4件に満たなかった場合や、全探索が終わった後の処理
+                if (initialBatchCount < 4 && allFoundItems.length > 0 && currentIndex === 0) {
+                    allFoundItems = shuffle(allFoundItems);
+                    loader.style.display = 'none';
+                    grid.style.display = 'grid';
+                    renderNextBatch();
+                } else if (allFoundItems.length > currentIndex) {
+                    // 全件見つかった後に「もっと見る」ボタンの表示状態を更新
+                    if (currentIndex < allFoundItems.length) loadMoreWrap.style.display = 'flex';
+                }
+
+                if (allFoundItems.length === 0) loader.style.display = 'none';
             }
 
             // Start discovery
