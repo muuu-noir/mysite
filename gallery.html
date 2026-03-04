@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/config.js"></script>
+    <script src="js/config_v2.js"></script>
     <script src="js/components.js" defer></script>
     <script src="js/main.js" defer></script>
 </head>
@@ -121,14 +121,6 @@
             const shuffleBtn = document.getElementById('shuffle-btn');
             const loadMoreWrap = document.getElementById('load-more-wrap');
             const loadMoreBtn = document.getElementById('load-more-btn');
-
-            // --- Baseline (Known image counts for instant render) ---
-            const manifest = {
-                watercolor: 11,
-                pencil: 6,
-                digital: 33,
-                work: 0
-            };
 
             let allFoundItems = [];
             let currentIndex = 0;
@@ -350,60 +342,75 @@
                 }
             }
 
-            // --- Intelligent Asset Discovery ---
-            // Checks for: prefix_N.jpg (Single) OR prefix_N_1.jpg, _2.jpg... (Multi)
-            async function discoverNewAssets() {
-                const checkImg = (src) => new Promise(r => {
+            // --- Baseline ---
+            const manifest = {
+                pencil: 12,
+                watercolor: 0,
+                digital: 0,
+                work: 0
+            };
+
+            const supportedExts = ['jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG'];
+
+            async function checkImg(src) {
+                return new Promise(r => {
                     const img = new Image();
                     img.onload = () => r(true);
                     img.onerror = () => r(false);
                     img.src = src;
                 });
+            }
+
+            async function findImage(basePath) {
+                for (const ext of supportedExts) {
+                    const src = `${basePath}.${ext}`;
+                    if (await checkImg(src)) return src;
+                }
+                return null;
+            }
+
+            async function discoverAssets() {
+                loader.style.display = 'flex';
+                grid.innerHTML = '';
+                allFoundItems = [];
+                currentIndex = 0;
 
                 const prefixes = Object.keys(manifest);
-                for (const prefix of prefixes) {
-                    let nextId = manifest[prefix] + 1;
 
-                    for (let i = nextId; i < nextId + 5; i++) {
-                        // 1. Try Multi-format first (e.g., prefix_N_1.jpg)
-                        const multi1 = `img/gallery/${prefix}_${i}_1.jpg`;
-                        if (await checkImg(multi1)) {
+                for (const prefix of prefixes) {
+                    // 1枚目から順に探索（1〜50くらいまで）
+                    for (let i = 1; i <= 50; i++) {
+                        // A. まず複数枚ポストをチェック (prefix_i_1.ext)
+                        const multi1 = await findImage(`img/gallery/${prefix}_${i}_1`);
+                        if (multi1) {
                             const paths = [multi1];
-                            // Search for subsequent images in the same post
                             for (let j = 2; j <= 10; j++) {
-                                const multiNext = `img/gallery/${prefix}_${i}_${j}.jpg`;
-                                if (await checkImg(multiNext)) paths.push(multiNext); else break;
+                                const multiNext = await findImage(`img/gallery/${prefix}_${i}_${j}`);
+                                if (multiNext) paths.push(multiNext); else break;
                             }
                             allFoundItems.push(createItem(prefix, paths));
-                            console.log(`[Gallery] Multi-post discovered: ${prefix}_${i} (${paths.length} images)`);
                             continue;
                         }
 
-                        // 2. Try Single-format (e.g., prefix_N.jpg)
-                        const single = `img/gallery/${prefix}_${i}.jpg`;
-                        if (await checkImg(single)) {
+                        // B. 次に単体ポストをチェック (prefix_i.ext)
+                        const single = await findImage(`img/gallery/${prefix}_${i}`);
+                        if (single) {
                             allFoundItems.push(createItem(prefix, [single]));
-                            console.log(`[Gallery] Single-post discovered: ${prefix}_${i}`);
-                        } else break;
+                        } else if (i > manifest[prefix]) {
+                            // マニフェストを超えても見つからなければ、そのカテゴリーの探索終了
+                            break;
+                        }
                     }
                 }
-                if (currentIndex < allFoundItems.length) loadMoreWrap.style.display = 'flex';
+
+                allFoundItems = shuffle(allFoundItems);
+                loader.style.display = 'none';
+                grid.style.display = 'grid';
+                renderNextBatch();
             }
 
-            // Initialization: Existing 1-image posts
-            Object.entries(manifest).forEach(([prefix, count]) => {
-                for (let i = 1; i <= count; i++) {
-                    const src = `img/gallery/${prefix}_${i}.jpg`;
-                    allFoundItems.push(createItem(prefix, [src]));
-                }
-            });
-
-            allFoundItems = shuffle(allFoundItems);
-            loader.style.display = 'none';
-            grid.style.display = 'grid';
-            renderNextBatch();
-
-            discoverNewAssets(); // Search for updates in background
+            // Start discovery
+            discoverAssets();
 
             // Event Listeners
             loadMoreBtn.addEventListener('click', () => {
