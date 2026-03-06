@@ -92,6 +92,26 @@
 }
 
 
+/* --- Skip Link (Accessibility) --- */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--grad-main);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.85rem;
+    z-index: 10001;
+    text-decoration: none;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
 /* --- Base Reset --- */
 * {
     box-sizing: border-box;

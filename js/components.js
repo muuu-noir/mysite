@@ -5,6 +5,7 @@
 class SiteHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
+      <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
       <header id="main-header">
         <div class="container header-container">
           <a href="index.html" class="logo">396 FOLIO</a>

@@ -15,6 +15,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <title>CONTACT | 396 FOLIO</title>
+    <meta name="description" content="手塚桃子へのお問い合わせ。お仕事のご依頼やご質問はこちらからお気軽にどうぞ。">
+    <meta property="og:title" content="CONTACT | 396 FOLIO">
+    <meta property="og:description" content="手塚桃子へのお問い合わせフォーム。">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
     <link rel="icon" href="img/profile/profile_avatar.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -22,13 +27,12 @@
     <script src="js/config_v2.js"></script>
     <script src="js/components.js" defer></script>
     <script src="js/main.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 </head>
 
 
 <body>
     <site-header></site-header>
-    <main>
+    <main id="main-content">
         <section class="container">
             <section-title title="CONTACT" center reveal></section-title>
             <div style="text-align: center; margin-bottom: 2rem;">
@@ -123,15 +127,13 @@
         });
 
         function postToGoogle() {
-            const form = $('#contact-form');
-            $.ajax({
-                url: form.attr('action'),
-                data: form.serialize(),
-                type: "POST",
-                dataType: "xml",
-                complete: function () {
-                    window.location.href = "success.html";
-                }
+            const form = document.getElementById('contact-form');
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                mode: 'no-cors'
+            }).finally(() => {
+                window.location.href = 'success.html';
             });
         }
     </script>
