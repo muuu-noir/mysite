@@ -21,8 +21,8 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
     <link rel="icon" href="img/profile/profile_avatar.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/config_v2.js"></script>
     <script src="js/components.js" defer></script>
@@ -97,11 +97,32 @@
                                 transform: translateY(-2px);
                                 box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
                             }
+
+                            .form-label {
+                                display: block;
+                                font-family: 'Outfit', sans-serif;
+                                font-size: 0.75rem;
+                                letter-spacing: 0.15em;
+                                color: var(--color-text-sub);
+                                margin-bottom: 0.5rem;
+                            }
                         </style>
-                        <input required class="form-input" type="text" name="entry.1564263618" placeholder="NAME*">
-                        <input required class="form-input" type="email" name="entry.292870337" placeholder="EMAIL*">
-                        <input required class="form-input" type="text" name="entry.1735355409" placeholder="SUBJECT*">
-                        <textarea class="form-input" name="entry.1370003883" rows="5" placeholder="MESSAGE"></textarea>
+                        <div>
+                            <label for="field-name" class="form-label">NAME *</label>
+                            <input required class="form-input" type="text" id="field-name" name="entry.1564263618" placeholder="お名前">
+                        </div>
+                        <div>
+                            <label for="field-email" class="form-label">EMAIL *</label>
+                            <input required class="form-input" type="email" id="field-email" name="entry.292870337" placeholder="メールアドレス">
+                        </div>
+                        <div>
+                            <label for="field-subject" class="form-label">SUBJECT *</label>
+                            <input required class="form-input" type="text" id="field-subject" name="entry.1735355409" placeholder="件名">
+                        </div>
+                        <div>
+                            <label for="field-message" class="form-label">MESSAGE</label>
+                            <textarea class="form-input" id="field-message" name="entry.1370003883" rows="5" placeholder="メッセージ"></textarea>
+                        </div>
 
                         <button type="button" id="submit-btn" class="btn-submit" onclick="postToGoogle()">Send
                             Message!</button>
