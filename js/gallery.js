@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Particle System (Heart Shower) ---
     function sparkHearts() {
         const colors = ['#ED4956', '#FF6B6B', '#FF8787', '#FFA8A8'];
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 12; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
             p.innerHTML = '<i class="fa-solid fa-heart"></i>';
@@ -63,19 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackTimeout = setTimeout(() => bubble.classList.remove('active'), 4000);
     }
 
-    // --- Toast Utility ---
-    function showToast(message) {
-        let toast = document.getElementById('gallery-toast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'gallery-toast';
-            document.body.appendChild(toast);
-        }
-        toast.textContent = message;
-        toast.classList.add('active');
-        setTimeout(() => toast.classList.remove('active'), 2500);
-    }
-
     // --- Analytics Tracker ---
     function trackGalleryEvent(action, itemLabel) {
         if (typeof gtag === 'function') {
@@ -86,13 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Flexible Item Creator ---
+    // --- Flexible Item Creator (lazy image loading) ---
     function createItem(prefix, imagePaths) {
         const item = document.createElement('div');
         item.className = 'gallery-item reveal';
 
         const itemId = imagePaths.map(p => p.split('/').pop().split('.')[0]).join('_');
-        const imagesHtml = imagePaths.map(src => `<img src="${src}" alt="${prefix} image" loading="lazy">`).join('');
+        const imagesHtml = imagePaths.map(src => `<img data-src="${src}" alt="${prefix} artwork" loading="lazy">`).join('');
         const hasMultiple = imagePaths.length > 1;
 
         item.innerHTML = `
@@ -125,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Double Tap to Like
         let lastTap = 0;
-        wrap.addEventListener('click', (e) => {
+        wrap.addEventListener('click', () => {
             const now = Date.now();
             const timesince = now - lastTap;
             if (timesince < 300 && timesince > 0) {
@@ -150,9 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Long Press Secret
         let pressTimer;
-        wrap.addEventListener('mousedown', () => { pressTimer = window.setTimeout(() => showButlerMessage("秘蔵のデッサンも、いつか公開されるかもしれません..."), 1200); });
+        wrap.addEventListener('mousedown', () => { pressTimer = setTimeout(() => showButlerMessage("秘蔵のデッサンも、いつか公開されるかもしれません..."), 1200); });
         wrap.addEventListener('mouseup', () => { clearTimeout(pressTimer); });
-        wrap.addEventListener('touchstart', () => { pressTimer = window.setTimeout(() => showButlerMessage("この作品には特別な想いが込められているようです。"), 1200); });
+        wrap.addEventListener('touchstart', () => { pressTimer = setTimeout(() => showButlerMessage("この作品には特別な想いが込められているようです。"), 1200); }, { passive: true });
         wrap.addEventListener('touchend', () => { clearTimeout(pressTimer); });
 
         // Button Actions
@@ -175,8 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         item.querySelector('.action-share').addEventListener('click', () => {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
                 showButlerMessage("この作品を、ぜひ多くの方へ。リンクをコピーしました。");
                 trackGalleryEvent('share', itemId);
             });
@@ -206,12 +192,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return item;
     }
 
+    // --- Lazy image loader via IntersectionObserver ---
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                }
+                imageObserver.unobserve(img);
+            }
+        });
+    }, { rootMargin: '200px' });
+
     function renderNextBatch() {
         const limit = Math.min(currentIndex + itemsPerPage, allFoundItems.length);
         const batch = allFoundItems.slice(currentIndex, limit);
 
         batch.forEach((item, i) => {
             grid.appendChild(item);
+            // Observe lazy images
+            item.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
             setTimeout(() => {
                 if (window.revealObserver) window.revealObserver.observe(item);
                 else item.classList.add('active');
@@ -219,23 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         currentIndex = limit;
-        if (currentIndex >= allFoundItems.length) {
-            loadMoreWrap.style.display = 'none';
-        } else {
-            loadMoreWrap.style.display = 'flex';
-        }
+        loadMoreWrap.style.display = currentIndex >= allFoundItems.length ? 'none' : 'flex';
     }
 
-    // --- Known Assets (Instant Load) ---
+    // --- Gallery Data (optimized paths) ---
     const initialPosts = [
-        { prefix: 'pencil', paths: ['img/gallery/pencil_1_1.PNG', 'img/gallery/pencil_1_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_2_1.PNG', 'img/gallery/pencil_2_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_3_1.PNG', 'img/gallery/pencil_3_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_4_1.PNG', 'img/gallery/pencil_4_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_5_1.PNG', 'img/gallery/pencil_5_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_1_1.jpg', 'img/gallery/pencil_1_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_2_1.jpg', 'img/gallery/pencil_2_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_3_1.jpg', 'img/gallery/pencil_3_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_4_1.jpg', 'img/gallery/pencil_4_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_5_1.jpg', 'img/gallery/pencil_5_2.JPG'] },
         { prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_7_1.PNG', 'img/gallery/pencil_7_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_8_1.PNG', 'img/gallery/pencil_8_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_7_1.jpg', 'img/gallery/pencil_7_2.JPG'] },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_8_1.jpg', 'img/gallery/pencil_8_2.JPG'] },
         { prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'] },
         { prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'] },
         { prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'] },
@@ -243,25 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'] },
         { prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'] }
     ];
-
-    const supportedExts = ['webp', 'jpg', 'png', 'jpeg', 'JPG', 'PNG'];
-
-    async function checkImg(src) {
-        return new Promise(r => {
-            const img = new Image();
-            img.onload = () => r(true);
-            img.onerror = () => r(false);
-            img.src = src;
-        });
-    }
-
-    async function findImage(basePath) {
-        for (const ext of supportedExts) {
-            const src = `${basePath}.${ext}`;
-            if (await checkImg(src)) return src;
-        }
-        return null;
-    }
 
     function initGallery() {
         allFoundItems = initialPosts.map(p => createItem(p.prefix, p.paths));
@@ -271,33 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderNextBatch();
     }
 
-    async function backgroundDiscovery() {
-        const prefixes = ['pencil', 'watercolor', 'digital', 'work'];
-        for (const prefix of prefixes) {
-            let startId = 15;
-            if (prefix === 'digital') startId = 34;
-            if (prefix === 'watercolor') startId = 12;
-
-            for (let i = startId; i < startId + 3; i++) {
-                const multi1 = await findImage(`img/gallery/${prefix}_${i}_1`);
-                if (multi1) {
-                    const paths = [multi1];
-                    for (let j = 2; j <= 5; j++) {
-                        const m = await findImage(`img/gallery/${prefix}_${i}_${j}`);
-                        if (m) paths.push(m); else break;
-                    }
-                    allFoundItems.push(createItem(prefix, paths));
-                } else {
-                    const s = await findImage(`img/gallery/${prefix}_${i}`);
-                    if (s) allFoundItems.push(createItem(prefix, [s]));
-                }
-            }
-        }
-        if (currentIndex < allFoundItems.length) loadMoreWrap.style.display = 'flex';
-    }
-
     initGallery();
-    backgroundDiscovery();
 
     // Event Listeners
     loadMoreBtn.addEventListener('click', renderNextBatch);
