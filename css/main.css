@@ -696,7 +696,7 @@ footer {
 /* --- Animations --- */
 .reveal {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
     transition: 1.0s cubic-bezier(0.2, 1, 0.2, 1);
     will-change: opacity, transform;
 }
@@ -706,9 +706,146 @@ footer {
     transform: translateY(0);
 }
 
+/* Staggered children animation */
+.reveal.active > *:nth-child(1) { transition-delay: 0s; }
+.reveal.active > *:nth-child(2) { transition-delay: 0.08s; }
+.reveal.active > *:nth-child(3) { transition-delay: 0.16s; }
+.reveal.active > *:nth-child(4) { transition-delay: 0.24s; }
+.reveal.active > *:nth-child(5) { transition-delay: 0.32s; }
+
 /* スマホでの視認性向上のため、ヒーローの最初のアニメーションを少し早める */
 .hero-content.reveal {
     transition-duration: 0.6s;
+}
+
+/* --- Scroll Progress Bar --- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--grad-main);
+    z-index: 10000;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: none;
+    pointer-events: none;
+}
+
+/* --- Hero Text Split Animation --- */
+.hero h1 .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(60px) rotateX(-40deg);
+    animation: charReveal 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+}
+
+@keyframes charReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+.hero .sub-title .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: wordReveal 0.6s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+}
+
+@keyframes wordReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Nav Link Animated Underline --- */
+.nav-list a {
+    position: relative;
+}
+
+.nav-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: var(--grad-main);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nav-list a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* --- Work Card Image Hover --- */
+.gallery-thumb-wrap img {
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gallery-thumb-wrap:hover img {
+    transform: scale(1.08);
+}
+
+/* --- Avatar Pulse Glow --- */
+.avatar-wrap {
+    position: relative;
+}
+
+.avatar-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--grad-main);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.6s ease;
+    animation: avatarPulse 3s ease-in-out infinite;
+}
+
+.avatar-wrap:hover::after {
+    opacity: 0.3;
+}
+
+@keyframes avatarPulse {
+    0%, 100% { transform: scale(1); opacity: 0; }
+    50% { transform: scale(1.08); }
+}
+
+/* --- Smooth Section Divider --- */
+.section-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--grad-main);
+    margin: 0 auto;
+    border-radius: 2px;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: all 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.section-divider.active {
+    opacity: 0.6;
+    transform: scaleX(1);
+}
+
+/* --- Footer Reveal --- */
+footer {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+footer.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -716,6 +853,19 @@ footer {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+    .scroll-progress {
+        display: none;
+    }
+    .hero h1 .char,
+    .hero .sub-title .word {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+    footer {
+        opacity: 1;
+        transform: none;
     }
 }
 
