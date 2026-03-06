@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollProgress();
     initHeroTextAnimation();
     initFooterReveal();
-    initSectionDividers();
   }
 
   // --- B. Hybrid News Engine ---
@@ -284,23 +283,3 @@ function initFooterReveal() {
   checkFooter();
 }
 
-/** Section Dividers with reveal */
-function initSectionDividers() {
-  const sections = document.querySelectorAll('section.container');
-  sections.forEach((section, i) => {
-    if (i === 0) return; // Skip first section
-    const divider = document.createElement('div');
-    divider.className = 'section-divider';
-    section.parentNode.insertBefore(divider, section);
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    observer.observe(divider);
-  });
-}
