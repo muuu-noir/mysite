@@ -164,8 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- D. Global Tools (Lightbox, etc.) ---
-  const header = document.querySelector('header');
-  if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
 
   const createLightbox = () => {
     const lb = document.createElement('div');
