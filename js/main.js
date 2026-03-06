@@ -12,6 +12,9 @@ window.revealObserver = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '0px 0px -50px', threshold: 0.01 });
 
+// Reduced motion check
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 document.addEventListener('DOMContentLoaded', () => {
   // --- A. System Log (Console Only) ---
   const diagLog = (msg, isError = false) => {
@@ -19,6 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   window.diagLog = diagLog;
   diagLog("System: Online.");
+
+  // --- Dynamic Animations ---
+  if (!prefersReducedMotion) {
+    initScrollProgress();
+    initHeroTextAnimation();
+    initFooterReveal();
+    initSectionDividers();
+  }
 
   // --- B. Hybrid News Engine ---
   const initNews = async () => {
@@ -201,3 +212,95 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   initIntegrations();
 });
+
+// =============================================
+// Dynamic Animation Functions
+// =============================================
+
+/** Scroll Progress Bar */
+function initScrollProgress() {
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  document.body.appendChild(bar);
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+    bar.style.transform = `scaleX(${progress})`;
+  }, { passive: true });
+}
+
+/** Hero Text Split Animation */
+function initHeroTextAnimation() {
+  const heroH1 = document.querySelector('.hero h1');
+  const heroSub = document.querySelector('.hero .sub-title');
+
+  if (heroH1) {
+    const original = heroH1.innerHTML;
+    // Preserve the jump-o span, split remaining chars
+    let charIndex = 0;
+    const html = original.replace(/(<[^>]+>)|(.)/g, (match, tag, char) => {
+      if (tag) return tag; // keep HTML tags intact
+      if (char === ' ') return ' ';
+      const delay = 0.3 + charIndex * 0.06;
+      charIndex++;
+      return `<span class="char" style="animation-delay:${delay}s">${char}</span>`;
+    });
+    heroH1.innerHTML = html;
+  }
+
+  if (heroSub) {
+    const text = heroSub.textContent;
+    const words = text.split(/(\s+|&)/);
+    heroSub.innerHTML = words.map((word, i) => {
+      if (word.trim() === '') return word;
+      const delay = 1.0 + i * 0.1;
+      return `<span class="word" style="animation-delay:${delay}s">${word}</span>`;
+    }).join('');
+  }
+}
+
+/** Footer Reveal on Scroll */
+function initFooterReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // Observe footer when it's added to DOM (since it's a web component)
+  const checkFooter = () => {
+    const footer = document.querySelector('footer');
+    if (footer) {
+      observer.observe(footer);
+    } else {
+      requestAnimationFrame(checkFooter);
+    }
+  };
+  checkFooter();
+}
+
+/** Section Dividers with reveal */
+function initSectionDividers() {
+  const sections = document.querySelectorAll('section.container');
+  sections.forEach((section, i) => {
+    if (i === 0) return; // Skip first section
+    const divider = document.createElement('div');
+    divider.className = 'section-divider';
+    section.parentNode.insertBefore(divider, section);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(divider);
+  });
+}
