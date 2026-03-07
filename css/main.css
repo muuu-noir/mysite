@@ -1693,3 +1693,209 @@ body.menu-open {
 iframe[id^="twitter-widget-"] {
     border-radius: 12px !important;
 }
+
+/* --- Blog Article Styles --- */
+.blog-article {
+    max-width: 780px;
+    padding-top: var(--sp-section-top);
+}
+
+.article-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.article-title {
+    font-family: "Inter", "Hiragino Kaku Gothic ProN", sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--color-text-main);
+    margin-top: 1rem;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-family: "Outfit", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-sub);
+}
+
+.article-category {
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border-radius: 50px;
+    border: 1px solid var(--color-indigo);
+    color: var(--color-indigo);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.article-body {
+    font-size: 1rem;
+    line-height: 2;
+    color: var(--color-text-main);
+}
+
+.article-body h2 {
+    font-size: 1.4rem;
+    text-align: left;
+    margin: 3rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-indigo);
+    font-weight: 400;
+}
+
+.article-body h3 {
+    font-size: 1.15rem;
+    text-align: left;
+    margin: 2.5rem 0 1rem;
+    color: var(--color-indigo);
+    font-weight: 400;
+}
+
+.article-body p {
+    margin-bottom: 1.5rem;
+}
+
+.article-body ul,
+.article-body ol {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.article-body li {
+    margin-bottom: 0.5rem;
+}
+
+.article-body strong {
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.article-body a {
+    color: var(--color-indigo);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+    transition: 0.3s;
+}
+
+.article-body a:hover {
+    border-bottom-color: var(--color-indigo);
+}
+
+.article-body code {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.85em;
+    background: var(--glass-bg);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+}
+
+.article-body pre {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.article-body pre code {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.article-body blockquote {
+    border-left: 3px solid var(--color-indigo);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    color: var(--color-text-sub);
+    font-style: italic;
+}
+
+.article-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.article-footer .btn-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Blog list on news page */
+.blog-list {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.blog-list-item {
+    display: block;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--color-text-main);
+    transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.blog-list-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.blog-list-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-family: "Outfit", sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-sub);
+}
+
+.blog-list-item-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.blog-list-item-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+    margin-top: 0.3rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 850px) {
+    .article-body h2 {
+        font-size: 1.2rem;
+    }
+
+    .article-body h3 {
+        font-size: 1.05rem;
+    }
+}
