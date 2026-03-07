@@ -27,6 +27,21 @@
     <script src="js/config_v2.js"></script>
     <script src="js/components.js" defer></script>
     <script src="js/main.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "NEWS | 396 FOLIO",
+        "description": "396 FOLIOの最新ニュースとお知らせ。プロジェクトの進捗やイベント情報を掲載しています。",
+        "url": "https://mog147.github.io/mysite/news.html",
+        "author": {
+            "@type": "Person",
+            "name": "手塚桃子"
+        }
+    }
+    </script>
+
 </head>
 
 <body>
@@ -41,9 +56,42 @@
                 ]'></info-table>
             </glass-card>
 
+            <!-- Blog Articles -->
+            <section-title title="BLOG" center reveal></section-title>
+            <div id="blog-list" class="blog-list reveal">
+                <p class="flex-center" style="font-style: italic; color: var(--color-text-sub);">記事を読み込み中...</p>
+            </div>
+
         </section>
     </main>
     <site-footer></site-footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('blog/index.json')
+                .then(res => res.json())
+                .then(articles => {
+                    const container = document.getElementById('blog-list');
+                    if (!articles.length) {
+                        container.innerHTML = '<p class="flex-center" style="font-style: italic; color: var(--color-text-sub);">記事はまだありません。</p>';
+                        return;
+                    }
+                    container.innerHTML = articles.map(a => `
+                        <a href="${a.url}" class="blog-list-item">
+                            <div class="blog-list-item-meta">
+                                <time>${a.dateFormatted}</time>
+                                <span class="article-category">${a.category}</span>
+                            </div>
+                            <div class="blog-list-item-title">${a.title}</div>
+                            ${a.description ? `<div class="blog-list-item-desc">${a.description}</div>` : ''}
+                        </a>
+                    `).join('');
+                })
+                .catch(() => {
+                    document.getElementById('blog-list').innerHTML = '<p class="flex-center" style="font-style: italic; color: var(--color-text-sub);">記事の読み込みに失敗しました。</p>';
+                });
+        });
+    </script>
 
 </body>
 

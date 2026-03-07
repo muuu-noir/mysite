@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLHXZS4T3C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-BLHXZS4T3C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>{{title}} | 396 FOLIO</title>
+    <meta name="description" content="{{description}}">
+    <meta property="og:title" content="{{title}} | 396 FOLIO">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{url}}">
+    <meta property="og:image" content="{{ogImage}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="../img/profile/profile_avatar.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/config_v2.js"></script>
+    <script src="../js/components.js" defer></script>
+    <script src="../js/main.js" defer></script>
+
+    <script type="application/ld+json">
+    {{jsonld}}
+    </script>
+</head>
+
+<body>
+    <site-header></site-header>
+    <main id="main-content">
+        <article class="blog-article container">
+            <header class="article-header">
+                <div class="article-meta">
+                    <time datetime="{{dateISO}}">{{dateFormatted}}</time>
+                    <span class="article-category">{{category}}</span>
+                </div>
+                <h1 class="article-title">{{title}}</h1>
+            </header>
+            <div class="article-body">
+                {{content}}
+            </div>
+            <footer class="article-footer">
+                <a href="../news.html" class="btn-more"><i class="fas fa-chevron-left"></i> NEWS に戻る</a>
+            </footer>
+        </article>
+    </main>
+    <site-footer></site-footer>
+</body>
+
+</html>
