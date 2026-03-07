@@ -1697,7 +1697,6 @@ iframe[id^="twitter-widget-"] {
 /* --- Blog Article Styles --- */
 .blog-article {
     max-width: 780px;
-    padding-top: var(--sp-section-top);
 }
 
 .article-header {
