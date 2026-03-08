@@ -23,6 +23,16 @@
 
   <!-- blog-start -->
   <url>
+    <loc>https://mog147.github.io/mysite/blog/2025-08-22-watercolor-experiment.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mog147.github.io/mysite/blog/2025-06-10-pencil-and-kent.html</loc>
+    <lastmod>2025-06-10</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://mog147.github.io/mysite/blog/2025-04-18-site-redesign.html</loc>
     <lastmod>2025-04-18</lastmod>
     <priority>0.7</priority>
