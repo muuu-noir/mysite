@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Flexible Item Creator (lazy image loading) ---
-    function createItem(prefix, imagePaths, title, description, medium) {
+    function createItem(prefix, imagePaths, title, description, medium, detailUrl) {
         const item = document.createElement('div');
         item.className = 'gallery-item reveal';
 
@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${title ? `<div class="post-caption-title">${title}</div>` : ''}
                 ${description ? `<div class="post-caption-desc">${description}</div>` : ''}
                 ${medium ? `<div class="post-caption-medium">${medium}</div>` : `<span class="username-bold">396 FOLIO</span> ${prefix} collection`}
+                ${detailUrl ? `<a href="${detailUrl}" class="post-detail-link">VIEW DETAILS <i class="fa-solid fa-arrow-right"></i></a>` : ''}
             </div>
         `;
 
@@ -231,27 +232,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // p({ id, title, desc }) — 追加時はこの3つだけでOK
     // 必要な時だけ med / e1 / e2 を上書き
     const DEFAULTS = { med: '鉛筆 / ケント紙', e1: 'webp', e2: 'JPG' };
-    const p = ({ id, title, desc, med = DEFAULTS.med, e1 = DEFAULTS.e1, e2 = DEFAULTS.e2 }) => ({
+    const p = ({ id, title, desc, med = DEFAULTS.med, e1 = DEFAULTS.e1, e2 = DEFAULTS.e2, detail = null }) => ({
         prefix: 'pencil',
         paths: [`img/gallery/pencil_${id}_1.${e1}`, `img/gallery/pencil_${id}_2.${e2}`],
-        title, description: desc, medium: med
+        title, description: desc, medium: med, detailUrl: detail
     });
 
     const initialPosts = [
-        p({ id: 1, title: 'Case 001', desc: 'Neither is a lie. Both are me.', e1: 'jpg' }),
-        p({ id: 2, title: 'Case 003', desc: 'The brighter the light the darker the shadow.', e1: 'jpg' }),
-        p({ id: 3, title: 'Case 007', desc: 'Devouring the last innocence.', e1: 'jpg' }),
-        p({ id: 4, title: 'Case 005', desc: 'He wears the sky like a bruise waiting for the rain to wash away his name', med: '水彩 / 水彩紙', e1: 'jpg' }),
-        p({ id: 5, title: 'Case 011', desc: 'Wandering through the void, where no one know her name.', e1: 'jpg' }),
-        p({ id: 6, title: 'Case 009', desc: 'Cold arms, warm wings.' }),
-        p({ id: 7, title: 'Case 002', desc: "Style is er armor in a world that's fading to black.", e1: 'jpg' }),
-        p({ id: 8, title: 'Case 015', desc: 'A face without a name, a soul without a cage.', med: '水彩 / 水彩紙', e1: 'jpg' }),
-        p({ id: 9, title: 'Case 014', desc: 'Even the light is a poison here.', med: '水彩 / 水彩紙' }),
-        p({ id: 10, title: 'Case 004', desc: 'Page 404: Person not found.' }),
-        p({ id: 11, title: 'Case 012', desc: 'Watching the stars burn out, one by one.' }),
-        p({ id: 12, title: 'Case 013', desc: 'Beauty is a parasite.', med: '水彩 / 水彩紙' }),
-        p({ id: 13, title: 'Case 008', desc: 'The circus is empty, but the paint never washes off.', med: '水彩 / 水彩紙', e2: 'webp' }),
-        p({ id: 14, title: 'Case 010', desc: 'Silence is the loudest song she knows.' }),
+        p({ id: 1, title: 'Case 001', desc: 'Neither is a lie. Both are me.', e1: 'jpg', detail: 'gallery/case-001.html' }),
+        p({ id: 2, title: 'Case 003', desc: 'The brighter the light the darker the shadow.', e1: 'jpg', detail: 'gallery/case-003.html' }),
+        p({ id: 3, title: 'Case 007', desc: 'Devouring the last innocence.', e1: 'jpg', detail: 'gallery/case-007.html' }),
+        p({ id: 4, title: 'Case 005', desc: 'He wears the sky like a bruise waiting for the rain to wash away his name', med: '水彩 / 水彩紙', e1: 'jpg', detail: 'gallery/case-005.html' }),
+        p({ id: 5, title: 'Case 011', desc: 'Wandering through the void, where no one know her name.', e1: 'jpg', detail: 'gallery/case-011.html' }),
+        p({ id: 6, title: 'Case 009', desc: 'Cold arms, warm wings.', detail: 'gallery/case-009.html' }),
+        p({ id: 7, title: 'Case 002', desc: "Style is er armor in a world that's fading to black.", e1: 'jpg', detail: 'gallery/case-002.html' }),
+        p({ id: 8, title: 'Case 015', desc: 'A face without a name, a soul without a cage.', med: '水彩 / 水彩紙', e1: 'jpg', detail: 'gallery/case-015.html' }),
+        p({ id: 9, title: 'Case 014', desc: 'Even the light is a poison here.', med: '水彩 / 水彩紙', detail: 'gallery/case-014.html' }),
+        p({ id: 10, title: 'Case 004', desc: 'Page 404: Person not found.', detail: 'gallery/case-004.html' }),
+        p({ id: 11, title: 'Case 012', desc: 'Watching the stars burn out, one by one.', detail: 'gallery/case-012.html' }),
+        p({ id: 12, title: 'Case 013', desc: 'Beauty is a parasite.', med: '水彩 / 水彩紙', detail: 'gallery/case-013.html' }),
+        p({ id: 13, title: 'Case 008', desc: 'The circus is empty, but the paint never washes off.', med: '水彩 / 水彩紙', e2: 'webp', detail: 'gallery/case-008.html' }),
+        p({ id: 14, title: 'Case 010', desc: 'Silence is the loudest song she knows.', detail: 'gallery/case-010.html' }),
     ];
 
     let currentFilter = 'all';
@@ -269,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = '';
         currentIndex = 0;
         const posts = getFilteredPosts();
-        allFoundItems = posts.map(post => createItem(post.prefix, post.paths, post.title, post.description, post.medium));
+        allFoundItems = posts.map(post => createItem(post.prefix, post.paths, post.title, post.description, post.medium, post.detailUrl));
         allFoundItems = shuffle(allFoundItems);
         loader.style.display = 'none';
         grid.style.display = 'grid';
