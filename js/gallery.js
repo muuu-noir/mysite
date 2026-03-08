@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const itemId = imagePaths.map(p => p.split('/').pop().split('.')[0]).join('_');
         const altText = title || `${prefix} artwork`;
-        const imagesHtml = imagePaths.map(src => `<img data-src="${src}" alt="${altText}" loading="lazy">`).join('');
+        const imagesHtml = imagePaths.map(src => `<img data-src="${src}" alt="${altText}" loading="lazy" data-title="${title || ''}" data-description="${description || ''}" data-medium="${medium || ''}">`).join('');
         const hasMultiple = imagePaths.length > 1;
 
         item.innerHTML = `
@@ -238,15 +238,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const initialPosts = [
-        p({ id: 1,  title: 'Case 001', desc: 'Neither is a lie. Both are me.', e1: 'jpg' }),
-        p({ id: 2,  title: 'Case 003', desc: 'The brighter the light the darker the shadow.', e1: 'jpg' }),
-        p({ id: 3,  title: 'Case 007', desc: 'Devouring the last innocence.', e1: 'jpg' }),
-        p({ id: 4,  title: 'Case 005', desc: 'He wears the sky like a bruise waiting for the rain to wash away his name.', e1: 'jpg' }),
-        p({ id: 5,  title: 'Case 011', desc: 'Wandering through the void, where no one know her name.', e1: 'jpg' }),
-        p({ id: 6,  title: 'Case 009', desc: 'Cold arms, warm wings.' }),
-        p({ id: 7,  title: 'Case 002', desc: "Style is er armor in a world that's fading to black.", e1: 'jpg' }),
-        p({ id: 8,  title: 'Case 015', desc: 'A face without a name, a soul without a cage.', e1: 'jpg' }),
-        p({ id: 9,  title: 'Case 014', desc: 'Even the light is a poison here.', med: '水彩 / 水彩紙' }),
+        p({ id: 1, title: 'Case 001', desc: 'Neither is a lie. Both are me.', e1: 'jpg' }),
+        p({ id: 2, title: 'Case 003', desc: 'The brighter the light the darker the shadow.', e1: 'jpg' }),
+        p({ id: 3, title: 'Case 007', desc: 'Devouring the last innocence.', e1: 'jpg' }),
+        p({ id: 4, title: 'Case 005', desc: 'He wears the sky like a bruise waiting for the rain to wash away his name', med: '水彩 / 水彩紙', e1: 'jpg' }),
+        p({ id: 5, title: 'Case 011', desc: 'Wandering through the void, where no one know her name.', e1: 'jpg' }),
+        p({ id: 6, title: 'Case 009', desc: 'Cold arms, warm wings.' }),
+        p({ id: 7, title: 'Case 002', desc: "Style is er armor in a world that's fading to black.", e1: 'jpg' }),
+        p({ id: 8, title: 'Case 015', desc: 'A face without a name, a soul without a cage.', med: '水彩 / 水彩紙', e1: 'jpg' }),
+        p({ id: 9, title: 'Case 014', desc: 'Even the light is a poison here.', med: '水彩 / 水彩紙' }),
         p({ id: 10, title: 'Case 004', desc: 'Page 404: Person not found.' }),
         p({ id: 11, title: 'Case 012', desc: 'Watching the stars burn out, one by one.' }),
         p({ id: 12, title: 'Case 013', desc: 'Beauty is a parasite.', med: '水彩 / 水彩紙' }),
@@ -254,8 +254,22 @@ document.addEventListener('DOMContentLoaded', () => {
         p({ id: 14, title: 'Case 010', desc: 'Silence is the loudest song she knows.' }),
     ];
 
+    let currentFilter = 'all';
+
+    function getFilteredPosts() {
+        if (currentFilter === 'all') return initialPosts;
+        return initialPosts.filter(post => {
+            if (currentFilter === 'pencil') return !post.medium.includes('水彩');
+            if (currentFilter === 'watercolor') return post.medium.includes('水彩');
+            return true;
+        });
+    }
+
     function initGallery() {
-        allFoundItems = initialPosts.map(post => createItem(post.prefix, post.paths, post.title, post.description, post.medium));
+        grid.innerHTML = '';
+        currentIndex = 0;
+        const posts = getFilteredPosts();
+        allFoundItems = posts.map(post => createItem(post.prefix, post.paths, post.title, post.description, post.medium));
         allFoundItems = shuffle(allFoundItems);
         loader.style.display = 'none';
         grid.style.display = 'grid';
@@ -263,6 +277,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initGallery();
+
+    // Filter Buttons
+    document.querySelectorAll('.filter-wrap .filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-wrap .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            initGallery();
+        });
+    });
 
     // Event Listeners
     loadMoreBtn.addEventListener('click', renderNextBatch);
