@@ -227,68 +227,35 @@ document.addEventListener('DOMContentLoaded', () => {
         loadMoreWrap.style.display = currentIndex >= allFoundItems.length ? 'none' : 'flex';
     }
 
-    // --- Gallery Data (optimized paths) ---
+    // --- Gallery Data ---
+    // p({ id, title, desc }) — 追加時はこの3つだけでOK
+    // 必要な時だけ med / e1 / e2 を上書き
+    const DEFAULTS = { med: '鉛筆 / ケント紙', e1: 'webp', e2: 'JPG' };
+    const p = ({ id, title, desc, med = DEFAULTS.med, e1 = DEFAULTS.e1, e2 = DEFAULTS.e2 }) => ({
+        prefix: 'pencil',
+        paths: [`img/gallery/pencil_${id}_1.${e1}`, `img/gallery/pencil_${id}_2.${e2}`],
+        title, description: desc, medium: med
+    });
+
     const initialPosts = [
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_1_1.jpg', 'img/gallery/pencil_1_2.JPG'],
-            title: 'Case 001', description: 'Neither is a lie. Both are me.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_2_1.jpg', 'img/gallery/pencil_2_2.JPG'],
-            title: 'Case 003', description: 'The brighter the light the darker the shadow.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_3_1.jpg', 'img/gallery/pencil_3_2.JPG'],
-            title: 'Case 007', description: 'Devouring the last innocence.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_4_1.jpg', 'img/gallery/pencil_4_2.JPG'],
-            title: 'Case 005', description: 'He wears the sky like a bruise waiting for the rain to wash away his name.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_5_1.jpg', 'img/gallery/pencil_5_2.JPG'],
-            title: 'Case 011', description: 'Wandering through the void, where no one know her name.境界線', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'],
-            title: 'Case 009', description: 'Cold arms, warm wings.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_7_1.jpg', 'img/gallery/pencil_7_2.JPG'],
-            title: 'Case 002', description: 'Style is er armor in a world that’s fading to black. ', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_8_1.jpg', 'img/gallery/pencil_8_2.JPG'],
-            title: 'Case 015', description: 'A face without a name, a soul without a cage.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'],
-            title: 'Case 014', description: 'Even the light is a poison here.', medium: '水彩 / 水彩紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'],
-            title: 'Case 004', description: 'Page 404: Person not found. ', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'],
-            title: 'Case 012', description: 'Watching the stars burn out, one by one.', medium: '鉛筆 / ケント紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_12_1.webp', 'img/gallery/pencil_12_2.JPG'],
-            title: 'Case 013', description: 'Beauty is a parasite.', medium: '水彩 / 水彩紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'],
-            title: 'Case 008', description: 'The circus is empty, but the paint never washes off.', medium: '水彩 / 水彩紙'
-        },
-        {
-            prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'],
-            title: 'Case 010', description: 'Silence is the loudest song she knows.', medium: '鉛筆 / ケント紙'
-        }
+        p({ id: 1,  title: 'Case 001', desc: 'Neither is a lie. Both are me.', e1: 'jpg' }),
+        p({ id: 2,  title: 'Case 003', desc: 'The brighter the light the darker the shadow.', e1: 'jpg' }),
+        p({ id: 3,  title: 'Case 007', desc: 'Devouring the last innocence.', e1: 'jpg' }),
+        p({ id: 4,  title: 'Case 005', desc: 'He wears the sky like a bruise waiting for the rain to wash away his name.', e1: 'jpg' }),
+        p({ id: 5,  title: 'Case 011', desc: 'Wandering through the void, where no one know her name.', e1: 'jpg' }),
+        p({ id: 6,  title: 'Case 009', desc: 'Cold arms, warm wings.' }),
+        p({ id: 7,  title: 'Case 002', desc: "Style is er armor in a world that's fading to black.", e1: 'jpg' }),
+        p({ id: 8,  title: 'Case 015', desc: 'A face without a name, a soul without a cage.', e1: 'jpg' }),
+        p({ id: 9,  title: 'Case 014', desc: 'Even the light is a poison here.', med: '水彩 / 水彩紙' }),
+        p({ id: 10, title: 'Case 004', desc: 'Page 404: Person not found.' }),
+        p({ id: 11, title: 'Case 012', desc: 'Watching the stars burn out, one by one.' }),
+        p({ id: 12, title: 'Case 013', desc: 'Beauty is a parasite.', med: '水彩 / 水彩紙' }),
+        p({ id: 13, title: 'Case 008', desc: 'The circus is empty, but the paint never washes off.', med: '水彩 / 水彩紙', e2: 'webp' }),
+        p({ id: 14, title: 'Case 010', desc: 'Silence is the loudest song she knows.' }),
     ];
 
     function initGallery() {
-        allFoundItems = initialPosts.map(p => createItem(p.prefix, p.paths, p.title, p.description, p.medium));
+        allFoundItems = initialPosts.map(post => createItem(post.prefix, post.paths, post.title, post.description, post.medium));
         allFoundItems = shuffle(allFoundItems);
         loader.style.display = 'none';
         grid.style.display = 'grid';
