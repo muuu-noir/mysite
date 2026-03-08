@@ -74,12 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Flexible Item Creator (lazy image loading) ---
-    function createItem(prefix, imagePaths) {
+    function createItem(prefix, imagePaths, title, description, medium) {
         const item = document.createElement('div');
         item.className = 'gallery-item reveal';
 
         const itemId = imagePaths.map(p => p.split('/').pop().split('.')[0]).join('_');
-        const imagesHtml = imagePaths.map(src => `<img data-src="${src}" alt="${prefix} artwork" loading="lazy">`).join('');
+        const altText = title || `${prefix} artwork`;
+        const imagesHtml = imagePaths.map(src => `<img data-src="${src}" alt="${altText}" loading="lazy">`).join('');
         const hasMultiple = imagePaths.length > 1;
 
         item.innerHTML = `
@@ -102,7 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="fa-regular fa-bookmark action-save"></i>
             </div>
             <div class="post-caption" style="padding-bottom: 1.5rem;">
-                <span class="username-bold">396 FOLIO</span> ${prefix} collection
+                ${title ? `<div class="post-caption-title">${title}</div>` : ''}
+                ${description ? `<div class="post-caption-desc">${description}</div>` : ''}
+                ${medium ? `<div class="post-caption-medium">${medium}</div>` : `<span class="username-bold">396 FOLIO</span> ${prefix} collection`}
             </div>
         `;
 
@@ -226,24 +229,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Gallery Data (optimized paths) ---
     const initialPosts = [
-        { prefix: 'pencil', paths: ['img/gallery/pencil_1_1.jpg', 'img/gallery/pencil_1_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_2_1.jpg', 'img/gallery/pencil_2_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_3_1.jpg', 'img/gallery/pencil_3_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_4_1.jpg', 'img/gallery/pencil_4_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_5_1.jpg', 'img/gallery/pencil_5_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_7_1.jpg', 'img/gallery/pencil_7_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_8_1.jpg', 'img/gallery/pencil_8_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_12_1.webp', 'img/gallery/pencil_12_2.JPG'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'] },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'] }
+        { prefix: 'pencil', paths: ['img/gallery/pencil_1_1.jpg', 'img/gallery/pencil_1_2.JPG'],
+          title: '静寂の刻', description: '冬の朝の静けさを鉛筆の濃淡で表現した作品', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_2_1.jpg', 'img/gallery/pencil_2_2.JPG'],
+          title: '光と影の対話', description: '窓辺に差し込む光が生み出すコントラストを描写', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_3_1.jpg', 'img/gallery/pencil_3_2.JPG'],
+          title: '記憶の断片', description: '日常の中に潜む美しい瞬間の記録', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_4_1.jpg', 'img/gallery/pencil_4_2.JPG'],
+          title: '呼吸する線', description: '線の強弱で生命の息吹を感じさせる表現', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_5_1.jpg', 'img/gallery/pencil_5_2.JPG'],
+          title: '境界線', description: '見えるものと見えないものの狭間を描く', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'],
+          title: '時の流れ', description: '移ろいゆく時間を繊細な筆致で捉えた一枚', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_7_1.jpg', 'img/gallery/pencil_7_2.JPG'],
+          title: '余白の美', description: '描かない部分にこそ宿る日本的な美意識', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_8_1.jpg', 'img/gallery/pencil_8_2.JPG'],
+          title: '夜想曲', description: '夜の静謐さと深みをモノトーンで表現', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'],
+          title: 'まなざし', description: '対象を見つめる視線そのものを形にした作品', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'],
+          title: '重力と浮遊', description: '重さと軽さが共存する不思議なバランス', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'],
+          title: '鼓動', description: '生き物の温かさを感じる緻密なデッサン', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_12_1.webp', 'img/gallery/pencil_12_2.JPG'],
+          title: '透明な朝', description: '早朝の澄んだ空気感を鉛筆で再現', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'],
+          title: '対峙', description: '描く者と描かれる者の緊張感ある関係性', medium: '鉛筆 / ケント紙' },
+        { prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'],
+          title: '微睡み', description: 'うたた寝の瞬間の穏やかな空気を描写', medium: '鉛筆 / ケント紙' }
     ];
 
     function initGallery() {
-        allFoundItems = initialPosts.map(p => createItem(p.prefix, p.paths));
+        allFoundItems = initialPosts.map(p => createItem(p.prefix, p.paths, p.title, p.description, p.medium));
         allFoundItems = shuffle(allFoundItems);
         loader.style.display = 'none';
         grid.style.display = 'grid';

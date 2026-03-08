@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 const { marked } = require('marked');
+const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
 
 const SITE_URL = 'https://mog147.github.io/mysite';
 const POSTS_DIR = path.join(__dirname, 'blog', 'posts');
@@ -9,6 +10,117 @@ const TEMPLATE_PATH = path.join(__dirname, 'blog', '_template.html');
 const OUTPUT_DIR = path.join(__dirname, 'blog');
 const INDEX_JSON_PATH = path.join(OUTPUT_DIR, 'index.json');
 const SITEMAP_PATH = path.join(__dirname, 'sitemap.xml');
+const OG_OUTPUT_DIR = path.join(__dirname, 'img', 'blog', 'og');
+
+// Register Noto Sans JP if available locally, otherwise use system fallback
+const FONT_PATHS = [
+    path.join(__dirname, 'fonts', 'NotoSansJP-Bold.ttf'),
+    path.join(__dirname, 'fonts', 'NotoSansJP-Regular.ttf'),
+];
+let fontFamily = 'sans-serif';
+if (fs.existsSync(FONT_PATHS[0])) {
+    GlobalFonts.registerFromPath(FONT_PATHS[0], 'NotoSansJP');
+    fontFamily = 'NotoSansJP';
+}
+if (fs.existsSync(FONT_PATHS[1])) {
+    GlobalFonts.registerFromPath(FONT_PATHS[1], 'NotoSansJP');
+}
+
+/**
+ * Generate OGP image for a blog article
+ */
+function generateOgImage(slug, title, dateFormatted, category) {
+    const WIDTH = 1200;
+    const HEIGHT = 630;
+    const canvas = createCanvas(WIDTH, HEIGHT);
+    const ctx = canvas.getContext('2d');
+
+    // Background gradient (indigo → purple, matching --grad-main)
+    const grad = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT);
+    grad.addColorStop(0, '#6366F1');
+    grad.addColorStop(1, '#A855F7');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+    // Subtle overlay pattern - decorative circles
+    ctx.globalAlpha = 0.08;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.arc(WIDTH * 0.85, HEIGHT * 0.2, 200, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(WIDTH * 0.1, HEIGHT * 0.8, 150, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1.0;
+
+    // Logo text (top-left)
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.font = `300 28px "${fontFamily}", sans-serif`;
+    ctx.fillText('396 FOLIO', 60, 70);
+
+    // Title text (centered, white, large)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = `bold 48px "${fontFamily}", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Word-wrap title
+    const maxWidth = WIDTH - 160;
+    const lines = wrapText(ctx, title, maxWidth);
+    const lineHeight = 66;
+    const totalHeight = lines.length * lineHeight;
+    const startY = (HEIGHT / 2) - (totalHeight / 2) + 10;
+
+    lines.forEach((line, i) => {
+        ctx.fillText(line, WIDTH / 2, startY + i * lineHeight);
+    });
+
+    // Date & Category (bottom)
+    ctx.font = `300 24px "${fontFamily}", sans-serif`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    const bottomText = category ? `${dateFormatted}  |  ${category}` : dateFormatted;
+    ctx.fillText(bottomText, WIDTH / 2, HEIGHT - 60);
+
+    // Save PNG
+    fs.mkdirSync(OG_OUTPUT_DIR, { recursive: true });
+    const outputPath = path.join(OG_OUTPUT_DIR, `${slug}.png`);
+    const buffer = canvas.toBuffer('image/png');
+    fs.writeFileSync(outputPath, buffer);
+    console.log(`Generated OG image: img/blog/og/${slug}.png`);
+
+    return `${SITE_URL}/img/blog/og/${slug}.png`;
+}
+
+/**
+ * Wrap text into lines that fit within maxWidth
+ */
+function wrapText(ctx, text, maxWidth) {
+    const chars = Array.from(text);
+    const lines = [];
+    let currentLine = '';
+
+    for (const char of chars) {
+        const testLine = currentLine + char;
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && currentLine.length > 0) {
+            lines.push(currentLine);
+            currentLine = char;
+        } else {
+            currentLine = testLine;
+        }
+    }
+    if (currentLine) {
+        lines.push(currentLine);
+    }
+
+    // Limit to 4 lines max, truncate with ellipsis
+    if (lines.length > 4) {
+        lines.length = 4;
+        lines[3] = lines[3].slice(0, -1) + '...';
+    }
+
+    return lines;
+}
 
 // Read template
 const template = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
@@ -65,8 +177,13 @@ for (const file of mdFiles) {
         }
     }, null, 8);
 
-    // OG image
-    const ogImage = fm.image ? `${SITE_URL}/${fm.image}` : `${SITE_URL}/img/profile/profile_avatar.png`;
+    // OG image: use frontmatter image if specified, otherwise auto-generate
+    let ogImage;
+    if (fm.image) {
+        ogImage = `${SITE_URL}/${fm.image}`;
+    } else {
+        ogImage = generateOgImage(slug, fm.title, dateFormatted, fm.category || '');
+    }
 
     // Fill template
     let html = template
