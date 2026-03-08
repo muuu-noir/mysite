@@ -1702,6 +1702,7 @@ iframe[id^="twitter-widget-"] {
 
 .article-header {
     text-align: center;
+    margin-top: 6rem;
     margin-bottom: 4rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--color-border);
