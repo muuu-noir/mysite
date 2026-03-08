@@ -1555,6 +1555,38 @@ body.menu-open {
     border: 1px solid var(--color-border);
 }
 
+/* Lightbox Caption */
+.lightbox-caption {
+    display: none;
+    padding: 1rem 1.5rem;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.lightbox-caption-title {
+    font-family: "Outfit", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-main);
+    margin-bottom: 0.3rem;
+}
+
+.lightbox-caption-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+    line-height: 1.6;
+    margin-bottom: 0.3rem;
+}
+
+.lightbox-caption-medium {
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+}
+
 /* New Badge */
 .badge-new {
     display: inline-block;

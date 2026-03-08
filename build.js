@@ -149,6 +149,11 @@ for (const file of mdFiles) {
     const dateISO = date.toISOString().split('T')[0];
     const dateFormatted = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
 
+    // Calculate reading time (Japanese: ~500 chars/min)
+    const plainText = content.replace(/[#*\[\]()>`_~\-|]/g, '').replace(/\s+/g, '');
+    const readingMinutes = Math.max(1, Math.round(plainText.length / 500));
+    const readingTime = `約${readingMinutes}分`;
+
     // Convert markdown to HTML
     const htmlContent = marked(content);
 
@@ -194,6 +199,7 @@ for (const file of mdFiles) {
         .replace(/\{\{dateISO\}\}/g, dateISO)
         .replace(/\{\{dateFormatted\}\}/g, dateFormatted)
         .replace(/\{\{category\}\}/g, fm.category || '')
+        .replace(/\{\{readingTime\}\}/g, readingTime)
         .replace(/\{\{content\}\}/g, htmlContent)
         .replace(/\{\{jsonld\}\}/g, jsonld);
 
