@@ -229,34 +229,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Gallery Data (optimized paths) ---
     const initialPosts = [
-        { prefix: 'pencil', paths: ['img/gallery/pencil_1_1.jpg', 'img/gallery/pencil_1_2.JPG'],
-          title: '静寂の刻', description: '冬の朝の静けさを鉛筆の濃淡で表現した作品', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_2_1.jpg', 'img/gallery/pencil_2_2.JPG'],
-          title: '光と影の対話', description: '窓辺に差し込む光が生み出すコントラストを描写', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_3_1.jpg', 'img/gallery/pencil_3_2.JPG'],
-          title: '記憶の断片', description: '日常の中に潜む美しい瞬間の記録', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_4_1.jpg', 'img/gallery/pencil_4_2.JPG'],
-          title: '呼吸する線', description: '線の強弱で生命の息吹を感じさせる表現', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_5_1.jpg', 'img/gallery/pencil_5_2.JPG'],
-          title: '境界線', description: '見えるものと見えないものの狭間を描く', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'],
-          title: '時の流れ', description: '移ろいゆく時間を繊細な筆致で捉えた一枚', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_7_1.jpg', 'img/gallery/pencil_7_2.JPG'],
-          title: '余白の美', description: '描かない部分にこそ宿る日本的な美意識', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_8_1.jpg', 'img/gallery/pencil_8_2.JPG'],
-          title: '夜想曲', description: '夜の静謐さと深みをモノトーンで表現', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'],
-          title: 'まなざし', description: '対象を見つめる視線そのものを形にした作品', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'],
-          title: '重力と浮遊', description: '重さと軽さが共存する不思議なバランス', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'],
-          title: '鼓動', description: '生き物の温かさを感じる緻密なデッサン', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_12_1.webp', 'img/gallery/pencil_12_2.JPG'],
-          title: '透明な朝', description: '早朝の澄んだ空気感を鉛筆で再現', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'],
-          title: '対峙', description: '描く者と描かれる者の緊張感ある関係性', medium: '鉛筆 / ケント紙' },
-        { prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'],
-          title: '微睡み', description: 'うたた寝の瞬間の穏やかな空気を描写', medium: '鉛筆 / ケント紙' }
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_1_1.jpg', 'img/gallery/pencil_1_2.JPG'],
+            title: 'Case 001', description: 'Neither is a lie. Both are me.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_2_1.jpg', 'img/gallery/pencil_2_2.JPG'],
+            title: 'Case 003', description: 'The brighter the light the darker the shadow.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_3_1.jpg', 'img/gallery/pencil_3_2.JPG'],
+            title: 'Case 007', description: 'Devouring the last innocence.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_4_1.jpg', 'img/gallery/pencil_4_2.JPG'],
+            title: 'Case 005', description: 'He wears the sky like a bruise waiting for the rain to wash away his name.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_5_1.jpg', 'img/gallery/pencil_5_2.JPG'],
+            title: 'Case 011', description: 'Wandering through the void, where no one know her name.境界線', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_6_1.webp', 'img/gallery/pencil_6_2.JPG'],
+            title: 'Case 009', description: 'Cold arms, warm wings.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_7_1.jpg', 'img/gallery/pencil_7_2.JPG'],
+            title: 'Case 002', description: 'Style is er armor in a world that’s fading to black. ', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_8_1.jpg', 'img/gallery/pencil_8_2.JPG'],
+            title: 'Case 015', description: 'A face without a name, a soul without a cage.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_9_1.webp', 'img/gallery/pencil_9_2.JPG'],
+            title: 'Case 014', description: 'Even the light is a poison here.', medium: '水彩 / 水彩紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_10_1.webp', 'img/gallery/pencil_10_2.JPG'],
+            title: 'Case 004', description: 'Page 404: Person not found. ', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_11_1.webp', 'img/gallery/pencil_11_2.JPG'],
+            title: 'Case 012', description: 'Watching the stars burn out, one by one.', medium: '鉛筆 / ケント紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_12_1.webp', 'img/gallery/pencil_12_2.JPG'],
+            title: 'Case 013', description: 'Beauty is a parasite.', medium: '水彩 / 水彩紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_13_1.webp', 'img/gallery/pencil_13_2.webp'],
+            title: 'Case 008', description: 'The circus is empty, but the paint never washes off.', medium: '水彩 / 水彩紙'
+        },
+        {
+            prefix: 'pencil', paths: ['img/gallery/pencil_14_1.webp', 'img/gallery/pencil_14_1.JPG'],
+            title: 'Case 010', description: 'Silence is the loudest song she knows.', medium: '鉛筆 / ケント紙'
+        }
     ];
 
     function initGallery() {
