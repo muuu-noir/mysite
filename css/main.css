@@ -1961,3 +1961,104 @@ iframe[id^="twitter-widget-"] {
         font-size: 1.05rem;
     }
 }
+
+/* ========================================
+   Skill Tooltip
+   ======================================== */
+.skill-tip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.skill-tip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    white-space: nowrap;
+    background: var(--color-text-main);
+    color: var(--color-bg);
+    font-size: 0.7rem;
+    font-family: "Outfit", sans-serif;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 10;
+}
+
+.skill-tip:hover::after,
+.skill-tip:active::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========================================
+   Case Study Page
+   ======================================== */
+.case-hero {
+    margin: -1rem -1rem 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.case-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.case-tagline {
+    font-family: "Outfit", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--color-text-sub);
+    text-align: center;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.case-figure {
+    margin: 2rem 0;
+}
+
+.case-figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.case-figure figcaption {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-sub);
+    margin-top: 0.8rem;
+    font-style: italic;
+}
+
+/* ========================================
+   Gallery Detail Link
+   ======================================== */
+.post-detail-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    font-family: "Outfit", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: var(--color-indigo);
+    text-decoration: none;
+    transition: gap 0.3s ease;
+}
+
+.post-detail-link:hover {
+    gap: 0.8rem;
+}
