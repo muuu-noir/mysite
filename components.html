@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Component Library | 396 FOLIO</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- External assets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="img/profile/profile_avatar.png">
+    <script src="js/config_v2.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/components.js" defer></script>
+</head>
+
+<body>
+    <site-header></site-header>
+
+    <main id="main-content">
+
+        <!-- ========== Intro ========== -->
+        <section class="container" style="padding-top: 10rem;">
+            <section-title title="COMPONENT LIBRARY" center></section-title>
+            <glass-card center>
+                <p>396 FOLIOで使用しているデザイントークン、Web Components、CSSパターンのビジュアルカタログです。<br>
+                開発・メンテナンス時のリファレンスとしてご活用ください。</p>
+            </glass-card>
+        </section>
+
+        <!-- ========== Design Tokens ========== -->
+        <section class="container">
+            <section-title title="DESIGN TOKENS" center reveal></section-title>
+
+            <!-- Color Palette -->
+            <glass-card reveal>
+                <h3>Color Palette</h3>
+                <div class="catalog-swatches">
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-indigo);"></div>
+                        <code>--color-indigo</code>
+                        <span class="catalog-swatch-val">#6366F1</span>
+                    </div>
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-indigo-dark);"></div>
+                        <code>--color-indigo-dark</code>
+                        <span class="catalog-swatch-val">#4F46E5</span>
+                    </div>
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-purple);"></div>
+                        <code>--color-purple</code>
+                        <span class="catalog-swatch-val">#A855F7</span>
+                    </div>
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-bg);"></div>
+                        <code>--color-bg</code>
+                        <span class="catalog-swatch-val">Background</span>
+                    </div>
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-surface);"></div>
+                        <code>--color-surface</code>
+                        <span class="catalog-swatch-val">Surface</span>
+                    </div>
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-text-main);"></div>
+                        <code>--color-text-main</code>
+                        <span class="catalog-swatch-val">Main Text</span>
+                    </div>
+                    <div class="catalog-swatch">
+                        <div class="catalog-swatch-color" style="background: var(--color-text-sub);"></div>
+                        <code>--color-text-sub</code>
+                        <span class="catalog-swatch-val">Sub Text</span>
+                    </div>
+                </div>
+            </glass-card>
+
+            <!-- Gradient -->
+            <glass-card reveal>
+                <h3>Gradient</h3>
+                <div class="catalog-gradient-preview" style="background: var(--grad-main);"></div>
+                <pre><code>--grad-main: linear-gradient(135deg, #6366F1 0%, #A855F7 100%);</code></pre>
+            </glass-card>
+
+            <!-- Typography -->
+            <glass-card reveal>
+                <h3>Typography</h3>
+                <div class="catalog-type-sample">
+                    <p style="font-family: 'Outfit', sans-serif; font-weight: 100; font-size: 2.5rem; letter-spacing: 0.15em;">
+                        Outfit — Display & Headings
+                    </p>
+                    <p style="font-family: 'Outfit', sans-serif; font-weight: 200; font-size: 1.5rem; letter-spacing: 0.1em; margin-top: 0.5rem;">
+                        Weight 100 · 200 · 300 · 400
+                    </p>
+                </div>
+                <div class="catalog-type-sample" style="margin-top: 2rem;">
+                    <p style="font-family: 'Inter', sans-serif; font-weight: 300; font-size: 1.1rem; line-height: 2;">
+                        Inter — Body text for readability. デザイン・エンジニアリング・アートの領域を横断する。
+                    </p>
+                    <p style="font-family: 'Inter', sans-serif; font-weight: 200; font-size: 0.95rem; color: var(--color-text-sub); margin-top: 0.5rem;">
+                        Weight 200 · 300 · 400 | Fallback: Hiragino Kaku Gothic ProN
+                    </p>
+                </div>
+            </glass-card>
+
+            <!-- Spacing -->
+            <glass-card reveal>
+                <h3>Spacing & Layout</h3>
+                <table class="data-table">
+                    <tr><th>--sp-section-top</th><td>8rem</td></tr>
+                    <tr><th>--sp-section-bottom</th><td>6rem</td></tr>
+                    <tr><th>--sp-card-p</th><td>3.5rem 2.5rem</td></tr>
+                    <tr><th>--max-width</th><td>1000px</td></tr>
+                    <tr><th>--glass-blur</th><td>blur(25px)</td></tr>
+                    <tr><th>Border radius</th><td>20px (cards)</td></tr>
+                </table>
+            </glass-card>
+        </section>
+
+        <!-- ========== Web Components ========== -->
+        <section class="container">
+            <section-title title="WEB COMPONENTS" center reveal></section-title>
+
+            <!-- section-title -->
+            <glass-card reveal>
+                <h3>&lt;section-title&gt;</h3>
+                <p class="catalog-desc">セクション見出しコンポーネント。center / reveal属性でバリエーション切り替え。</p>
+
+                <div class="catalog-preview">
+                    <section-title title="DEFAULT"></section-title>
+                    <section-title title="CENTERED" center></section-title>
+                    <section-title title="WITH REVEAL" center reveal></section-title>
+                </div>
+
+                <pre><code>&lt;section-title title="DEFAULT"&gt;&lt;/section-title&gt;
+&lt;section-title title="CENTERED" center&gt;&lt;/section-title&gt;
+&lt;section-title title="WITH REVEAL" center reveal&gt;&lt;/section-title&gt;</code></pre>
+            </glass-card>
+
+            <!-- glass-card -->
+            <glass-card reveal>
+                <h3>&lt;glass-card&gt;</h3>
+                <p class="catalog-desc">Glassmorphism効果のカードラッパー。reveal / grid / center 属性で組み合わせ可能。</p>
+
+                <div class="catalog-preview">
+                    <glass-card>
+                        <p>Default glass-card — シンプルなカードコンテナ。</p>
+                    </glass-card>
+
+                    <glass-card center>
+                        <p>center — テキスト中央寄せ。</p>
+                    </glass-card>
+
+                    <glass-card grid>
+                        <div>
+                            <h4>Grid Left</h4>
+                            <p>flex-grid レイアウト左カラム。</p>
+                        </div>
+                        <div>
+                            <h4>Grid Right</h4>
+                            <p>flex-grid レイアウト右カラム。</p>
+                        </div>
+                    </glass-card>
+                </div>
+
+                <pre><code>&lt;glass-card&gt;Default&lt;/glass-card&gt;
+&lt;glass-card center&gt;Centered&lt;/glass-card&gt;
+&lt;glass-card grid&gt;
+  &lt;div&gt;Left&lt;/div&gt;
+  &lt;div&gt;Right&lt;/div&gt;
+&lt;/glass-card&gt;
+&lt;glass-card reveal&gt;With reveal animation&lt;/glass-card&gt;</code></pre>
+            </glass-card>
+
+            <!-- site-button -->
+            <glass-card reveal>
+                <h3>&lt;site-button&gt;</h3>
+                <p class="catalog-desc">ボタンコンポーネント。type="more"（テキストリンク風）と type="cta"（アクションボタン）の2種類。</p>
+
+                <div class="catalog-preview">
+                    <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+                        <site-button href="#" type="more">もっと見る</site-button>
+                        <site-button href="#" type="cta">作品を見る</site-button>
+                    </div>
+                </div>
+
+                <pre><code>&lt;site-button href="url" type="more"&gt;もっと見る&lt;/site-button&gt;
+&lt;site-button href="url" type="cta"&gt;作品を見る&lt;/site-button&gt;</code></pre>
+            </glass-card>
+
+            <!-- work-card -->
+            <glass-card reveal>
+                <h3>&lt;work-card&gt;</h3>
+                <p class="catalog-desc">作品カード。サムネイル・タイトル・説明・CTAボタンを含む完結型コンポーネント。</p>
+
+                <div class="catalog-preview">
+                    <work-card
+                        img="img/profile/profile_avatar.png"
+                        title="Sample Work"
+                        subtitle="Web Design / Development"
+                        href="#">
+                        サンプルの作品説明文です。デザインとエンジニアリングを融合したプロジェクト。
+                    </work-card>
+                </div>
+
+                <pre><code>&lt;work-card
+  img="img/profile/profile_avatar.png"
+  title="Sample Work"
+  subtitle="Web Design / Development"
+  href="#"&gt;
+  作品の説明文をここに記述します。
+&lt;/work-card&gt;</code></pre>
+            </glass-card>
+
+            <!-- info-table -->
+            <glass-card reveal>
+                <h3>&lt;info-table&gt;</h3>
+                <p class="catalog-desc">データテーブルコンポーネント。JSON配列からニュース形式・タイムライン形式のテーブルを生成。</p>
+
+                <div class="catalog-preview">
+                    <h4 style="margin-bottom: 1rem;">ニュース形式</h4>
+                    <info-table data='[{"date":"2025.03.15","text":"コンポーネントライブラリーを公開しました","isNew":true},{"date":"2025.02.01","text":"ポートフォリオサイトをリニューアル","link":"index.html"},{"date":"2025.01.10","text":"新しい作品を追加しました"}]'></info-table>
+                </div>
+
+                <div class="catalog-preview" style="margin-top: 2rem;">
+                    <h4 style="margin-bottom: 1rem;">タイムライン形式</h4>
+                    <info-table data='[{"date":"2024","text":"フリーランスとして独立"},{"date":"2023","text":"Web開発プロジェクト開始"},{"date":"2022","text":"デザインの学習を開始"}]'></info-table>
+                </div>
+
+                <pre><code>&lt;info-table data='[
+  {"date":"2025.03.15", "text":"記事タイトル", "isNew":true},
+  {"date":"2025.02.01", "text":"リンク付き", "link":"url"},
+  {"date":"2025.01.10", "text":"テキストのみ"}
+]'&gt;&lt;/info-table&gt;</code></pre>
+            </glass-card>
+        </section>
+
+        <!-- ========== CSS Patterns ========== -->
+        <section class="container">
+            <section-title title="CSS PATTERNS" center reveal></section-title>
+
+            <!-- Glassmorphism -->
+            <glass-card reveal>
+                <h3>Glassmorphism</h3>
+                <p class="catalog-desc">半透明背景 + ブラー + ボーダーによるガラス効果。ダークモードで自動的に配色が切り替わる。</p>
+
+                <div class="catalog-preview">
+                    <div class="catalog-glass-demo">
+                        <div class="catalog-glass-bg"></div>
+                        <div class="glass-card" style="position: relative; z-index: 1; max-width: 400px;">
+                            <h4>Glass Card</h4>
+                            <p>背景が透過して見えるガラスモーフィズム効果。hover時にわずかに浮き上がる。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <pre><code>/* Glass Variables */
+--glass-bg: rgba(255,255,255,0.65);
+--glass-border: rgba(255,255,255,0.4);
+--glass-blur: blur(25px);
+--glass-shadow: 0 10px 40px rgba(31,38,135,0.03);
+
+.glass-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 20px;
+  padding: var(--sp-card-p);
+}</code></pre>
+            </glass-card>
+
+            <!-- Reveal Animation -->
+            <glass-card reveal>
+                <h3>Reveal Animation</h3>
+                <p class="catalog-desc">IntersectionObserverによるスクロールトリガーアニメーション。要素がビューポートに入ると、下から上にフェードイン。</p>
+
+                <div class="catalog-preview">
+                    <div class="reveal active" style="padding: 1.5rem; border-radius: 12px; background: var(--color-surface); border: 1px solid var(--color-border);">
+                        <p>この要素は <code>.reveal.active</code> — 表示済み状態。</p>
+                    </div>
+                </div>
+
+                <pre><code>.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1.0s cubic-bezier(0.2, 1, 0.2, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Usage: add reveal attribute to components */
+&lt;glass-card reveal&gt;...&lt;/glass-card&gt;
+&lt;section-title title="..." reveal&gt;&lt;/section-title&gt;</code></pre>
+            </glass-card>
+
+            <!-- Dark Mode -->
+            <glass-card reveal>
+                <h3>Dark Mode</h3>
+                <p class="catalog-desc">ヘッダーのトグルボタンでライト/ダークモードを切り替え。CSS変数が一括で切り替わり、全コンポーネントが自動対応。<code>prefers-color-scheme</code>にもフォールバック対応。</p>
+
+                <div class="catalog-preview">
+                    <table class="data-table">
+                        <tr><th>トークン</th><td>Light → Dark</td></tr>
+                        <tr><th>--color-bg</th><td>#F9FAFC → #0B0E14</td></tr>
+                        <tr><th>--color-surface</th><td>#FFFFFF → #1A1F2B</td></tr>
+                        <tr><th>--color-text-main</th><td>#1D1D1F → #E2E8F0</td></tr>
+                        <tr><th>--color-text-sub</th><td>#6E6E73 → #94A3B8</td></tr>
+                        <tr><th>--glass-bg</th><td>rgba(255,255,255,0.65) → rgba(26,31,43,0.7)</td></tr>
+                    </table>
+                </div>
+
+                <pre><code>/* Toggle via data-theme attribute */
+:root[data-theme="dark"] {
+  --color-bg: #0B0E14;
+  --color-surface: #1A1F2B;
+  --color-text-main: #E2E8F0;
+  ...
+}
+
+/* System preference fallback */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { ... }
+}</code></pre>
+            </glass-card>
+        </section>
+
+        <!-- ========== Spacing ========== -->
+        <div style="height: var(--sp-section-bottom);"></div>
+
+    </main>
+
+    <site-footer></site-footer>
+</body>
+
+</html>

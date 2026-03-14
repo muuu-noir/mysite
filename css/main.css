@@ -2062,3 +2062,101 @@ iframe[id^="twitter-widget-"] {
 .post-detail-link:hover {
     gap: 0.8rem;
 }
+
+/* ========================================
+   Component Library (Catalog Page)
+   ======================================== */
+.catalog-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+}
+
+.catalog-swatch {
+    text-align: center;
+}
+
+.catalog-swatch-color {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    margin-bottom: 0.5rem;
+}
+
+.catalog-swatch code {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--color-text-main);
+    word-break: break-all;
+}
+
+.catalog-swatch-val {
+    font-size: 0.6rem;
+    color: var(--color-text-sub);
+}
+
+.catalog-gradient-preview {
+    height: 80px;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+}
+
+.catalog-desc {
+    color: var(--color-text-sub);
+    margin: 0.8rem 0 2rem;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.catalog-preview {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 16px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+}
+
+.catalog-preview glass-card {
+    margin-bottom: 1rem;
+}
+
+.catalog-preview glass-card:last-child {
+    margin-bottom: 0;
+}
+
+.catalog-glass-demo {
+    position: relative;
+    padding: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.catalog-glass-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--grad-main);
+    opacity: 0.3;
+}
+
+pre {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+pre code {
+    font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
+    font-size: 0.75rem;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    white-space: pre;
+}
