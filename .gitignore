@@ -3,3 +3,6 @@ js/config.js
 node_modules/
 dist/
 .env
+
+*storybook.log
+storybook-static/
