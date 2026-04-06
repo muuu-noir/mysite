@@ -120,11 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add "Add More" button if there are more items and we are on the news page
         if (combined.length > initialLimit && newsArea.id !== 'top-info') {
           const moreBtnContainer = document.createElement('div');
-          moreBtnContainer.className = 'flex-center';
-          moreBtnContainer.style.marginTop = '1.5rem';
+          moreBtnContainer.className = 'flex-center load-more-wrap';
           moreBtnContainer.innerHTML = `
-            <button id="load-more-news" class="btn-more" style="cursor: pointer; background: none; border: none; outline: none; font-family: inherit;">
-              もっと見る <i class="fa fa-chevron-down" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+            <button id="load-more-news" class="btn-more btn-more--plain">
+              もっと見る <i class="fa fa-chevron-down btn-icon"></i>
             </button>
           `;
           newsArea.appendChild(moreBtnContainer);
