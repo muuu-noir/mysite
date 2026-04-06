@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLHXZS4T3C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-BLHXZS4T3C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Workflow Design — 業務自動化・プロセス設計の実績 | 396 FOLIO</title>
+    <meta name="description" content="Excel VBAによる経理計算自動化、データ移行提案、Pythonによる大規模データ処理など、業務フロー設計の実績まとめ。">
+    <meta property="og:title" content="Workflow Design — 業務自動化・プロセス設計の実績 | 396 FOLIO">
+    <meta property="og:description" content="EC経理計算自動化、3日→半日のデータ移行、30,000件を約5時間で処理した自動化スクリプトなど。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://mog147.github.io/mysite/gallery/case-workflow.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="../img/profile/profile_avatar.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/config_v2.js"></script>
+    <script src="../js/components.js" defer></script>
+    <script src="../js/main.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": "Workflow Design — 業務自動化・プロセス設計の実績",
+        "description": "Excel VBAによる経理計算自動化、データ移行提案（3日→半日）、Pythonによる30,000件データクリーニング（約5時間）など、業務フロー設計の実績。",
+        "url": "https://mog147.github.io/mysite/gallery/case-workflow.html",
+        "author": {
+            "@type": "Person",
+            "name": "手塚桃子",
+            "url": "https://mog147.github.io/mysite/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <site-header></site-header>
+    <main id="main-content">
+        <section class="container">
+            <article class="blog-article case-study">
+
+                <!-- Header -->
+                <div class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">workflow</span>
+                        <span>Excel VBA / Python / プロセス設計</span>
+                    </div>
+                    <h1 class="article-title">Workflow Design</h1>
+                    <p class="case-tagline">デザインと実装と仕組みづくりを、ひとりでカバーする。</p>
+                </div>
+
+                <!-- Body -->
+                <div class="article-body">
+
+                    <!-- Case 1 -->
+                    <h2>Case 1 — EC経理計算の月次自動化</h2>
+                    <dl class="workflow-meta">
+                        <dt>使用技術</dt><dd>Excel VBA</dd>
+                        <dt>背景</dt>
+                        <dd>エンタメ会社の国内外向けECサイトでは、月次の経理計算が複数シートにまたがる手作業で行われており、担当者の工数と入力ミスのリスクが課題でした。</dd>
+                        <dt>対応</dt>
+                        <dd>売上データの集計・通貨換算・帳票出力までの一連のフローをExcel VBAでマクロ化。月次のルーティン処理をボタン一つで完結できる仕組みに置き換えました。</dd>
+                        <dt>成果</dt>
+                        <dd>毎月発生していた手作業の繰り返しを排除。担当者が本来の業務に集中できる体制を整えました。</dd>
+                    </dl>
+
+                    <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--color-border, rgba(128,128,128,0.2));">
+
+                    <!-- Case 2 -->
+                    <h2>Case 2 — ExcelデータのAccess / Notion移行提案</h2>
+                    <dl class="workflow-meta">
+                        <dt>使用技術</dt><dd>Excel / Access / Notion / プロセス設計</dd>
+                        <dt>背景</dt>
+                        <dd>顧客データがExcelファイルで管理されており、検索・更新・共有のたびに手間がかかっていました。複数人が同じファイルを触ることによる上書きリスクも問題でした。</dd>
+                        <dt>対応</dt>
+                        <dd>データ構造を分析し、利用頻度・共有範囲・操作スキルに応じてAccessとNotionの2案を提案。業務フロー全体を再設計した上で移行を主導しました。</dd>
+                        <dt>成果</dt>
+                        <dd><strong>3日かかっていた作業を半日に短縮。</strong>データの重複・上書きリスクもゼロに。</dd>
+                    </dl>
+
+                    <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--color-border, rgba(128,128,128,0.2));">
+
+                    <!-- Case 3 -->
+                    <h2>Case 3 — 30,000件データクリーニングの自動化</h2>
+                    <dl class="workflow-meta">
+                        <dt>使用技術</dt><dd>Python</dd>
+                        <dt>背景</dt>
+                        <dd>友人からの依頼で、30,000件規模のデータクリーニングが必要な状況に。手作業で対応した場合、60〜100時間の工数が見込まれていました。</dd>
+                        <dt>対応</dt>
+                        <dd>Pythonでデータ検証・クレンジング・整形の処理を自動化するスクリプトを設計・実装。対象データの構造を分析し、エラーパターンを洗い出した上でロジックを組みました。</dd>
+                        <dt>成果</dt>
+                        <dd><strong>手作業60〜100時間の処理を約5時間で完了。</strong>品質も手作業より均一に保てました。</dd>
+                    </dl>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="article-footer">
+                    <a href="../about.html" class="btn-more"><i class="fas fa-chevron-left"></i> ABOUT に戻る</a>
+                </div>
+
+            </article>
+        </section>
+    </main>
+    <site-footer></site-footer>
+
+    <style>
+        .workflow-meta {
+            display: grid;
+            grid-template-columns: 6rem 1fr;
+            gap: 0.75rem 1.5rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .workflow-meta dt {
+            font-weight: 600;
+            color: var(--color-indigo);
+            padding-top: 0.1rem;
+        }
+        .workflow-meta dd {
+            margin: 0;
+        }
+        @media (max-width: 480px) {
+            .workflow-meta {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+            .workflow-meta dt {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</body>
+
+</html>
