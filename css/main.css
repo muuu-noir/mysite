@@ -571,6 +571,14 @@ p {
     transform: translateX(3px);
 }
 
+.btn-more--plain {
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+}
+
 /* --- Header & Footer (Ultra Compact) --- */
 header {
     position: fixed;
@@ -1995,6 +2003,299 @@ iframe[id^="twitter-widget-"] {
 .skill-tip:active::after {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+}
+
+/* ========================================
+   Contact Form
+   ======================================== */
+.form-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-sub);
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background: var(--glass-bg);
+    color: var(--color-text-main);
+    transition: 0.3s;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    border-color: var(--color-indigo);
+    outline: none;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--grad-main);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.5;
+    pointer-events: none;
+    text-align: center;
+}
+
+.btn-submit.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.btn-submit.active:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+}
+
+/* Contact page layout */
+.contact-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contact-note {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-sub);
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-main);
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background: var(--glass-bg);
+    border: 1px solid var(--color-border);
+}
+
+.github-link:hover {
+    background: var(--color-surface);
+    border-color: var(--color-indigo);
+}
+
+.contact-card-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-note {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   Index page layout
+   ======================================== */
+.works-grid {
+    display: grid;
+    gap: 12rem;
+}
+
+.sns-panel {
+    width: 100%;
+    min-height: 400px;
+}
+
+.news-more-wrap {
+    margin-top: 5rem;
+}
+
+.text-italic {
+    font-style: italic;
+}
+
+.social-link {
+    color: var(--color-indigo);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.instagram-link {
+    color: #e4405f;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ========================================
+   Profile / Intro components
+   ======================================== */
+.avatar-wrap img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+.hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.intro-text {
+    max-width: 650px;
+}
+
+.intro-body {
+    max-width: 650px;
+    text-align: center;
+}
+
+.intro-lead {
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+}
+
+.intro-quote {
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   About page specific
+   ======================================== */
+.role-links {
+    margin-bottom: 2rem;
+    color: var(--color-indigo);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.role-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.skill-note {
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.skill-note a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.skill-icons--center {
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+/* ========================================
+   Work Card component (components.js)
+   ======================================== */
+.thumb-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-icon {
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+}
+
+.content-block .sub-title {
+    margin-bottom: 2rem;
+}
+
+/* ========================================
+   Utility pages (404, success)
+   ======================================== */
+.page-full {
+    min-height: 80vh;
+}
+
+.page-cta {
+    margin-top: 3rem;
+}
+
+.page-btn-row {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.page-title--accent {
+    color: var(--color-indigo);
+    margin: 0 0 1rem;
+}
+
+.page-title--success {
+    color: var(--color-indigo);
+    margin: 0 0 2rem;
+}
+
+.text-sub {
+    color: var(--color-text-sub);
+}
+
+.success-note {
+    color: var(--color-text-sub);
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+/* Blog load more */
+.load-more-wrap {
+    margin-top: 2rem;
+}
+
+.mt-section {
+    margin-top: 3rem;
+}
+
+/* --- Gallery page --- */
+.gallery-loader {
+    padding: 4rem;
+    opacity: 0.8;
+}
+
+.gallery-load-text {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+#load-more-wrap {
+    margin-top: 4rem;
+}
+
+/* --- Divider --- */
+.divider {
+    margin: 3rem 0;
+    border: none;
+    border-top: 1px solid var(--color-border);
 }
 
 /* ========================================

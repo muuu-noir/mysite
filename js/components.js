@@ -182,7 +182,7 @@ class SiteButton extends HTMLElement {
     if (type === 'more') {
       this.innerHTML = `
         <a href="${href}" class="btn-more" target="${target}">
-          ${label} <i class="fa fa-chevron-right" style="font-size: 0.7rem; margin-left: 0.5rem;"></i>
+          ${label} <i class="fa fa-chevron-right btn-icon"></i>
         </a>
       `;
     } else {
@@ -208,13 +208,13 @@ class WorkCard extends HTMLElement {
     this.innerHTML = `
       <div class="glass-card reveal flex-grid">
         <div class="gallery-thumb-wrap">
-          <a href="${href}" target="_blank" style="display:block; width:100%; height:100%;">
+          <a href="${href}" target="_blank" class="thumb-link">
             <img src="${img}" alt="${title}" loading="lazy">
           </a>
         </div>
         <div class="content-block">
           <h3>${title}</h3>
-          <p class="sub-title" style="margin-bottom: 2rem;">${subtitle}</p>
+          <p class="sub-title">${subtitle}</p>
           <p>${description}</p>
           <site-button href="${href}" type="cta" target="_blank">作品を見る</site-button>
         </div>

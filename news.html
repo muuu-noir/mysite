@@ -59,7 +59,7 @@
             <!-- Blog Articles -->
             <section-title title="BLOG" center reveal></section-title>
             <div id="blog-list" class="blog-list reveal">
-                <p class="flex-center" style="font-style: italic; color: var(--color-text-sub);">記事を読み込み中...</p>
+                <p class="flex-center text-italic text-sub">記事を読み込み中...</p>
             </div>
 
         </section>
@@ -75,7 +75,7 @@
                 .then(articles => {
                     const container = document.getElementById('blog-list');
                     if (!articles.length) {
-                        container.innerHTML = '<p class="flex-center" style="font-style: italic; color: var(--color-text-sub);">記事はまだありません。</p>';
+                        container.innerHTML = '<p class="flex-center text-italic text-sub">記事はまだありません。</p>';
                         return;
                     }
 
@@ -97,8 +97,7 @@
 
                     if (remainingItems.length > 0) {
                         const loadMoreWrap = document.createElement('div');
-                        loadMoreWrap.className = 'flex-center';
-                        loadMoreWrap.style.marginTop = '2rem';
+                        loadMoreWrap.className = 'flex-center load-more-wrap';
                         loadMoreWrap.innerHTML = '<button class="btn-cta" id="blog-load-more">LOAD MORE</button>';
                         container.after(loadMoreWrap);
 
@@ -109,7 +108,7 @@
                     }
                 })
                 .catch(() => {
-                    document.getElementById('blog-list').innerHTML = '<p class="flex-center" style="font-style: italic; color: var(--color-text-sub);">記事の読み込みに失敗しました。</p>';
+                    document.getElementById('blog-list').innerHTML = '<p class="flex-center text-italic text-sub">記事の読み込みに失敗しました。</p>';
                 });
         });
     </script>

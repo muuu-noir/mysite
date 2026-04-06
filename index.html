@@ -94,7 +94,7 @@
                 <picture>
                     <source srcset="img/hero/hero_alternative.jpg" media="(max-width: 850px)">
                     <img src="img/hero/hero_main.jpg" alt="396 FOLIO ポートフォリオ メインビジュアル"
-                        style="width:100%; height:100%; object-fit:cover;" loading="eager">
+                        loading="eager">
                 </picture>
             </div>
             <div class="hero-aura"></div>
@@ -109,15 +109,15 @@
             <glass-card center reveal>
                 <div class="avatar-wrap">
                     <img src="img/profile/profile_avatar.png" alt="Tezuka Momoko"
-                        style="width: 70%; height: 70%; object-fit: contain;" loading="lazy">
+                        loading="lazy">
                 </div>
                 <h3>手塚 桃子 <span class="sub-title">TEZUKA MOMOKO</span></h3>
-                <div style="max-width: 650px;">
-                    <p style="font-weight: 400; color: var(--color-text-main); margin-bottom: 2.5rem;">
+                <div class="intro-text">
+                    <p class="intro-lead">
                         『効率化で時間を作り、デザインで時間を整え、アートで時間を愛でる。』</p>
                     <p>業務自動化からWebサイト構築、ブランディングデザインまで——複雑な課題を、動く仕組みと美しい形に変えるデザインエンジニアです。</p>
                 </div>
-                <div style="margin-top: 4rem;">
+                <div class="page-cta">
                     <site-button href="about.html" type="more">LEARN MORE</site-button>
                 </div>
             </glass-card>
@@ -126,7 +126,7 @@
         <!-- Works Section -->
         <section id="WORKS" class="container">
             <section-title title="WORKS" reveal></section-title>
-            <div style="display: grid; gap: 12rem;">
+            <div class="works-grid">
                 <work-card img="img/works/works_design.png" title="Design" subtitle="Solving Problems"
                     href="https://fori.io/momoko-tz0402">
                     情報の解像度を高め、使い手にとって心地よい「時間」を整えます。機能美と直感的な心地よさが共存するデザインを提供いたします。
@@ -147,11 +147,10 @@
         <section class="container">
             <section-title title="NEWS" reveal></section-title>
             <glass-card id="top-info" reveal>
-                <p class="flex-center" style="font-style: italic;">Stay tuned for upcoming news and project highlights.
-                </p>
+                <p class="flex-center text-italic">Stay tuned for upcoming news and project highlights.</p>
             </glass-card>
 
-            <div class="flex-center" style="margin-top: 5rem;">
+            <div class="flex-center news-more-wrap">
                 <site-button href="news.html" type="more">VIEW ALL NEWS</site-button>
             </div>
         </section>
@@ -160,7 +159,7 @@
             <section-title title="SOCIAL" reveal></section-title>
             <div class="twitter-container reveal">
                 <glass-card center>
-                    <div id="twitter-timeline-wrapper" style="width: 100%; margin: 0 auto; min-height: 400px;">
+                    <div id="twitter-timeline-wrapper" class="sns-panel">
                         <!-- Twitter Card -->
                         <div id="twitter-fallback" class="sns-fallback-card">
                             <div class="fallback-header">
@@ -176,14 +175,13 @@
                             <div class="fallback-footer">
                                 <span id="fallback-tweet-date">2026.02.11</span>
                                 <a href="https://twitter.com/mog147_2" target="_blank"
-                                    style="color:var(--color-indigo); text-decoration:none; font-weight:600;">View on X
-                                    →</a>
+                                    class="social-link">View on X →</a>
                             </div>
                         </div>
                     </div>
 
                     <!-- Instagram Card -->
-                    <div id="instagram-wrapper" style="width: 100%; margin: 0 auto; min-height: 400px;">
+                    <div id="instagram-wrapper" class="sns-panel">
                         <div id="instagram-fallback" class="sns-fallback-card">
                             <div class="fallback-header">
                                 <div class="fallback-avatar instagram-avatar">
@@ -200,8 +198,7 @@
                             <div class="fallback-footer">
                                 <span>Art Palette</span>
                                 <a href="https://www.instagram.com/mogmog_atelier/" id="instagram-profile-link"
-                                    target="_blank" style="color:#e4405f; text-decoration:none; font-weight:600;">View
-                                    on Instagram →</a>
+                                    target="_blank" class="instagram-link">View on Instagram →</a>
                             </div>
                         </div>
                     </div>
