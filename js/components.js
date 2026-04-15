@@ -205,6 +205,7 @@ class WorkCard extends HTMLElement {
     const href = this.getAttribute('href') || '';
     const role = this.getAttribute('role') || '';
     const result = this.getAttribute('result') || '';
+    const note = this.getAttribute('note') || '';
     const contactLabel = this.getAttribute('contact-label') || '';
     const contactHref = this.getAttribute('contact-href') || 'contact.html';
     const description = this.innerHTML;
@@ -214,6 +215,12 @@ class WorkCard extends HTMLElement {
         ${role   ? `<div class="work-meta__item"><dt>担当</dt><dd>${role}</dd></div>` : ''}
         ${result ? `<div class="work-meta__item"><dt>成果</dt><dd>${result}</dd></div>` : ''}
       </dl>` : '';
+
+    const noteHtml = note ? `
+      <div class="work-note">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>${note}</span>
+      </div>` : '';
 
     const contactHtml = contactLabel ? `
       <a href="${contactHref}" class="work-contact-cta">
@@ -232,6 +239,7 @@ class WorkCard extends HTMLElement {
           <p class="sub-title">${subtitle}</p>
           <p>${description}</p>
           ${metaHtml}
+          ${noteHtml}
           <div class="work-actions">
             <site-button href="${href}" type="cta" target="_blank">作品を見る</site-button>
             ${contactHtml}

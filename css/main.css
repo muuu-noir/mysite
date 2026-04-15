@@ -3145,3 +3145,80 @@ pre code {
     color: var(--color-text-main);
     white-space: pre;
 }
+
+/* Stance Block — 制作スタンス */
+.stance-block {
+    margin-top: 2rem;
+    padding: 1.4rem 1.6rem;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 10px;
+    background: rgba(99, 102, 241, 0.04);
+}
+
+.stance-block__heading {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-indigo);
+    margin-bottom: 0.9rem;
+    font-weight: 400;
+}
+
+.stance-block__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 0;
+}
+
+.stance-block__list li {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--color-text-sub);
+    padding-left: 1.1rem;
+    position: relative;
+}
+
+.stance-block__list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-indigo);
+    opacity: 0.6;
+}
+
+.stance-block__list li strong {
+    color: var(--color-text-main);
+    font-weight: 400;
+}
+
+[data-theme="dark"] .stance-block {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Work Note — 制作のポイント callout */
+.work-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    padding: 0.65rem 0.9rem;
+    background: rgba(99, 102, 241, 0.07);
+    border-left: 3px solid var(--color-indigo);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-text-sub);
+}
+
+.work-note i {
+    color: var(--color-indigo);
+    flex-shrink: 0;
+    margin-top: 0.15em;
+}
+
+[data-theme="dark"] .work-note {
+    background: rgba(99, 102, 241, 0.12);
+}
