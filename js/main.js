@@ -302,3 +302,30 @@ function initFooterReveal() {
   checkFooter();
 }
 
+// WORKS category filter
+function initWorksFilter() {
+  const filterBtns = document.querySelectorAll('.works-filter__btn');
+  if (!filterBtns.length) return;
+
+  // Wait for work-card custom elements to render
+  const applyFilter = (category) => {
+    document.querySelectorAll('#works-grid work-card').forEach(card => {
+      const match = category === 'all' || card.getAttribute('data-category') === category;
+      card.style.display = match ? '' : 'none';
+    });
+  };
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.filter);
+    });
+  });
+}
+
+// Defer filter init until custom elements are defined
+if (document.querySelector('.works-filter')) {
+  customElements.whenDefined('work-card').then(initWorksFilter);
+}
+

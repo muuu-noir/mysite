@@ -195,7 +195,7 @@ class SiteButton extends HTMLElement {
 
 /**
  * Work Card Component
- * <work-card img="src" title="Title" subtitle="Sub" href="url">Description</work-card>
+ * <work-card img="src" title="Title" subtitle="Sub" href="url" role="担当範囲" result="成果">Description</work-card>
  */
 class WorkCard extends HTMLElement {
   connectedCallback() {
@@ -203,7 +203,15 @@ class WorkCard extends HTMLElement {
     const title = this.getAttribute('title') || '';
     const subtitle = this.getAttribute('subtitle') || '';
     const href = this.getAttribute('href') || '';
+    const role = this.getAttribute('role') || '';
+    const result = this.getAttribute('result') || '';
     const description = this.innerHTML;
+
+    const metaHtml = (role || result) ? `
+      <dl class="work-meta">
+        ${role   ? `<div class="work-meta__item"><dt>担当</dt><dd>${role}</dd></div>` : ''}
+        ${result ? `<div class="work-meta__item"><dt>成果</dt><dd>${result}</dd></div>` : ''}
+      </dl>` : '';
 
     this.innerHTML = `
       <div class="glass-card reveal flex-grid">
@@ -216,6 +224,7 @@ class WorkCard extends HTMLElement {
           <h3>${title}</h3>
           <p class="sub-title">${subtitle}</p>
           <p>${description}</p>
+          ${metaHtml}
           <site-button href="${href}" type="cta" target="_blank">作品を見る</site-button>
         </div>
       </div>
@@ -266,6 +275,36 @@ class InfoTable extends HTMLElement {
   }
 }
 
+/**
+ * Floating CTA Button
+ * <floating-cta href="contact.html">お問い合わせ</floating-cta>
+ * Hides automatically on the contact page.
+ */
+class FloatingCTA extends HTMLElement {
+  connectedCallback() {
+    const href = this.getAttribute('href') || 'contact.html';
+    const label = this.textContent.trim() || 'お問い合わせ';
+
+    // Don't render on the contact page itself
+    if (window.location.pathname.endsWith('contact.html')) return;
+
+    this.innerHTML = `
+      <a href="${href}" class="floating-cta" aria-label="${label}">
+        <i class="fa-regular fa-envelope floating-cta__icon"></i>
+        <span class="floating-cta__label">${label}</span>
+      </a>
+    `;
+
+    // Reveal after a short delay for a polished entrance
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const btn = this.querySelector('.floating-cta');
+        if (btn) btn.classList.add('floating-cta--visible');
+      }, 800);
+    });
+  }
+}
+
 customElements.define('site-header', SiteHeader);
 customElements.define('site-footer', SiteFooter);
 customElements.define('section-title', SectionTitle);
@@ -273,3 +312,4 @@ customElements.define('glass-card', GlassCard);
 customElements.define('site-button', SiteButton);
 customElements.define('work-card', WorkCard);
 customElements.define('info-table', InfoTable);
+customElements.define('floating-cta', FloatingCTA);
