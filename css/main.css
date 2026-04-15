@@ -2795,6 +2795,14 @@ iframe[id^="twitter-widget-"] {
     text-align: center;
 }
 
+.intro-one-liner {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 300;
+    color: var(--color-text-main);
+    margin-bottom: 1.4rem;
+    line-height: 1.6;
+}
+
 .intro-lead {
     font-weight: 400;
     margin-bottom: 2.5rem;
