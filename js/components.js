@@ -241,7 +241,7 @@ class WorkCard extends HTMLElement {
           ${metaHtml}
           ${noteHtml}
           <div class="work-actions">
-            <site-button href="${href}" type="cta" target="_blank">作品を見る</site-button>
+            <site-button href="${href}" type="more" target="_blank">作品を見る</site-button>
             ${contactHtml}
           </div>
         </div>
