@@ -2077,53 +2077,68 @@ iframe[id^="twitter-widget-"] {
 }
 
 /* Contact examples & reply note */
+/* Contact examples & reply note (Flattened version) */
 .contact-examples {
-    max-width: 700px;
-    margin: 0 auto 2rem;
-    padding: 1.75rem 2rem;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    backdrop-filter: var(--glass-blur);
+    max-width: 850px;
+    margin: 0 auto 3.5rem;
+    padding: 0;
+    background: none;
+    border: none;
+    backdrop-filter: none;
+    text-align: center;
 }
 
 .contact-examples__heading {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-sub);
-    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--color-indigo);
+    margin-bottom: 2rem;
+    opacity: 0.8;
 }
 
 .contact-examples__list {
     list-style: none;
     display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    margin-bottom: 1.25rem;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 .contact-examples__list li {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-    font-size: 0.88rem;
+    gap: 0.8rem;
+    font-size: 0.82rem;
+    line-height: 1.6;
     color: var(--color-text-main);
+    max-width: 220px;
+    flex: 1;
 }
 
 .contact-examples__list li i {
+    font-size: 1.25rem;
     color: var(--color-indigo);
-    width: 1rem;
-    text-align: center;
-    flex-shrink: 0;
+    opacity: 0.9;
+    background: var(--glass-bg);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
 }
 
 .contact-reply-note {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--color-text-sub);
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    gap: 0.45rem;
+    opacity: 0.8;
 }
 
 /* Contact page layout */
