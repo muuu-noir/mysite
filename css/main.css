@@ -3148,6 +3148,41 @@ pre code {
     white-space: pre;
 }
 
+/* For-clients divider */
+.for-clients-divider {
+    max-width: var(--content-width, 900px);
+    margin: 4rem auto 0;
+    padding: 1.4rem 2rem;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.for-clients-divider__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-sub);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 99px;
+    padding: 0.35rem 1rem;
+}
+
+.for-clients-divider__label i {
+    color: var(--color-indigo);
+    font-size: 0.7rem;
+}
+
+.for-clients-divider__note {
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    color: var(--color-text-sub);
+}
+
 /* Stance Block — 制作スタンス */
 .stance-block {
     margin-top: 2rem;
