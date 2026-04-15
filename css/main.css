@@ -292,6 +292,17 @@ section {
     text-align: center;
 }
 
+.hero-tagline {
+    font-family: "Outfit", sans-serif;
+    color: var(--color-text-sub);
+    font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+    margin-top: 1rem;
+    letter-spacing: 0.25em;
+    font-weight: 300;
+    text-align: center;
+    opacity: 0.75;
+}
+
 .hero+section {
     margin-top: 8rem !important;
     /* 絶対的な余白を保証 */
@@ -2065,6 +2076,56 @@ iframe[id^="twitter-widget-"] {
     box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
 }
 
+/* Contact examples & reply note */
+.contact-examples {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    padding: 1.75rem 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: var(--glass-blur);
+}
+
+.contact-examples__heading {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-sub);
+    margin-bottom: 1rem;
+}
+
+.contact-examples__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1.25rem;
+}
+
+.contact-examples__list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--color-text-main);
+}
+
+.contact-examples__list li i {
+    color: var(--color-indigo);
+    width: 1rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.contact-reply-note {
+    font-size: 0.8rem;
+    color: var(--color-text-sub);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
 /* Contact page layout */
 .contact-intro {
     text-align: center;
@@ -2107,9 +2168,74 @@ iframe[id^="twitter-widget-"] {
     font-size: 0.9rem;
 }
 
+/* Work card meta (role / result) */
+.work-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0.85rem 0 1.1rem;
+    padding: 0.75rem 1rem;
+    border-left: 2px solid var(--color-indigo);
+    background: var(--glass-bg);
+    border-radius: 0 8px 8px 0;
+}
+
+.work-meta__item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.work-meta__item dt {
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--color-indigo);
+    font-weight: 500;
+    min-width: 2.5rem;
+}
+
+.work-meta__item dd {
+    color: var(--color-text-sub);
+}
+
 /* ========================================
    Index page layout
    ======================================== */
+
+/* Works filter tabs */
+.works-filter {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.works-filter__btn {
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-sub);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.works-filter__btn:hover {
+    border-color: var(--color-indigo);
+    color: var(--color-indigo);
+}
+
+.works-filter__btn.active {
+    background: var(--grad-main);
+    border-color: transparent;
+    color: #fff;
+}
+
 .works-grid {
     display: grid;
     gap: 12rem;
@@ -2157,6 +2283,56 @@ iframe[id^="twitter-widget-"] {
 
 .intro-text {
     max-width: 650px;
+}
+
+/* Introduction pillars */
+.intro-pillars {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.intro-pillar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 1.1rem 1.4rem;
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    min-width: 130px;
+    flex: 1;
+    max-width: 180px;
+    text-align: center;
+    transition: border-color 0.25s, transform 0.25s;
+}
+
+.intro-pillar:hover {
+    border-color: var(--color-indigo);
+    transform: translateY(-3px);
+}
+
+.intro-pillar__icon {
+    font-size: 1.1rem;
+    color: var(--color-indigo);
+}
+
+.intro-pillar__title {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-text-main);
+    letter-spacing: 0.03em;
+}
+
+.intro-pillar__desc {
+    font-size: 0.68rem;
+    color: var(--color-text-sub);
+    line-height: 1.5;
 }
 
 .intro-body {
@@ -2452,6 +2628,61 @@ pre {
     padding: 1.2rem 1.5rem;
     overflow-x: auto;
     margin-top: 1rem;
+}
+
+/* ----------------------------------------- */
+/* Floating CTA Button                       */
+/* ----------------------------------------- */
+
+.floating-cta {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 900;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--grad-main);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.25s ease, padding 0.25s ease;
+    pointer-events: none;
+}
+
+.floating-cta--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.floating-cta:hover {
+    box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
+    transform: translateY(-2px);
+}
+
+.floating-cta__icon {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .floating-cta {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        padding: 0.75rem;
+        border-radius: 50%;
+    }
+    .floating-cta__label {
+        display: none;
+    }
 }
 
 pre code {

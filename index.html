@@ -101,6 +101,7 @@
             <div class="hero-content reveal">
                 <h1>396 F<span class="jump-o">O</span>LIO</h1>
                 <p class="sub-title">Design & Programming & Art & Writing</p>
+                <p class="hero-tagline">業務自動化 / Web制作 / ブランディングデザイン</p>
             </div>
         </section>
 
@@ -117,6 +118,23 @@
                         『効率化で時間を作り、デザインで時間を整え、アートで時間を愛でる。』</p>
                     <p>業務自動化からWebサイト構築、ブランディングデザインまで——複雑な課題を、動く仕組みと美しい形に変えるデザインエンジニアです。</p>
                 </div>
+                <div class="intro-pillars">
+                    <div class="intro-pillar">
+                        <i class="fa-solid fa-gears intro-pillar__icon"></i>
+                        <span class="intro-pillar__title">業務自動化</span>
+                        <span class="intro-pillar__desc">Python / JS でワークフロー設計</span>
+                    </div>
+                    <div class="intro-pillar">
+                        <i class="fa-solid fa-globe intro-pillar__icon"></i>
+                        <span class="intro-pillar__title">Web制作</span>
+                        <span class="intro-pillar__desc">企画・設計・実装を一気通貫で</span>
+                    </div>
+                    <div class="intro-pillar">
+                        <i class="fa-solid fa-swatchbook intro-pillar__icon"></i>
+                        <span class="intro-pillar__title">ブランディング</span>
+                        <span class="intro-pillar__desc">世界観・言語・ビジュアルを統合</span>
+                    </div>
+                </div>
                 <div class="page-cta">
                     <site-button href="about.html" type="more">LEARN MORE</site-button>
                 </div>
@@ -126,18 +144,33 @@
         <!-- Works Section -->
         <section id="WORKS" class="container">
             <section-title title="WORKS" reveal></section-title>
-            <div class="works-grid">
+            <div class="works-filter" role="tablist" aria-label="WORKSカテゴリ絞り込み">
+                <button class="works-filter__btn active" data-filter="all">ALL</button>
+                <button class="works-filter__btn" data-filter="design">DESIGN</button>
+                <button class="works-filter__btn" data-filter="engineering">ENGINEERING</button>
+                <button class="works-filter__btn" data-filter="art">ART</button>
+            </div>
+            <div class="works-grid" id="works-grid">
                 <work-card img="img/works/works_design.png" title="Design" subtitle="Solving Problems"
-                    href="https://fori.io/momoko-tz0402">
+                    href="https://fori.io/momoko-tz0402"
+                    role="UI/UX設計・ビジュアルデザイン・情報設計"
+                    result="視認性・操作性の向上、ブランド印象の統一"
+                    data-category="design">
                     情報の解像度を高め、使い手にとって心地よい「時間」を整えます。機能美と直感的な心地よさが共存するデザインを提供いたします。
                 </work-card>
 
                 <work-card img="img/works/works_programming.png" title="Engineering" subtitle="Automation & Logic"
-                    href="https://github.com/mog147/mysite">
+                    href="https://github.com/mog147/mysite"
+                    role="要件定義・設計・実装・運用"
+                    result="反復作業の削減、開発・運用コストの最適化"
+                    data-category="engineering">
                     PythonやJavaScript等を駆使した業務自動化・ワークフロー設計。ロジカルなアプローチで時間を創出し、持続可能なクリエイティブ環境を構築します。
                 </work-card>
 
-                <work-card img="img/works/works_art.png" title="Art" subtitle="Embracing Time" href="gallery.html">
+                <work-card img="img/works/works_art.png" title="Art" subtitle="Embracing Time" href="gallery.html"
+                    role="コンセプト・制作・発表"
+                    result="時間と感情をテーマとした表現活動の継続的な発信"
+                    data-category="art">
                     移ろう時間をテーマに、言葉にならない感情を視覚的な対話として形にします。
                 </work-card>
             </div>
@@ -207,6 +240,7 @@
         </section>
     </main>
     <site-footer></site-footer>
+    <floating-cta href="contact.html">お問い合わせ</floating-cta>
 
 
 </body>
