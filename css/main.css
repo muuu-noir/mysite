@@ -3221,6 +3221,12 @@ pre code {
     margin-top: 0.15em;
 }
 
+.work-note a {
+    color: var(--color-indigo);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 [data-theme="dark"] .work-note {
     background: rgba(99, 102, 241, 0.12);
 }
