@@ -2485,7 +2485,9 @@ iframe[id^="twitter-widget-"] {
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-top: 0.5rem;
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
 }
 
 .work-contact-cta {
