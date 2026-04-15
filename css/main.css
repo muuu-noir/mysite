@@ -2168,6 +2168,343 @@ iframe[id^="twitter-widget-"] {
     font-size: 0.9rem;
 }
 
+/* ----------------------------------------- */
+/* Services grid (about.html)               */
+/* ----------------------------------------- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.25rem;
+}
+
+.service-card {
+    position: relative;
+    overflow: hidden;
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* gradient top bar — slides in on hover */
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--grad-main);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+.service-card:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(99, 102, 241, 0.1);
+}
+
+.service-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+/* icon in a rounded box */
+.service-card__icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.12) 100%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--color-indigo);
+    flex-shrink: 0;
+    transition: background 0.3s, color 0.3s;
+}
+
+.service-card:hover .service-card__icon {
+    background: var(--grad-main);
+    color: #fff;
+}
+
+.service-card__title {
+    font-size: 0.92rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-text-main);
+    line-height: 1.4;
+}
+
+.service-card__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1;
+}
+
+.service-card__list li {
+    font-size: 0.78rem;
+    color: var(--color-text-sub);
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.55;
+}
+
+/* gradient dot bullet */
+.service-card__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--grad-main);
+    opacity: 0.6;
+}
+
+.service-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.service-card__meta > div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+/* pill badge */
+.service-card__meta dt {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.12));
+    color: var(--color-indigo);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 50px;
+    margin-top: 0.1rem;
+}
+
+.service-card__meta dd {
+    color: var(--color-text-sub);
+}
+
+/* ----------------------------------------- */
+/* Flow timeline (about.html)               */
+/* ----------------------------------------- */
+.flow-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+/* ---- mobile: vertical line ---- */
+.flow-timeline::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: 28px;
+    width: 1px;
+    background: linear-gradient(to bottom,
+        rgba(99, 102, 241, 0.45),
+        rgba(168, 85, 247, 0.45));
+    pointer-events: none;
+}
+
+.flow-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding-bottom: 1.75rem;
+    position: relative;
+}
+
+.flow-item--last { padding-bottom: 0; }
+
+/* step number circle */
+.flow-item__marker {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--grad-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.flow-item__marker--end {
+    background: var(--color-surface);
+    border: 2px solid var(--color-indigo);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.flow-item__marker span {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.04em;
+}
+
+.flow-item__marker--end span { color: var(--color-indigo); }
+
+.flow-item__content {
+    flex: 1;
+    padding: 0.85rem 1.2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    backdrop-filter: var(--glass-blur);
+    margin-top: 0.2rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.flow-item__content:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.07);
+}
+
+.flow-item__title {
+    font-size: 0.86rem;
+    font-weight: 400;
+    color: var(--color-text-main);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.01em;
+}
+
+.flow-item__desc {
+    font-size: 0.76rem;
+    color: var(--color-text-sub);
+    line-height: 1.75;
+}
+
+/* ---- desktop: horizontal stepper ---- */
+@media (min-width: 700px) {
+    .flow-timeline {
+        flex-direction: row;
+        align-items: flex-start;
+        max-width: 100%;
+        gap: 0;
+    }
+
+    /* hide vertical line, use per-step ::after instead */
+    .flow-timeline::before { display: none; }
+
+    .flow-item {
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 0;
+        gap: 0;
+    }
+
+    /* horizontal connector: right edge of this marker → center of next */
+    .flow-item:not(.flow-item--last)::after {
+        content: '';
+        position: absolute;
+        top: 19px;                        /* center of 40px marker */
+        left: calc(50% + 20px);           /* right edge of this marker */
+        width: calc(100% - 20px);         /* extends to center of next item */
+        height: 1px;
+        background: linear-gradient(to right,
+            rgba(99, 102, 241, 0.45),
+            rgba(168, 85, 247, 0.45));
+        pointer-events: none;
+    }
+
+    .flow-item__marker {
+        margin-bottom: 1.1rem;
+    }
+
+    /* hover: lift marker */
+    .flow-item:hover .flow-item__marker {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    /* content: clean text, no box */
+    .flow-item__content {
+        background: transparent;
+        border: none;
+        backdrop-filter: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0 0.5rem;
+        margin-top: 0;
+    }
+
+    .flow-item__content:hover {
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    .flow-item__title {
+        font-size: 0.82rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .flow-item__desc {
+        font-size: 0.72rem;
+        line-height: 1.7;
+    }
+}
+
+/* ----------------------------------------- */
+/* Work card actions & contact CTA          */
+/* ----------------------------------------- */
+.work-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.work-contact-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--color-indigo);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+    padding-bottom: 1px;
+    white-space: nowrap;
+}
+
+.work-contact-cta:hover {
+    border-bottom-color: var(--color-indigo);
+}
+
 /* Work card meta (role / result) */
 .work-meta {
     display: flex;
