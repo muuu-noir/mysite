@@ -20,9 +20,9 @@ window.SITE_CONFIG = {
   },
 
   // Visitor Counter
-  counterTag: `<!-- Visitor Analytics Tag for https://momoko0402.web.fc2.com/ -->
+  counterTag: `<!-- Visitor Analytics Tag for https://mog147.github.io/ -->
 
-<!-- Visitor Analytics Tag for https://momoko0402.web.fc2.com/ -->
+<!-- Visitor Analytics Tag for https://mog147.github.io/ -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, doc, updateDoc, increment, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -39,7 +39,7 @@ window.SITE_CONFIG = {
   const auth = getAuth(app);
 
   signInAnonymously(auth).then(() => {
-    const docRef = doc(db, 'artifacts', 'c_b9ec481a8a59586b_AnalyticsApp.jsx-786', 'public', 'data', 'analytics_sites', 'https___momoko0402_web_fc2_com_');
+    const docRef = doc(db, 'artifacts', 'c_b9ec481a8a59586b_AnalyticsApp.jsx-786', 'public', 'data', 'analytics_sites', 'https___mog147_github_io_');
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const dateId = new Date().toISOString().split('T')[0];
 
@@ -50,12 +50,12 @@ window.SITE_CONFIG = {
       lastUpdated: serverTimestamp() 
     }).catch(() => {
       setDoc(docRef, { 
-        url: "https://momoko0402.web.fc2.com/", count: 1, mobile: isMobile ? 1 : 0, desktop: !isMobile ? 1 : 0, 
+        url: "https://mog147.github.io/", count: 1, mobile: isMobile ? 1 : 0, desktop: !isMobile ? 1 : 0, 
         lastUpdated: serverTimestamp(), createdAt: serverTimestamp() 
       });
     });
 
-    const dailyRef = doc(db, 'artifacts', 'c_b9ec481a8a59586b_AnalyticsApp.jsx-786', 'public', 'data', 'analytics_sites', 'https___momoko0402_web_fc2_com_', 'daily_stats', dateId);
+    const dailyRef = doc(db, 'artifacts', 'c_b9ec481a8a59586b_AnalyticsApp.jsx-786', 'public', 'data', 'analytics_sites', 'https___mog147_github_io_', 'daily_stats', dateId);
     setDoc(dailyRef, { 
       date: serverTimestamp(), dateString: dateId, count: increment(1), 
       mobile: isMobile ? increment(1) : increment(0), desktop: !isMobile ? increment(1) : increment(0) 
