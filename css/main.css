@@ -2108,7 +2108,7 @@ iframe[id^="twitter-widget-"] {
 .contact-examples__list li {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 0.8rem;
     font-size: 0.82rem;
     line-height: 1.6;
@@ -2116,6 +2116,12 @@ iframe[id^="twitter-widget-"] {
     max-width: 220px;
     flex: 1;
     text-align: center;
+}
+
+.contact-examples__list li span {
+    display: block;
+    text-align: center;
+    width: 100%;
 }
 
 .contact-examples__list li i {
@@ -2130,7 +2136,6 @@ iframe[id^="twitter-widget-"] {
     justify-content: center;
     border-radius: 50%;
     border: 1px solid var(--color-border);
-    align-self: center;
 }
 
 .contact-reply-note {

@@ -8,7 +8,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-BLHXZS4T3C');
     </script>
     <meta charset="UTF-8">
@@ -42,9 +41,7 @@
         }
     }
     </script>
-
 </head>
-
 
 <body>
     <site-header></site-header>
@@ -52,15 +49,7 @@
         <section class="container">
             <section-title title="CONTACT" center reveal></section-title>
 
-            <div class="contact-examples reveal">
-                <p class="contact-examples__heading">こんな連絡が嬉しいです</p>
-                <ul class="contact-examples__list">
-                    <li><i class="fa-regular fa-comments"></i>制作・技術についての相談やフィードバック</li>
-                    <li><i class="fa-solid fa-handshake"></i>コラボレーション・協業・共同制作の提案</li>
-                    <li><i class="fa-solid fa-pen-nib"></i>取材・インタビュー・登壇・執筆依頼</li>
-                </ul>
-                <p class="contact-reply-note"><i class="fa-regular fa-clock"></i> 通常 2〜3 営業日以内にご返信します。</p>
-            </div>
+            <contact-examples></contact-examples>
 
             <glass-card reveal class="contact-card-wrap">
                 <form id="contact-form"
@@ -89,42 +78,13 @@
                             <textarea class="form-input" id="field-message" name="entry.1370003883" rows="5" placeholder="メッセージ"></textarea>
                         </div>
 
-                        <button type="button" id="submit-btn" class="btn-submit" onclick="postToGoogle()">Send
-                            Message!</button>
+                        <button type="button" id="submit-btn" class="btn-submit" onclick="postToGoogle()">Send Message!</button>
                     </div>
                 </form>
+            </glass-card>
         </section>
     </main>
-
-    <script>
-        // フォームバリデーションの簡易実装
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('contact-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const requiredFields = form.querySelectorAll('[required]');
-
-            const checkForm = () => {
-                const allFilled = Array.from(requiredFields).every(f => f.value.trim() !== '');
-                submitBtn.classList.toggle('active', allFilled);
-            };
-
-            form.addEventListener('input', checkForm);
-        });
-
-        function postToGoogle() {
-            const form = document.getElementById('contact-form');
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                mode: 'no-cors'
-            }).finally(() => {
-                window.location.href = 'success.html';
-            });
-        }
-    </script>
-
     <site-footer></site-footer>
-
 </body>
 
 </html>

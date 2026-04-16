@@ -162,49 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hero.addEventListener('mouseleave', () => { if (heroBg) heroBg.style.transform = `scale(1) translate(0, 0)`; });
   }
 
-  // --- D. Global Tools (Lightbox, etc.) ---
-
-  const createLightbox = () => {
-    const lb = document.createElement('div');
-    lb.className = 'lightbox-overlay'; lb.id = 'lightbox';
-    lb.innerHTML = `
-      <div class="lightbox-close"><i class="fa fa-times"></i></div>
-      <div class="lightbox-content">
-        <img src="">
-        <div class="lightbox-caption"></div>
-      </div>`;
-    document.body.appendChild(lb);
-    const close = () => { lb.classList.remove('active'); setTimeout(() => lb.style.display = 'none', 400); };
-    lb.querySelector('.lightbox-close').addEventListener('click', close);
-    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-    return lb;
-  };
-  const lightbox = createLightbox();
-  window.openLightbox = (src, meta) => {
-    const img = lightbox.querySelector('img'); img.src = src;
-    const caption = lightbox.querySelector('.lightbox-caption');
-    if (meta && (meta.title || meta.description || meta.medium)) {
-      caption.innerHTML = `
-        ${meta.title ? `<div class="lightbox-caption-title">${meta.title}</div>` : ''}
-        ${meta.description ? `<div class="lightbox-caption-desc">${meta.description}</div>` : ''}
-        ${meta.medium ? `<div class="lightbox-caption-medium">${meta.medium}</div>` : ''}`;
-      caption.style.display = 'block';
-    } else {
-      caption.style.display = 'none';
-    }
-    lightbox.style.display = 'flex'; setTimeout(() => lightbox.classList.add('active'), 10);
-  };
-  document.addEventListener('click', (e) => {
-    if (e.target.tagName === 'IMG' && (e.target.closest('#gallery-grid') || e.target.closest('.gallery-grid'))) {
-      const meta = {
-        title: e.target.dataset.title || '',
-        description: e.target.dataset.description || '',
-        medium: e.target.dataset.medium || ''
-      };
-      window.openLightbox(e.target.src, meta);
-    }
-  });
 
   // --- E. Integrations ---
   const initIntegrations = () => {
@@ -229,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cnt && counterTag && !counterTag.includes('お嬢様、ここに')) cnt.innerHTML = counterTag;
   };
   initIntegrations();
+  initContactForm();
 });
 
 // =============================================
@@ -328,4 +286,33 @@ function initWorksFilter() {
 if (document.querySelector('.works-filter')) {
   customElements.whenDefined('work-card').then(initWorksFilter);
 }
+
+// =============================================
+// Contact Form
+// =============================================
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  const submitBtn = document.getElementById('submit-btn');
+  const requiredFields = form.querySelectorAll('[required]');
+
+  const checkForm = () => {
+    const allFilled = Array.from(requiredFields).every(f => f.value.trim() !== '');
+    submitBtn.classList.toggle('active', allFilled);
+  };
+
+  form.addEventListener('input', checkForm);
+
+  window.postToGoogle = () => {
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      mode: 'no-cors'
+    }).finally(() => {
+      window.location.href = 'success.html';
+    });
+  };
+}
+
 

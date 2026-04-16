@@ -320,6 +320,41 @@ class FloatingCTA extends HTMLElement {
   }
 }
 
+/**
+ * Contact Examples Component
+ * <contact-examples></contact-examples>
+ */
+class ContactExamples extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <div class="contact-examples reveal">
+        <p class="contact-examples__heading">こんな連絡が嬉しいです</p>
+        <ul class="contact-examples__list">
+          <li>
+            <i class="fa-regular fa-comments"></i>
+            <span>制作・技術についての相談やフィードバック</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-handshake"></i>
+            <span>コラボレーション・協業・共同制作の提案</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-pen-nib"></i>
+            <span>取材・インタビュー・登壇・執筆依頼</span>
+          </li>
+        </ul>
+        <p class="contact-reply-note">
+          <i class="fa-regular fa-clock"></i> 通常 2〜3 営業日以内にご返信します。
+        </p>
+      </div>
+    `;
+
+    if (window.revealObserver) {
+      window.revealObserver.observe(this.querySelector('.contact-examples'));
+    }
+  }
+}
+
 customElements.define('site-header', SiteHeader);
 customElements.define('site-footer', SiteFooter);
 customElements.define('section-title', SectionTitle);
