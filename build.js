@@ -4,7 +4,7 @@ const matter = require('gray-matter');
 const { marked } = require('marked');
 const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
 
-const SITE_URL = 'https://mog147.github.io/mysite';
+const SITE_URL = 'https://mog147.github.io';
 const POSTS_DIR = path.join(__dirname, 'blog', 'posts');
 const TEMPLATE_PATH = path.join(__dirname, 'blog', '_template.html');
 const OUTPUT_DIR = path.join(__dirname, 'blog');
