@@ -2115,6 +2115,7 @@ iframe[id^="twitter-widget-"] {
     color: var(--color-text-main);
     max-width: 220px;
     flex: 1;
+    text-align: center;
 }
 
 .contact-examples__list li i {
