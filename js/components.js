@@ -28,7 +28,7 @@ class SiteHeader extends HTMLElement {
               <li><a href="index.html#WORKS">WORKS</a></li>
               <li><a href="news.html">NEWS</a></li>
               <li><a href="about.html">ABOUT</a></li>
-              <li><a href="gallery.html">GALLERY</a></li>
+              <li><a href="https://mog147.github.io/formaldehyde/" target="_blank" rel="noopener">GALLERY</a></li>
               <li><a href="contact.html">CONTACT</a></li>
             </ul>
           </nav>
