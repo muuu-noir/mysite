@@ -1,4 +1,5 @@
 .DS_Store
+memo/
 js/config.js
 node_modules/
 dist/
