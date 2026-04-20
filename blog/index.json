@@ -1,5 +1,15 @@
 [
   {
+    "slug": "2026-04-20-automation-and-time",
+    "title": "100時間を返してもらった日",
+    "date": "2026-04-20",
+    "dateFormatted": "2026.04.20",
+    "category": "automation",
+    "description": "30,000件のデータを手で処理していた。Pythonで自動化したとき、時間が戻ってきた感覚と、その先に見えたものについて。",
+    "image": "img/blog/og/2026-04-20-automation-and-time.png",
+    "url": "blog/2026-04-20-automation-and-time.html"
+  },
+  {
     "slug": "2025-08-22-watercolor-experiment",
     "title": "水彩、はじめての滲み",
     "date": "2025-08-22",

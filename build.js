@@ -1,8 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const matter = require('gray-matter');
-const { marked } = require('marked');
-const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import matter from 'gray-matter';
+import { marked } from 'marked';
+import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SITE_URL = 'https://mog147.github.io';
 const POSTS_DIR = path.join(__dirname, 'blog', 'posts');
@@ -216,7 +219,7 @@ for (const file of mdFiles) {
         dateFormatted,
         category: fm.category || '',
         description: fm.description || '',
-        image: fm.image || '',
+        image: fm.image || `img/blog/og/${slug}.png`,
         url: `blog/${htmlFilename}`
     });
 }
@@ -232,7 +235,6 @@ console.log(`Generated: blog/index.json (${articles.length} articles)`);
 updateSitemap(articles);
 
 function updateSitemap(articles) {
-    // Read existing sitemap
     let sitemap = fs.readFileSync(SITEMAP_PATH, 'utf-8');
 
     // Remove any existing blog entries
