@@ -6,23 +6,23 @@ window.SITE_CONFIG = {
   newsSheetUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSv2LsjAJiTj68L-xjW483uo8dBOqgQ8WZOVbwvSII_zlvUcWhHoXO9DB_AUqwqfJaWGFA1YLKo8OMR/pub?gid=234492263&single=true&output=csv",
 
   // Twitter (X)
-  twitterId: "mog147_2",
+  twitterId: "muuu_noir",
 
   // Instagram
-  instagramId: "mogmog_atelier",
-  instagramLink: "https://www.instagram.com/mogmog_atelier/",
+  instagramId: "muuu_noir",
+  instagramLink: "https://www.instagram.com/muuu_noir/",
 
   // Featured Content
   featuredTweet: {
     text: "論理と感性の交差点で、目に見えない価値を形にする。私のつくるものが、誰かの日常に静かな驚きと美しさを添えられますように。 #DesignEngineer #396FOLIO",
     date: "2026.02.11",
-    link: "https://x.com/mog147_2/status/2021394354901020891"
+    link: "https://x.com/muuu_noir"
   },
 
   // Visitor Counter
-  counterTag: `<!-- Visitor Analytics Tag for https://mog147.github.io/ -->
+  counterTag: `<!-- Visitor Analytics Tag for https://muuu-noir.github.io/mysite/ -->
 
-<!-- Visitor Analytics Tag for https://mog147.github.io/ -->
+<!-- Visitor Analytics Tag for https://muuu-noir.github.io/mysite/ -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, doc, updateDoc, increment, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -50,7 +50,7 @@ window.SITE_CONFIG = {
       lastUpdated: serverTimestamp() 
     }).catch(() => {
       setDoc(docRef, { 
-        url: "https://mog147.github.io/", count: 1, mobile: isMobile ? 1 : 0, desktop: !isMobile ? 1 : 0, 
+        url: "https://muuu-noir.github.io/mysite/", count: 1, mobile: isMobile ? 1 : 0, desktop: !isMobile ? 1 : 0, 
         lastUpdated: serverTimestamp(), createdAt: serverTimestamp() 
       });
     });

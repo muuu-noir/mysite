@@ -28,7 +28,7 @@ class SiteHeader extends HTMLElement {
               <li><a href="index.html#WORKS">WORKS</a></li>
               <li><a href="news.html">NEWS</a></li>
               <li><a href="about.html">ABOUT</a></li>
-              <li><a href="https://mog147.github.io/formaldehyde/" target="_blank" rel="noopener">GALLERY</a></li>
+              <li><a href="https://muuu-noir.github.io/formaldehyde/" target="_blank" rel="noopener">GALLERY</a></li>
               <li><a href="contact.html">CONTACT</a></li>
             </ul>
           </nav>
@@ -106,9 +106,9 @@ class SiteFooter extends HTMLElement {
         <div class="container footer-minimal">
           <div class="footer-content">
             <nav class="footer-sns">
-              <a href="https://github.com/mog147/mog147.github.io" target="_blank"><i class="fa-brands fa-github"></i></a>
+              <a href="https://github.com/muuu-noir/mysite" target="_blank"><i class="fa-brands fa-github"></i></a>
               <a href="https://www.linkedin.com/in/momoko-tezuka" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-              <a href="https://note.com/mog_0147/" target="_blank"><i class="fa-regular fa-note-sticky"></i></a>
+              <a href="https://note.com/muuu_noir/" target="_blank"><i class="fa-regular fa-note-sticky"></i></a>
             </nav>
             <div class="footer-copy">MOMOKO TEZUKA | 396 FOLIO</div>
             <!-- Access Counter Tag Area (Invisible) -->
