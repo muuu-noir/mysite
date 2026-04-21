@@ -108,7 +108,7 @@ class SiteFooter extends HTMLElement {
           <div class="footer-content">
             <nav class="footer-sns">
               <a href="https://github.com/muuu-noir/mysite" target="_blank"><i class="fa-brands fa-github"></i></a>
-              <a href="https://www.linkedin.com/in/momoko-tezuka" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="https://www.linkedin.com/in/momoko-tezuka/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
               <a href="https://note.com/muuu_noir/" target="_blank"><i class="fa-regular fa-note-sticky"></i></a>
             </nav>
             <div class="footer-copy">MOMOKO TEZUKA | 396 FOLIO</div>
@@ -213,7 +213,7 @@ class WorkCard extends HTMLElement {
 
     const metaHtml = (role || result) ? `
       <dl class="work-meta">
-        ${role   ? `<div class="work-meta__item"><dt>担当</dt><dd>${role}</dd></div>` : ''}
+        ${role ? `<div class="work-meta__item"><dt>担当</dt><dd>${role}</dd></div>` : ''}
         ${result ? `<div class="work-meta__item"><dt>成果</dt><dd>${result}</dd></div>` : ''}
       </dl>` : '';
 
