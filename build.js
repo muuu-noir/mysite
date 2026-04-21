@@ -7,7 +7,7 @@ import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SITE_URL = 'https://mog147.github.io';
+const SITE_URL = 'https://muuu-noir.github.io/mysite';
 const POSTS_DIR = path.join(__dirname, 'blog', 'posts');
 const TEMPLATE_PATH = path.join(__dirname, 'blog', '_template.html');
 const OUTPUT_DIR = path.join(__dirname, 'blog');
