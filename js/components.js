@@ -4,12 +4,13 @@
 
 class SiteHeader extends HTMLElement {
   connectedCallback() {
+    const base = this.getAttribute('data-base') || '';
     this.innerHTML = `
       <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
       <header id="main-header">
         <div class="container header-container">
-          <a href="index.html" class="logo">396 FOLIO</a>
-          
+          <a href="${base}index.html" class="logo">396 FOLIO</a>
+
           <div class="header-actions">
             <button class="theme-toggle" aria-label="Toggle dark mode">
               <i class="fa-solid fa-moon"></i>
@@ -24,12 +25,12 @@ class SiteHeader extends HTMLElement {
 
           <nav class="main-nav">
             <ul class="nav-list">
-              <li><a href="index.html">TOP</a></li>
-              <li><a href="index.html#WORKS">WORKS</a></li>
-              <li><a href="news.html">NEWS</a></li>
-              <li><a href="about.html">ABOUT</a></li>
+              <li><a href="${base}index.html">TOP</a></li>
+              <li><a href="${base}index.html#WORKS">WORKS</a></li>
+              <li><a href="${base}news.html">NEWS</a></li>
+              <li><a href="${base}about.html">ABOUT</a></li>
               <li><a href="https://muuu-noir.github.io/formaldehyde/" target="_blank" rel="noopener">GALLERY</a></li>
-              <li><a href="contact.html">CONTACT</a></li>
+              <li><a href="${base}contact.html">CONTACT</a></li>
             </ul>
           </nav>
         </div>
