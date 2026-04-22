@@ -2175,8 +2175,7 @@ iframe[id^="twitter-widget-"] {
     padding: 1.75rem 1.5rem 1.5rem;
     border-radius: 16px;
     border: 1px solid var(--color-border);
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
+    background: var(--color-surface);
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
@@ -2370,10 +2369,9 @@ iframe[id^="twitter-widget-"] {
 .flow-item__content {
     flex: 1;
     padding: 0.85rem 1.2rem;
-    background: var(--glass-bg);
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 14px;
-    backdrop-filter: var(--glass-blur);
     margin-top: 0.2rem;
     transition: border-color 0.25s, box-shadow 0.25s;
 }
@@ -2552,8 +2550,7 @@ iframe[id^="twitter-widget-"] {
     padding: 2rem 1.75rem 1.5rem;
     border-radius: 18px;
     border: 1px solid var(--color-border);
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
+    background: var(--color-surface);
     text-decoration: none;
     color: inherit;
     position: relative;
@@ -2750,8 +2747,7 @@ iframe[id^="twitter-widget-"] {
     padding: 1.1rem 1.4rem;
     border-radius: 14px;
     border: 1px solid var(--color-border);
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
+    background: var(--color-surface);
     min-width: 130px;
     flex: 1;
     max-width: 180px;
