@@ -1,6 +1,6 @@
 # 396 FOLIO - Official Portfolio
 
-![396 FOLIO Preview](img/hero/hero_main.jpg)
+![396 FOLIO Preview](img/hero/hero_main.webp)
 
 **Design Engineering / Workflow Design / Art**
 _A portfolio demonstrating the intersection of logical engineering and aesthetic time._

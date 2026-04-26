@@ -148,19 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- C. Hero & Visuals ---
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-  const hero = document.querySelector('.hero'), aura = document.querySelector('.hero-aura'), heroBg = document.querySelector('.hero-bg img');
-  if (hero && aura) {
-    hero.addEventListener('mousemove', (e) => {
-      const r = hero.getBoundingClientRect();
-      const x = e.clientX - r.left, y = e.clientY - r.top;
-      aura.style.left = `${x}px`; aura.style.top = `${y}px`;
-      if (heroBg) {
-        const mx = (x - r.width / 2) / 40, my = (y - r.height / 2) / 40;
-        heroBg.style.transform = `scale(1.1) translate(${mx * 0.5}px, ${my * 0.5}px)`;
-      }
-    });
-    hero.addEventListener('mouseleave', () => { if (heroBg) heroBg.style.transform = `scale(1) translate(0, 0)`; });
-  }
+  document.querySelector('.hero-aura');
 
 
   // --- E. Integrations ---
