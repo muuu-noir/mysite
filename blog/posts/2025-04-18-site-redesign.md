@@ -3,7 +3,7 @@ title: サイトデザインリニューアルしました
 date: 2025-04-18
 category: design
 description: 396 FOLIOのデザインを一新。グラスモーフィズムとミニマルデザインで、より洗練されたポートフォリオに生まれ変わりました。
-image: img/hero/hero_main.jpg
+image: img/hero/hero_main.webp
 ---
 
 ## リニューアルの背景

@@ -54,7 +54,7 @@
 }
 
 :root[data-theme="dark"] .hero-bg {
-    opacity: 0.15 !important;
+    opacity: 0.3 !important;
 }
 
 :root[data-theme="dark"] footer {
@@ -82,7 +82,7 @@
     }
 
     :root:not([data-theme="light"]) .hero-bg {
-        opacity: 0.15 !important;
+        opacity: 0.3 !important;
     }
 
     :root:not([data-theme="light"]) footer {
@@ -198,25 +198,22 @@ section {
     width: 100%;
     height: 100%;
     z-index: 1;
-    opacity: 0.3;
-    transform: scale(1);
-    animation: heroKenBurns 40s infinite alternate ease-in-out;
-    transition: transform 0.15s ease-out, opacity 1s ease-out;
-    /* マウス追従を滑らかに */
+    opacity: 0.5;
+}
+
+.hero-bg::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, var(--color-bg), transparent);
+    z-index: 1;
 }
 
 .hero-aura {
     display: none;
-}
-
-@keyframes heroKenBurns {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.1);
-    }
 }
 
 .hero-content {
@@ -240,8 +237,23 @@ section {
 .jump-o {
     display: inline-block;
     animation: jumpOnce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
-    /* revealアニメーションが終わった頃にぴょんとはねる */
     will-change: transform;
+    position: relative;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-text-main);
+}
+
+.jump-o::before {
+    content: '';
+    position: absolute;
+    top: 18%;
+    left: 15%;
+    width: 70%;
+    height: 64%;
+    border-radius: 50%;
+    background: url('../img/hero/pencil_o.webp') center/cover no-repeat;
+    opacity: 0.6;
+    z-index: -1;
 }
 
 @keyframes jumpOnce {
@@ -405,13 +417,21 @@ p {
 }
 
 @media (max-width: 850px) {
+    .jump-o {
+        color: var(--color-text-main);
+        -webkit-text-stroke: 0;
+    }
+
+    .jump-o::before {
+        display: none;
+    }
+
     .content-block {
         min-width: 100%;
     }
 
     .gallery-thumb-wrap {
         width: 200px;
-        /* スマホでは少し小ぶりにして親しみやすく */
         height: 200px;
         margin-bottom: 1rem;
     }
@@ -806,7 +826,7 @@ footer {
 }
 
 .gallery-thumb-wrap:hover img {
-    transform: scale(1.08);
+    transform: scale(1.03);
 }
 
 /* --- Avatar Hover Glow --- */
@@ -2732,7 +2752,7 @@ iframe[id^="twitter-widget-"] {
 /* Introduction pillars */
 .intro-pillars {
     display: flex;
-    gap: 1rem;
+    gap: 1.2rem;
     margin-top: 2rem;
     margin-bottom: 0.5rem;
     flex-wrap: wrap;
@@ -2743,25 +2763,29 @@ iframe[id^="twitter-widget-"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.35rem;
-    padding: 1.1rem 1.4rem;
-    border-radius: 14px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    min-width: 130px;
+    gap: 0.45rem;
+    padding: 1.4rem 1.6rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    min-width: 140px;
     flex: 1;
-    max-width: 180px;
+    max-width: 200px;
     text-align: center;
-    transition: border-color 0.25s, transform 0.25s;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: border-color 0.25s, transform 0.3s, box-shadow 0.3s;
 }
 
 .intro-pillar:hover {
     border-color: var(--color-indigo);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .intro-pillar__icon {
-    font-size: 1.1rem;
+    font-size: 1.65rem;
     color: var(--color-indigo);
 }
 
@@ -3329,3 +3353,4 @@ pre code {
 [data-theme="dark"] .work-note {
     background: rgba(110, 140, 171, 0.12);
 }
+
