@@ -2702,7 +2702,67 @@ iframe[id^="twitter-widget-"] {
 
 .works-grid {
     display: grid;
-    gap: 12rem;
+    gap: 3rem;
+}
+
+/* 1枚目: フル幅・画像を大きく */
+.works-grid work-card:first-child .glass-card {
+    flex-direction: column;
+    text-align: center;
+}
+
+.works-grid work-card:first-child .gallery-thumb-wrap {
+    width: 320px;
+    height: 320px;
+    margin: 0 auto 1rem;
+}
+
+/* 2・3枚目: 横並び */
+.works-grid work-card:not(:first-child) {
+    display: inline;
+}
+
+@media (min-width: 851px) {
+    .works-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .works-grid work-card:first-child {
+        grid-column: 1;
+    }
+
+    /* 2・3枚目を横並びにするラッパー的な振る舞い */
+    .works-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+
+    .works-grid work-card:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .works-grid work-card:first-child .gallery-thumb-wrap {
+        width: 400px;
+        height: 400px;
+    }
+
+    .works-grid work-card:not(:first-child) {
+        display: flex;
+    }
+
+    .works-grid work-card:not(:first-child) .glass-card {
+        flex-direction: column;
+        text-align: center;
+        flex: 1;
+    }
+
+    .works-grid work-card:not(:first-child) .gallery-thumb-wrap {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 1rem;
+    }
 }
 
 .sns-panel {
