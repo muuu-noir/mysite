@@ -291,6 +291,17 @@ section {
     text-align: center;
 }
 
+.hero-catchcopy {
+    font-family: "Outfit", sans-serif;
+    color: var(--color-text-sub);
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    margin-top: 2.5rem;
+    letter-spacing: 0.35em;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+}
+
 .hero-tagline {
     font-family: "Outfit", sans-serif;
     color: var(--color-text-sub);
