@@ -252,7 +252,7 @@ section {
     height: 64%;
     border-radius: 50%;
     background: url('../img/hero/pencil_o.webp') center/cover no-repeat;
-    opacity: 0.6;
+    opacity: 0.75;
     z-index: -1;
 }
 
@@ -281,7 +281,7 @@ section {
 .hero .sub-title {
     font-family: "Outfit", sans-serif;
     color: var(--color-text-sub);
-    font-size: clamp(0.75rem, 2vw, 0.85rem);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
     margin-top: 2.5rem;
     letter-spacing: 0.5em;
     font-weight: 300;
@@ -292,12 +292,12 @@ section {
 .hero-tagline {
     font-family: "Outfit", sans-serif;
     color: var(--color-text-sub);
-    font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+    font-size: clamp(0.75rem, 1.5vw, 0.8rem);
     margin-top: 1rem;
     letter-spacing: 0.25em;
     font-weight: 300;
     text-align: center;
-    opacity: 0.75;
+    opacity: 0.85;
 }
 
 .hero+section {
@@ -485,7 +485,7 @@ p {
 }
 
 .data-table td a:hover {
-    opacity: 0.6;
+    opacity: 0.75;
 }
 
 @media (max-width: 600px) {
@@ -519,7 +519,7 @@ p {
 .skill-icons img {
     width: 20px;
     height: 20px;
-    opacity: 0.7;
+    opacity: 0.85;
     filter: grayscale(20%);
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -583,7 +583,7 @@ p {
 }
 
 .btn-more:hover {
-    opacity: 0.6;
+    opacity: 0.75;
     transform: translateX(3px);
 }
 
@@ -648,7 +648,7 @@ header.scrolled {
     justify-content: center;
     font-size: 1.1rem;
     transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 .theme-toggle:hover {
@@ -720,7 +720,7 @@ footer {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    opacity: 0.6;
+    opacity: 0.75;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -735,7 +735,7 @@ footer {
     color: var(--color-text-sub);
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 /* --- Animations --- */
@@ -1448,10 +1448,10 @@ body.menu-open {
 
 .post-caption-medium {
     font-family: "Outfit", sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     letter-spacing: 0.1em;
     color: var(--color-indigo);
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 @media (max-width: 850px) {
@@ -1592,7 +1592,7 @@ body.menu-open {
 .lightbox-caption-medium {
     font-size: 0.75rem;
     color: var(--color-text-sub);
-    opacity: 0.7;
+    opacity: 0.8;
     letter-spacing: 0.05em;
 }
 
@@ -1690,7 +1690,7 @@ body.menu-open {
 
 .fallback-handle {
     font-size: 0.85rem;
-    opacity: 0.6;
+    opacity: 0.75;
 }
 
 .fallback-content {
@@ -1698,7 +1698,7 @@ body.menu-open {
     line-height: 1.7;
     margin-bottom: auto;
     padding-bottom: 2rem;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 .fallback-footer {
@@ -1706,7 +1706,7 @@ body.menu-open {
     justify-content: space-between;
     align-items: center;
     font-size: 0.85rem;
-    opacity: 0.5;
+    opacity: 0.7;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 1.5rem;
 }
@@ -1714,6 +1714,10 @@ body.menu-open {
 @media (max-width: 768px) {
     .twitter-container {
         grid-template-columns: 1fr;
+    }
+
+    .sns-fallback-card {
+        padding: 1.5rem;
     }
 }
 
@@ -2527,6 +2531,7 @@ iframe[id^="twitter-widget-"] {
     border-left: 2px solid var(--color-indigo);
     background: var(--glass-bg);
     border-radius: 0 8px 8px 0;
+    text-align: left;
 }
 
 .work-meta__item {
@@ -2539,7 +2544,7 @@ iframe[id^="twitter-widget-"] {
 
 .work-meta__item dt {
     flex-shrink: 0;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     letter-spacing: 0.08em;
     color: var(--color-indigo);
     font-weight: 500;
@@ -2567,7 +2572,7 @@ iframe[id^="twitter-widget-"] {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 2rem 1.75rem 1.5rem;
+    padding: 2rem 1.5rem 1.5rem;
     border-radius: 18px;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
@@ -2636,7 +2641,7 @@ iframe[id^="twitter-widget-"] {
 }
 
 .needs-card__points li {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     color: var(--color-text-sub);
     padding-left: 1rem;
     position: relative;
@@ -2758,6 +2763,12 @@ iframe[id^="twitter-widget-"] {
         flex: 1;
     }
 
+    .works-grid work-card:not(:first-child) .glass-card p,
+    .works-grid work-card:not(:first-child) .work-note,
+    .works-grid work-card:not(:first-child) .work-meta {
+        text-align: left;
+    }
+
     .works-grid work-card:not(:first-child) .gallery-thumb-wrap {
         width: 200px;
         height: 200px;
@@ -2857,7 +2868,7 @@ iframe[id^="twitter-widget-"] {
 }
 
 .intro-pillar__desc {
-    font-size: 0.68rem;
+    font-size: 0.73rem;
     color: var(--color-text-sub);
     line-height: 1.5;
 }
@@ -2892,7 +2903,9 @@ iframe[id^="twitter-widget-"] {
     font-size: 1rem;
     line-height: 2;
     margin-bottom: 3rem;
-    color: var(--color-text-main);
+    color: var(--color-indigo);
+    font-weight: 400;
+    letter-spacing: 0.04em;
 }
 
 .intro-achievements {
@@ -3396,6 +3409,7 @@ pre code {
     font-size: 0.82rem;
     line-height: 1.6;
     color: var(--color-text-sub);
+    text-align: left;
 }
 
 .work-note i {
