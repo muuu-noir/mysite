@@ -2731,24 +2731,24 @@ iframe[id^="twitter-widget-"] {
     gap: 3rem;
 }
 
-/* 1枚目: フル幅・画像を大きく */
-.works-grid work-card:first-child .glass-card {
-    flex-direction: column;
-    text-align: center;
-}
-
-.works-grid work-card:first-child .gallery-thumb-wrap {
-    width: 320px;
-    height: 320px;
-    margin: 0 auto 1rem;
-}
-
-/* 2・3枚目: 横並び */
-.works-grid work-card:not(:first-child) {
-    display: inline;
-}
-
 @media (min-width: 851px) {
+    /* 1枚目: フル幅・画像を大きく */
+    .works-grid work-card:first-child .glass-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .works-grid work-card:first-child .gallery-thumb-wrap {
+        width: 320px;
+        height: 320px;
+        margin: 0 auto 1rem;
+    }
+
+    /* 2・3枚目: 横並び */
+    .works-grid work-card:not(:first-child) {
+        display: inline;
+    }
+
     .works-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
