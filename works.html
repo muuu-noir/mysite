@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLHXZS4T3C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-BLHXZS4T3C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>DESIGN WORKS | 396 FOLIO</title>
+    <meta name="description" content="手塚桃子の制作実績一覧。チラシ・バナー・ロゴ・Webサイトなど、幅広いデザイン制作物をご覧いただけます。">
+    <meta property="og:title" content="DESIGN WORKS | 396 FOLIO">
+    <meta property="og:description" content="手塚桃子の制作実績一覧。チラシ・バナー・ロゴ・Webサイトなど。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://muuu-noir.github.io/mysite/works.html">
+    <meta property="og:image" content="https://muuu-noir.github.io/mysite/img/profile/profile_avatar.png">
+    <link rel="canonical" href="https://muuu-noir.github.io/mysite/works.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="img/profile/profile_avatar.png">
+    <link rel="apple-touch-icon" href="img/profile/profile_avatar.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print"
+        onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/config_v2.js"></script>
+    <script src="js/components.js" defer></script>
+    <script src="js/main.js" defer></script>
+
+    <style>
+        /* foriio Works Grid */
+        .foriio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .foriio-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .foriio-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .foriio-card__img {
+            width: 100%;
+            aspect-ratio: 688 / 424;
+            object-fit: cover;
+            display: block;
+            background: var(--color-border);
+        }
+
+        .foriio-card__body {
+            padding: 1.2rem 1.4rem;
+        }
+
+        .foriio-card__title {
+            font-family: "Inter", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--color-text-main);
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+
+        .foriio-card__cats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .foriio-card__cat {
+            font-family: "Outfit", sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: var(--color-indigo);
+            background: rgba(110, 140, 171, 0.08);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            font-weight: 400;
+        }
+
+        /* Filter */
+        .foriio-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .foriio-filter__btn {
+            font-family: "Outfit", sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            background: transparent;
+            color: var(--color-text-sub);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .foriio-filter__btn:hover {
+            color: var(--color-indigo);
+            border-color: var(--color-indigo);
+        }
+
+        .foriio-filter__btn.active {
+            background: var(--grad-main);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* Loading */
+        .foriio-loading {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--color-text-sub);
+            font-family: "Outfit", sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+        }
+
+        .foriio-loading::after {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 24px;
+            margin: 1rem auto 0;
+            border: 2px solid var(--color-border);
+            border-top-color: var(--color-indigo);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Lightbox */
+        .foriio-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            background: var(--lightbox-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            overflow-y: auto;
+            animation: fadeInLightbox 0.3s ease;
+        }
+
+        .foriio-lightbox.active {
+            display: block;
+        }
+
+        @keyframes fadeInLightbox {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .foriio-lightbox__close {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: var(--color-surface);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            color: var(--color-text-sub);
+            cursor: pointer;
+            z-index: 10001;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .foriio-lightbox__close:hover {
+            color: var(--color-text-main);
+            transform: scale(1.1);
+        }
+
+        .foriio-lightbox__inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 4rem 2rem 6rem;
+        }
+
+        .foriio-lightbox__title {
+            font-family: "Inter", sans-serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--color-text-main);
+            margin-bottom: 1rem;
+        }
+
+        .foriio-lightbox__meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .foriio-lightbox__images {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .foriio-lightbox__images img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .foriio-lightbox__desc {
+            font-size: 0.9rem;
+            line-height: 2;
+            color: var(--color-text-sub);
+            white-space: pre-line;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .foriio-lightbox__link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            font-family: "Outfit", sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: var(--color-indigo);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .foriio-lightbox__link:hover {
+            opacity: 0.6;
+        }
+
+        /* Count */
+        .foriio-count {
+            text-align: center;
+            font-family: "Outfit", sans-serif;
+            font-size: 0.8rem;
+            color: var(--color-text-sub);
+            letter-spacing: 0.1em;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .foriio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .foriio-lightbox__inner {
+                padding: 3rem 1.2rem 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <site-header></site-header>
+    <main id="main-content">
+        <section class="container">
+            <section-title title="DESIGN WORKS" subtitle="foriio Portfolio" center reveal></section-title>
+
+            <div class="foriio-filter" id="foriio-filter" role="tablist" aria-label="カテゴリ絞り込み">
+                <button class="foriio-filter__btn active" data-filter="all">ALL</button>
+            </div>
+
+            <div class="foriio-count" id="foriio-count"></div>
+
+            <div id="foriio-loading" class="foriio-loading">Loading works...</div>
+            <div class="foriio-grid" id="foriio-grid"></div>
+        </section>
+    </main>
+    <site-footer></site-footer>
+
+    <!-- Lightbox -->
+    <div class="foriio-lightbox" id="foriio-lightbox">
+        <button class="foriio-lightbox__close" id="lightbox-close" aria-label="閉じる">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="foriio-lightbox__inner" id="lightbox-inner"></div>
+    </div>
+
+    <script>
+        (function () {
+            const API_URL = 'https://api.foriio.com/api/v1/developer/works';
+            const TOKEN = '0bc34c887226302865633e9f74a83e36';
+            const FORIIO_PROFILE = 'https://fori.io/momoko-tz0402';
+
+            let allWorks = [];
+            let activeFilter = 'all';
+
+            async function fetchWorks() {
+                try {
+                    const res = await fetch(API_URL, {
+                        headers: {
+                            'token': TOKEN,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await res.json();
+                    allWorks = data.works || [];
+                    buildFilters();
+                    renderWorks();
+                } catch (e) {
+                    document.getElementById('foriio-loading').textContent = 'Failed to load works.';
+                }
+            }
+
+            function buildFilters() {
+                const cats = new Set();
+                allWorks.forEach(w => (w.category_list || []).forEach(c => cats.add(c)));
+                const filterEl = document.getElementById('foriio-filter');
+                Array.from(cats).sort().forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'foriio-filter__btn';
+                    btn.dataset.filter = cat;
+                    btn.textContent = cat;
+                    filterEl.appendChild(btn);
+                });
+
+                filterEl.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.foriio-filter__btn');
+                    if (!btn) return;
+                    filterEl.querySelectorAll('.foriio-filter__btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeFilter = btn.dataset.filter;
+                    renderWorks();
+                });
+            }
+
+            function renderWorks() {
+                const grid = document.getElementById('foriio-grid');
+                const loading = document.getElementById('foriio-loading');
+                const countEl = document.getElementById('foriio-count');
+                loading.style.display = 'none';
+
+                const filtered = activeFilter === 'all'
+                    ? allWorks
+                    : allWorks.filter(w => (w.category_list || []).includes(activeFilter));
+
+                countEl.textContent = filtered.length + ' works';
+
+                grid.innerHTML = filtered.map(w => `
+                    <div class="foriio-card" data-id="${w.id}">
+                        <img class="foriio-card__img" src="${w.thumbnail}" alt="${escapeHtml(w.title)}" loading="lazy">
+                        <div class="foriio-card__body">
+                            <div class="foriio-card__title">${escapeHtml(w.title)}</div>
+                            <div class="foriio-card__cats">
+                                ${(w.category_list || []).map(c => `<span class="foriio-card__cat">${escapeHtml(c)}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Card click -> lightbox
+                grid.querySelectorAll('.foriio-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const id = parseInt(card.dataset.id);
+                        const work = allWorks.find(w => w.id === id);
+                        if (work) openLightbox(work);
+                    });
+                });
+            }
+
+            function openLightbox(work) {
+                const lightbox = document.getElementById('foriio-lightbox');
+                const inner = document.getElementById('lightbox-inner');
+
+                const images = (work.images || []).map(img => {
+                    const src = img.urls?.detail || img.urls?.list || work.thumbnail;
+                    return `<img src="${src}" alt="${escapeHtml(work.title)}" loading="lazy">`;
+                }).join('');
+
+                inner.innerHTML = `
+                    <h3 class="foriio-lightbox__title">${escapeHtml(work.title)}</h3>
+                    <div class="foriio-lightbox__meta">
+                        ${(work.category_list || []).map(c => `<span class="foriio-card__cat">${escapeHtml(c)}</span>`).join('')}
+                    </div>
+                    <div class="foriio-lightbox__images">${images}</div>
+                    ${work.description ? `<div class="foriio-lightbox__desc">${escapeHtml(work.description)}</div>` : ''}
+                    <a href="${FORIIO_PROFILE}" target="_blank" rel="noopener" class="foriio-lightbox__link">
+                        View on foriio <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                `;
+
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                document.getElementById('foriio-lightbox').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+            document.getElementById('foriio-lightbox').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+            });
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                const d = document.createElement('div');
+                d.textContent = str;
+                return d.innerHTML;
+            }
+
+            fetchWorks();
+        })();
+    </script>
+</body>
+
+</html>
