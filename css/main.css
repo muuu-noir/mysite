@@ -448,6 +448,11 @@ p {
         height: 200px;
         margin-bottom: 1rem;
     }
+
+    .works-grid work-card:first-child .gallery-thumb-wrap {
+        width: 200px;
+        height: 200px;
+    }
 }
 
 /* --- Data Table (Unified Tone & Manner) --- */
