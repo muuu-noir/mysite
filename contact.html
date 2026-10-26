@@ -26,9 +26,17 @@
     <link rel="apple-touch-icon" href="img/profile/profile_avatar.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print" onload="this.media='all'" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400&family=Inter:wght@200;300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"
+        integrity="sha384-Rhhh6ZSam+ptQ2OzRSIzLpy/MTSmi4UyYSJoLvkOPx9pHpwnDkvFxGdRto0mDA9A"
+        crossorigin="anonymous" media="print"
+        onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g"
+        crossorigin="anonymous"
+        media="print" onload="this.media='all'">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/config_v2.js"></script>
     <script src="js/components.js" defer></script>
@@ -90,37 +98,42 @@
             </div>
 
             <div class="contact-form-section">
-            <glass-card reveal class="contact-card-wrap">
-                <form id="contact-form"
-                    action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfYEsQyqY1EzHRB7w8vg46BP_26vIJuk0lQjoJ_G1KD4qYslw/formResponse"
-                    method="POST">
-                    <p class="form-note">
-                        *は必須項目です。入力すると送信ボタンがアクティブになります。<br>
-                        <span class="text-sub">Fields marked with (*) are required.</span>
-                    </p>
+                <glass-card reveal class="contact-card-wrap">
+                    <form id="contact-form"
+                        action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfYEsQyqY1EzHRB7w8vg46BP_26vIJuk0lQjoJ_G1KD4qYslw/formResponse"
+                        method="POST">
+                        <p class="form-note">
+                            *は必須項目です。入力すると送信ボタンがアクティブになります。<br>
+                            <span class="text-sub">Fields marked with (*) are required.</span>
+                        </p>
 
-                    <div class="form-grid">
-                        <div>
-                            <label for="field-name" class="form-label">NAME *</label>
-                            <input required class="form-input" type="text" id="field-name" name="entry.1564263618" placeholder="お名前">
-                        </div>
-                        <div>
-                            <label for="field-email" class="form-label">EMAIL *</label>
-                            <input required class="form-input" type="email" id="field-email" name="entry.292870337" placeholder="メールアドレス">
-                        </div>
-                        <div>
-                            <label for="field-subject" class="form-label">SUBJECT *</label>
-                            <input required class="form-input" type="text" id="field-subject" name="entry.1735355409" placeholder="件名">
-                        </div>
-                        <div>
-                            <label for="field-message" class="form-label">MESSAGE</label>
-                            <textarea class="form-input" id="field-message" name="entry.1370003883" rows="5" placeholder="メッセージ"></textarea>
-                        </div>
+                        <div class="form-grid">
+                            <div>
+                                <label for="field-name" class="form-label">NAME *</label>
+                                <input required class="form-input" type="text" id="field-name" name="entry.1564263618"
+                                    placeholder="お名前">
+                            </div>
+                            <div>
+                                <label for="field-email" class="form-label">EMAIL *</label>
+                                <input required class="form-input" type="email" id="field-email" name="entry.292870337"
+                                    placeholder="メールアドレス">
+                            </div>
+                            <div>
+                                <label for="field-subject" class="form-label">SUBJECT *</label>
+                                <input required class="form-input" type="text" id="field-subject"
+                                    name="entry.1735355409" placeholder="件名">
+                            </div>
+                            <div>
+                                <label for="field-message" class="form-label">MESSAGE</label>
+                                <textarea class="form-input" id="field-message" name="entry.1370003883" rows="5"
+                                    placeholder="メッセージ"></textarea>
+                            </div>
 
-                        <button type="button" id="submit-btn" class="btn-submit" onclick="postToGoogle()">Send Message!</button>
-                    </div>
-                </form>
-            </glass-card>
+                            <button type="button" id="submit-btn" class="btn-submit" onclick="postToGoogle()">Send
+                                Message!</button>
+                        </div>
+                    </form>
+                </glass-card>
             </div>
         </section>
     </main>
