@@ -891,6 +891,15 @@ footer {
     }
 }
 
+.hero h1 .char.hero-char-0 { animation-delay: 0.30s; }
+.hero h1 .char.hero-char-1 { animation-delay: 0.36s; }
+.hero h1 .char.hero-char-2 { animation-delay: 0.42s; }
+.hero h1 .char.hero-char-3 { animation-delay: 0.48s; }
+.hero h1 .char.hero-char-4 { animation-delay: 0.54s; }
+.hero h1 .char.hero-char-5 { animation-delay: 0.60s; }
+.hero h1 .char.hero-char-6 { animation-delay: 0.66s; }
+.hero h1 .char.hero-char-7 { animation-delay: 0.72s; }
+
 /* --- Nav Link Animated Underline --- */
 .nav-list a {
     position: relative;

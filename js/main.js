@@ -205,9 +205,9 @@ function initHeroTextAnimation() {
     const html = original.replace(/(<[^>]+>)|(.)/g, (match, tag, char) => {
       if (tag) return tag; // keep HTML tags intact
       if (char === ' ') return ' ';
-      const delay = 0.3 + charIndex * 0.06;
+      const delayClass = `hero-char-${charIndex}`;
       charIndex++;
-      return `<span class="char" style="animation-delay:${delay}s">${char}</span>`;
+      return `<span class="char ${delayClass}">${char}</span>`;
     });
     heroH1.innerHTML = html;
   }
