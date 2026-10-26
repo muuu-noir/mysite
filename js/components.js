@@ -111,8 +111,6 @@ class SiteFooter extends HTMLElement {
               <a href="https://note.com/muuu_noir/" target="_blank"><i class="fa-regular fa-note-sticky"></i></a>
             </nav>
             <div class="footer-copy">MOMOKO TEZUKA | 396 FOLIO</div>
-            <!-- Access Counter Tag Area (Invisible) -->
-            <div id="access-counter" class="hidden-counter"></div>
           </div>
         </div>
       </footer>

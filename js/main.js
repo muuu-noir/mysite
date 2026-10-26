@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- E. Integrations ---
   const initIntegrations = () => {
     if (!window.SITE_CONFIG) return;
-    const { twitterId, counterTag, featuredTweet } = window.SITE_CONFIG;
+    const { twitterId, featuredTweet } = window.SITE_CONFIG;
     const soc = document.getElementById('SOCIAL');
     if (soc) {
       if (featuredTweet) {
@@ -170,8 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, 3000);
     }
-    const cnt = document.getElementById('access-counter');
-    if (cnt && counterTag && !counterTag.includes('お嬢様、ここに')) cnt.innerHTML = counterTag;
   };
   initIntegrations();
   initContactForm();

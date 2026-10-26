@@ -18,50 +18,5 @@ window.SITE_CONFIG = {
     date: "2026.02.11",
     link: "https://x.com/muuu_noir"
   },
-
-  // Visitor Counter
-  counterTag: `<!-- Visitor Analytics Tag for https://muuu-noir.github.io/mysite/ -->
-
-<!-- Visitor Analytics Tag for https://muuu-noir.github.io/mysite/ -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, doc, updateDoc, increment, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  
-  const firebaseConfig = { 
-    apiKey: "AIzaSyCGzBYbY_OCBacDJ8x7F0M333oYGSqTJi8", 
-    projectId: "my-site-analytics-993dc", 
-    appId: "1:973356323774:web:b2797526ac35ca259c9fef" 
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  signInAnonymously(auth).then(() => {
-    const docRef = doc(db, 'artifacts', 'c_b9ec481a8a59586b_AnalyticsApp.jsx-786', 'public', 'data', 'analytics_sites', 'https___mog147_github_io_');
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const dateId = new Date().toISOString().split('T')[0];
-
-    updateDoc(docRef, { 
-      count: increment(1), 
-      mobile: isMobile ? increment(1) : increment(0), 
-      desktop: !isMobile ? increment(1) : increment(0), 
-      lastUpdated: serverTimestamp() 
-    }).catch(() => {
-      setDoc(docRef, { 
-        url: "https://muuu-noir.github.io/mysite/", count: 1, mobile: isMobile ? 1 : 0, desktop: !isMobile ? 1 : 0, 
-        lastUpdated: serverTimestamp(), createdAt: serverTimestamp() 
-      });
-    });
-
-    const dailyRef = doc(db, 'artifacts', 'c_b9ec481a8a59586b_AnalyticsApp.jsx-786', 'public', 'data', 'analytics_sites', 'https___mog147_github_io_', 'daily_stats', dateId);
-    setDoc(dailyRef, { 
-      date: serverTimestamp(), dateString: dateId, count: increment(1), 
-      mobile: isMobile ? increment(1) : increment(0), desktop: !isMobile ? increment(1) : increment(0) 
-    }, { merge: true });
-  }).catch(console.error);
-</script>
-<\/script>`
 };
 console.log("Config: Loaded SITE_CONFIG successfully.");

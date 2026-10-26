@@ -1719,17 +1719,6 @@ body.menu-open {
     opacity: 0.8;
 }
 
-/* Access Counter (Invisible) */
-.hidden-counter {
-    display: none !important;
-    visibility: hidden;
-    height: 0;
-    width: 0;
-    overflow: hidden;
-    position: absolute;
-    pointer-events: none;
-}
-
 /* Twitter Section Styles */
 .twitter-container {
     width: 100%;
