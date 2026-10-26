@@ -196,7 +196,6 @@ function initScrollProgress() {
 /** Hero Text Split Animation */
 function initHeroTextAnimation() {
   const heroH1 = document.querySelector('.hero h1');
-  const heroSub = document.querySelector('.hero .sub-title');
 
   if (heroH1) {
     const original = heroH1.innerHTML;
@@ -212,15 +211,6 @@ function initHeroTextAnimation() {
     heroH1.innerHTML = html;
   }
 
-  if (heroSub) {
-    const text = heroSub.textContent;
-    const words = text.split(/(\s+|&)/);
-    heroSub.innerHTML = words.map((word, i) => {
-      if (word.trim() === '') return word;
-      const delay = 1.0 + i * 0.1;
-      return `<span class="word" style="animation-delay:${delay}s">${word}</span>`;
-    }).join('');
-  }
 }
 
 /** Footer Reveal on Scroll */
