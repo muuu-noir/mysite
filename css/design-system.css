@@ -343,3 +343,8 @@
     color: var(--color-text-sub);
     text-align: right;
 }
+
+/* Design system spacing utilities */
+.ds-mb-5 { margin-bottom: 5rem; }
+.ds-mb-1 { margin-bottom: 1rem; }
+.ds-mb-2 { margin-bottom: 2rem; }
