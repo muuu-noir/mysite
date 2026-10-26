@@ -290,7 +290,13 @@ function initContactForm() {
 
   form.addEventListener('input', checkForm);
 
-  window.postToGoogle = () => {
+  let isSubmitting = false;
+
+  const postToGoogle = () => {
+    if (isSubmitting) return;
+    isSubmitting = true;
+    submitBtn.disabled = true;
+
     fetch(form.action, {
       method: 'POST',
       body: new FormData(form),
@@ -299,6 +305,8 @@ function initContactForm() {
       window.location.href = 'success.html';
     });
   };
+
+  submitBtn.addEventListener('click', postToGoogle);
 }
 
 
