@@ -83,6 +83,42 @@
     transition: var(--transition-fast);
 }
 
+.ds-color-swatch--indigo {
+    background-color: #6E8CAB;
+}
+
+.ds-color-swatch--indigo-dark {
+    background-color: #5A7A99;
+}
+
+.ds-color-swatch--gradient {
+    background: linear-gradient(135deg, #6E8CAB 0%, #8DAEC7 100%);
+}
+
+.ds-color-swatch--text-main {
+    background-color: var(--color-text-main);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ds-color-swatch--text-sub {
+    background-color: var(--color-text-sub);
+}
+
+.ds-color-swatch--background {
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ds-color-swatch--surface {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.ds-color-swatch--glass {
+    background-color: var(--glass-bg);
+    border-bottom: 1px solid var(--color-border);
+}
+
 .ds-color-card:hover .ds-color-swatch {
     opacity: 0.95;
 }
