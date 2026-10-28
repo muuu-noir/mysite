@@ -479,6 +479,11 @@
     text-align: center;
 }
 
+.ds-animation-card {
+    padding: 2.5rem;
+    text-align: center;
+}
+
 .flex-center .ds-animation-description {
     font-size: 0.85rem;
     color: var(--color-text-sub);
