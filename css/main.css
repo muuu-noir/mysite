@@ -2446,6 +2446,10 @@ iframe[id^="twitter-widget-"] {
 /* ----------------------------------------- */
 /* Flow timeline (about.html)               */
 /* ----------------------------------------- */
+.about-flow-cta {
+    margin-top: 3rem;
+}
+
 .flow-timeline {
     position: relative;
     display: flex;
