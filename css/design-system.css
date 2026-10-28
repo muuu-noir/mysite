@@ -484,6 +484,18 @@
     text-align: center;
 }
 
+.ds-animation-avatar {
+    margin-bottom: 0;
+    width: 6rem;
+    height: 6rem;
+}
+
+.avatar-wrap .ds-animation-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .flex-center .ds-animation-description {
     font-size: 0.85rem;
     color: var(--color-text-sub);
