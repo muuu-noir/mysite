@@ -348,3 +348,21 @@
 .ds-mb-5 { margin-bottom: 5rem; }
 .ds-mb-1 { margin-bottom: 1rem; }
 .ds-mb-2 { margin-bottom: 2rem; }
+
+/* Showcase labels and animation text */
+.sub-title.ds-button-subtitle {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.flex-center .ds-animation-description {
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+    margin-bottom: 2rem;
+}
+
+.ds-animation-note {
+    font-size: 0.75rem;
+    color: var(--color-indigo);
+    margin-top: 1.5rem;
+}
