@@ -414,6 +414,22 @@
     transition: var(--transition-smooth);
 }
 
+.ds-space-bar--max-width {
+    width: 100%;
+}
+
+.ds-space-bar--section-top {
+    width: 80px;
+}
+
+.ds-space-bar--section-bottom {
+    width: 60px;
+}
+
+.ds-space-bar--card-padding {
+    width: 40px;
+}
+
 .ds-space-val {
     font-family: "Outfit", sans-serif;
     font-size: 0.85rem;
