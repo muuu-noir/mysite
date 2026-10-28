@@ -282,6 +282,23 @@
     background: #0B0E14;
 }
 
+.ds-glass-card-demo {
+    width: 100%;
+    max-width: 600px;
+}
+
+.ds-glass-card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-main);
+}
+
+.ds-glass-card-description {
+    font-size: 0.95rem;
+    color: var(--color-text-sub);
+}
+
 .ds-code-wrap {
     position: relative;
     background: #1E1E24;
