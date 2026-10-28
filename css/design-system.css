@@ -209,6 +209,47 @@
     color: var(--color-text-main);
 }
 
+.ds-typo-outfit {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.ds-typo-inter {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.ds-typo-hero {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+.ds-typo-section {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.ds-typo-component {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+}
+
+.ds-typo-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text-main);
+}
+
 /* Interactive Component Showcase */
 .ds-component-demo {
     background: var(--color-surface);
